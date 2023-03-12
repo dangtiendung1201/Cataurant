@@ -6,7 +6,7 @@
 #include <SDL_mixer.h>
 
 // Screen size
-const int SCREEN_WIDTH = 1280;
+const int SCREEN_WIDTH = 1366;
 const int SCREEN_HEIGHT = 768;
 
 // Menu
@@ -16,7 +16,7 @@ const int MENU_SIZE = 45;
 
 const int TITLE_WIDTH = 500;
 const int TITLE_HEIGHT = 100;
-const int TITLE_SIZE = 100;
+const int TITLE_SIZE = 250;
 
 const SDL_Color WHITE = {255, 255, 255, 255};
 const SDL_Color BLACK = {0, 0, 0, 255};
