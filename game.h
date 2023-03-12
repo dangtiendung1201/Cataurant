@@ -8,7 +8,7 @@
 #include <SDL_ttf.h>
 #include "button.h"
 #include "const.h"
-// #include "texture.h"
+#include "texture.h"
 
 bool init();
 

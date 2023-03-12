@@ -37,7 +37,6 @@ bool init()
 	}
 	return success;
 }
-
 void menu()
 {
 	// Load fonts
@@ -51,9 +50,9 @@ void menu()
 	{
 		std::cout << "Failed to load font! Error: " << TTF_GetError() << std::endl;
 	}
-	
+	Texture title;
+	title.loadFromRenderedText(renderer, "Cataurant", ORANGE, textFont);
 	const char *menuText[3] = {"Play", "Options", "Credits"};
-
 	std::vector<Button> buttons;
 
 	for (int i = 0; i < 3; i++)
@@ -106,7 +105,7 @@ void menu()
 		// Clear screen
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(renderer);
-
+		title.render(renderer, SCREEN_WIDTH / 2 - title.getWidth() / 2, SCREEN_HEIGHT / 2 - title.getHeight() / 2 - 200);
 		for (int i = 0; i < 3; i++)
 		{
 			buttons[i].render(renderer);
