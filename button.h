@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _BUTTON_H
+#define _BUTTON_H
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include "ui.h"
@@ -6,8 +7,11 @@
 class Button : public UserInterface
 {
 public:
-    Button(const SDL_Rect &rect, const SDL_Color &colour, TTF_Font *const font, const SDL_Color &fontColour);
+	Button(const SDL_Rect &rect, const SDL_Color &color, TTF_Font *const font, const SDL_Color &fontColor);
 
-    bool isMouseInside(const int x, const int y) const;
-    void changeColourTo(const SDL_Colour &colour);
+	bool isMouseInside(const int x, const int y) const;
+	void changeColor(const SDL_Color &color);
+
 };
+
+#endif

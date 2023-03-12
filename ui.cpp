@@ -1,8 +1,8 @@
 #include "ui.h"
 
-UserInterface::UserInterface(const SDL_Rect &rect, const SDL_Color &colour, TTF_Font *const font, const SDL_Color &fontColour)
-    : mRect(rect), mColour(colour),
-      mFontRect({0, 0, 0, 0}), mFontColour(fontColour), mFont(font),
+UserInterface::UserInterface(const SDL_Rect &rect, const SDL_Color &color, TTF_Font *const font, const SDL_Color &fontColor)
+    : mRect(rect), mColor(color),
+      mFontRect({0, 0, 0, 0}), mFontColor(fontColor), mFont(font),
       mTexture(nullptr)
 {
 }
@@ -12,7 +12,7 @@ void UserInterface::loadTexture(SDL_Renderer *const renderer, const char *text)
     // Free old texture if it exists
     free();
 
-    SDL_Surface *textSurface = TTF_RenderText_Solid(mFont, text, mFontColour);
+    SDL_Surface *textSurface = TTF_RenderText_Solid(mFont, text, mFontColor);
     if (textSurface == nullptr)
     {
         std::cout << "Unable to render text surface! Error: " << TTF_GetError() << std::endl;
@@ -44,7 +44,7 @@ void UserInterface::centerText()
 void UserInterface::render(SDL_Renderer *const renderer) const
 {
     // Render UserInterface
-    SDL_SetRenderDrawColor(renderer, mColour.r, mColour.g, mColour.b, mColour.a);
+    SDL_SetRenderDrawColor(renderer, mColor.r, mColor.g, mColor.b, mColor.a);
     SDL_RenderFillRect(renderer, &mRect);
 
     // Render texture if it exists

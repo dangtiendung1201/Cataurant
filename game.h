@@ -2,12 +2,16 @@
 #define _GAME_H
 
 #include <iostream>
-#include "const.h"
+#include <vector>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-
+#include "button.h"
+#include "const.h"
+// #include "texture.h"
 
 bool init();
+
+void menu();
 
 #endif

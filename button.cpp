@@ -1,7 +1,7 @@
 #include "button.h"
 
-Button::Button(const SDL_Rect &rect, const SDL_Color &colour, TTF_Font *const font, const SDL_Color &fontColour)
-    : UserInterface(rect, colour, font, fontColour)
+Button::Button(const SDL_Rect &rect, const SDL_Color &color, TTF_Font *const font, const SDL_Color &fontColor)
+    : UserInterface(rect, color, font, fontColor)
 {
 }
 
@@ -34,7 +34,7 @@ bool Button::isMouseInside(const int x, const int y) const
     return inside;
 }
 
-void Button::changeColourTo(const SDL_Color &colour)
+void Button::changeColor(const SDL_Color &color)
 {
-    mColour = colour;
+    mColor = color;
 }
