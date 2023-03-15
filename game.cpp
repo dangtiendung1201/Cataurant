@@ -3,6 +3,9 @@
 SDL_Window *window;
 SDL_Renderer *renderer;
 
+bool musicState = true;
+bool soundState = true;
+
 bool init()
 {
 	// Initialization flag
@@ -86,9 +89,18 @@ void loadImage(Texture &texture, const char *path)
 	}
 }
 
-void loadSound(Mix_Music *&sound, const char *path)
+void loadMusic(Mix_Music *&music, const char *path)
 {
-	sound = Mix_LoadMUS(path);
+	music = Mix_LoadMUS(path);
+	if (music == nullptr)
+	{
+		std::cout << "Failed to load music! Error: " << Mix_GetError() << std::endl;
+	}
+}
+
+void loadSound(Mix_Chunk *&sound, const char *path)
+{
+	sound = Mix_LoadWAV(path);
 	if (sound == nullptr)
 	{
 		std::cout << "Failed to load sound! Error: " << Mix_GetError() << std::endl;
@@ -108,9 +120,10 @@ void menu()
 
 	Texture background; // Background texture
 
-	Mix_Music *music; // Click sound
+	Mix_Music *music; // Music
+	Mix_Chunk *sound; // Sound
 
-	const char *menuText[NUM_BUTTONS] = {"Play", "Options", "Credits"}; // Menu text
+	const char *menuText[NUM_BUTTONS] = {"Play", "Help", "Quit"}; // Menu text
 	std::vector<Button> buttons;										// Menu buttons
 
 	// Load fonts
@@ -124,7 +137,8 @@ void menu()
 	loadImage(background, "assets/images/background.png");
 
 	// Load music
-	loadSound(music, "assets/sounds/music.wav");
+	loadMusic(music, "assets/sounds/music.wav");
+	loadSound(sound, "assets/sounds/sound.wav");
 
 	// Load buttons
 	for (int i = 0; i < NUM_BUTTONS; i++)
@@ -169,6 +183,7 @@ void menu()
 					if (buttons[i].isMouseInside(event.motion.x, event.motion.y))
 					{
 						buttons[i].changeColor(ORANGE);
+						Mix_PlayChannel(-1, sound, 0);
 					}
 				}
 				break;
@@ -185,12 +200,13 @@ void menu()
 							std::cout << "Play" << std::endl;
 							break;
 						case 1:
-							// options();
-							std::cout << "Options" << std::endl;
+							// help();
+							std::cout << "Help" << std::endl;
 							break;
 						case 2:
-							// credits();
-							std::cout << "Credits" << std::endl;
+							// quit();
+							quit = true;
+							std::cout << "Quit" << std::endl;
 							break;
 						}
 					}
