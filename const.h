@@ -18,6 +18,13 @@ enum State
     QUIT = 3
 };
 
+enum binaryState
+{
+    ON = 1,
+    OFF = 0
+};
+
+
 // Menu
 const int NUM_BUTTONS = 3; // Number of buttons
 const int BUTTON_WIDTH = 150;
@@ -27,6 +34,24 @@ const int MENU_SIZE = 45;
 const int TITLE_WIDTH = 500;
 const int TITLE_HEIGHT = 100;
 const int TITLE_SIZE = 250;
+// At right top corner
+const int VERSION_POSX = SCREEN_WIDTH - 10;
+const int VERSION_POSY = 10;
+const int VERSION_SIZE = 25;
+const int VERSION_WIDTH = 100;
+const int VERSION_HEIGHT = 50;
+
+const int SOUND_POSX = 10;
+const int SOUND_POSY = 10;
+
+const int MUSIC_POSX = 50;
+const int MUSIC_POSY = 10;
+
+const int SOUND_WIDTH = 30;
+const int SOUND_HEIGHT = 30;
+
+const int MUSIC_WIDTH = 30;
+const int MUSIC_HEIGHT = 30;
 
 // Color
 const SDL_Color WHITE = {255, 255, 255, 255};

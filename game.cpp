@@ -3,8 +3,8 @@
 SDL_Window *window;
 SDL_Renderer *renderer;
 
-bool musicState = true;
-bool soundState = true;
+bool musicState = ON;
+bool soundState = ON;
 
 bool init()
 {
@@ -114,27 +114,33 @@ void menu()
 
 	// Declearation
 	TTF_Font *menuFont, // Menu font
-		*titleFont;		// Title font
+		*titleFont, *versionFont;		// Title font
 
-	Texture title; // Title texture
+	Texture title, version; // Title texture
 
-	Texture background; // Background texture
+	Texture background, musicOn, soundOn, musicOff, soundOff; // Background texture
 
 	Mix_Music *music; // Music
 	Mix_Chunk *sound; // Sound
 
 	const char *menuText[NUM_BUTTONS] = {"Play", "Help", "Quit"}; // Menu text
-	std::vector<Button> buttons;										// Menu buttons
+	std::vector<Button> buttons;								  // Menu buttons
 
 	// Load fonts
 	loadFont(menuFont, "assets/fonts/menu.ttf", MENU_SIZE);
 	loadFont(titleFont, "assets/fonts/title.ttf", TITLE_SIZE);
+	loadFont(versionFont, "assets/fonts/version.ttf", VERSION_SIZE);
 
 	// Load title
 	title.loadFromRenderedText(renderer, "Cataurant", ORANGE, titleFont);
+	version.loadFromRenderedText(renderer, "VERSION: 1.0", BLACK, versionFont);
 
 	// Load background
 	loadImage(background, "assets/images/background.png");
+	loadImage(musicOn, "assets/icons/musicOn.png");
+	loadImage(soundOn, "assets/icons/soundOn.png");
+	loadImage(musicOff, "assets/icons/musicOff.png");
+	loadImage(soundOff, "assets/icons/soundOff.png");
 
 	// Load music
 	loadMusic(music, "assets/sounds/music.wav");
@@ -150,6 +156,14 @@ void menu()
 
 		buttons.push_back(button);
 	}
+
+	SDL_Rect musicRect = {MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT};
+	SDL_Rect soundRect = {SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT};
+	Button musicButton(musicRect, TRANSPARENT, menuFont, TRANSPARENT);
+	Button soundButton(soundRect, TRANSPARENT, menuFont, TRANSPARENT);
+
+	musicButton.loadTexture(renderer, "");
+	soundButton.loadTexture(renderer, "");
 
 	// Main loop
 	SDL_Event event;
@@ -183,7 +197,32 @@ void menu()
 					if (buttons[i].isMouseInside(event.motion.x, event.motion.y))
 					{
 						buttons[i].changeColor(ORANGE);
-						Mix_PlayChannel(-1, sound, 0);
+						if (soundState == ON)
+							Mix_PlayChannel(-1, sound, 0);
+					}
+				}
+				if (musicButton.isMouseInside(event.motion.x, event.motion.y))
+				{
+					if (Mix_PausedMusic() == 1)
+					{
+						Mix_ResumeMusic();
+						musicState = ON;
+					}
+					else
+					{
+						Mix_PauseMusic();
+						musicState = OFF;
+					}
+				}
+				if (soundButton.isMouseInside(event.motion.x, event.motion.y))
+				{
+					if (soundState == ON)
+					{
+						soundState = OFF;
+					}
+					else
+					{
+						soundState = ON;
 					}
 				}
 				break;
@@ -218,50 +257,24 @@ void menu()
 				break;
 			}
 		}
-		// while (SDL_PollEvent(&event))
-		// {
-		// 	switch (event.type)
-		// 	{
-		// 	case SDL_QUIT:
-		// 		quit = true;
-		// 		break;
-		// 	case SDL_MOUSEMOTION:
-		// 		for (int i = 0; i < NUM_BUTTONS; i++)
-		// 		{
-		// 			if (buttons[i].isMouseInside(event.motion.x, event.motion.y))
-		// 			{
-		// 				buttons[i].changeColor(GREEN);
-		// 			}
-		// 			else
-		// 			{
-		// 				buttons[i].changeColor(PINK);
-		// 			}
-		// 		}
-		// 		break;
-		// 	case SDL_MOUSEBUTTONDOWN:
-		// 		for (int i = 0; i < 3; i++)
-		// 		{
-		// 			if (buttons[i].isMouseInside(event.motion.x, event.motion.y))
-		// 			{
-		// 				buttons[i].changeColor(WHITE);
-		// 			}
-		// 			else
-		// 			{
-		// 				buttons[i].changeColor(PINK);
-		// 			}
-		// 		}
-		// 		break;
-		// 	}
-		// }
 
 		// Clear screen
 		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(renderer);
 
 		// Render
-		background.render(renderer, 0, 0);
+		background.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		if (musicState == ON)
+			musicOn.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT);
+		else
+			musicOff.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT);
+		if (soundState == ON)
+			soundOn.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT);
+		else
+			soundOff.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT);
 
-		title.render(renderer, SCREEN_WIDTH / 2 - title.getWidth() / 2, SCREEN_HEIGHT / 2 - title.getHeight() / 2 - 200);
+		title.render(renderer, SCREEN_WIDTH / 2 - title.getWidth() / 2, SCREEN_HEIGHT / 2 - title.getHeight() / 2 - 200, title.getWidth(), title.getHeight());
+		version.render(renderer, SCREEN_WIDTH - version.getWidth() - 10, 10, version.getWidth(), version.getHeight());
 
 		for (int i = 0; i < 3; i++)
 		{
