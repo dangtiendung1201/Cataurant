@@ -34,7 +34,6 @@ const int MENU_SIZE = 45;
 const int TITLE_WIDTH = 500;
 const int TITLE_HEIGHT = 100;
 const int TITLE_SIZE = 250;
-// At right top corner
 const int VERSION_POSX = SCREEN_WIDTH - 10;
 const int VERSION_POSY = 10;
 const int VERSION_SIZE = 25;
@@ -52,6 +51,14 @@ const int SOUND_HEIGHT = 30;
 
 const int MUSIC_WIDTH = 30;
 const int MUSIC_HEIGHT = 30;
+
+// Game
+const int NUM_DISHES = 5;
+const int NUM_CUSTOMERS = 5;
+const int NUM_INGREDIENTS = 5;
+const int SELLER_STARTX = 375;
+const int SELLER_STARTY = 350;
+const int SELLER_VEL = 100;
 
 // Color
 const SDL_Color WHITE = {255, 255, 255, 255};

@@ -19,6 +19,8 @@ const char *menuText[NUM_BUTTONS] = {"Play", "Help", "Quit"}; // Menu text
 bool musicState = ON;
 bool soundState = ON;
 
+Seller seller;
+
 void loadFont(TTF_Font *&font, const char *path, const int size)
 {
 	font = TTF_OpenFont(path, size);
@@ -132,6 +134,7 @@ void game()
 	// Load images
 	loadImage(gameground, "assets/images/gameground.png");
 	loadImage(stand, "assets/images/stand.png");
+	seller.loadTexture(renderer);
 
 	SDL_Event event;
 	bool quit = false;
@@ -146,6 +149,7 @@ void game()
 				quit = true;
 				break;
 			}
+			seller.handleEvent(event);
 		}
 
 		// Clear screen
@@ -154,6 +158,10 @@ void game()
 
 		// Render
 		gameground.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		// render seller equivalent to stand and dishes
+		seller.render(renderer);
+
+		// seller.render(renderer, SCREEN_WIDTH / 2 - seller.getWidth() / 2, SCREEN_HEIGHT / 2 - seller.getHeight() / 2, seller.getWidth() / 2, seller.getHeight() / 2);
 		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight());
 
 		// Update screen

@@ -10,6 +10,7 @@
 #include "button.h"
 #include "const.h"
 #include "texture.h"
+#include "seller.h"
 
 bool init();
 
