@@ -3,8 +3,56 @@
 SDL_Window *window;
 SDL_Renderer *renderer;
 
+// Declearation
+TTF_Font *menuFont,			  // Menu font
+	*titleFont, *versionFont; // Title font
+
+Texture title, version; // Title texture
+
+Texture background, musicOn, soundOn, musicOff, soundOff, gameground, stand; // Background texture
+
+Mix_Music *music; // Music
+Mix_Chunk *sound; // Sound
+
+const char *menuText[NUM_BUTTONS] = {"Play", "Help", "Quit"}; // Menu text
+
 bool musicState = ON;
 bool soundState = ON;
+
+void loadFont(TTF_Font *&font, const char *path, const int size)
+{
+	font = TTF_OpenFont(path, size);
+	if (font == nullptr)
+	{
+		std::cout << "Failed to load font! Error: " << TTF_GetError() << std::endl;
+	}
+}
+
+void loadImage(Texture &texture, const char *path)
+{
+	if (!texture.loadFromFile(renderer, path))
+	{
+		std::cout << "Failed to load image! Error: " << SDL_GetError() << std::endl;
+	}
+}
+
+void loadMusic(Mix_Music *&music, const char *path)
+{
+	music = Mix_LoadMUS(path);
+	if (music == nullptr)
+	{
+		std::cout << "Failed to load music! Error: " << Mix_GetError() << std::endl;
+	}
+}
+
+void loadSound(Mix_Chunk *&sound, const char *path)
+{
+	sound = Mix_LoadWAV(path);
+	if (sound == nullptr)
+	{
+		std::cout << "Failed to load sound! Error: " << Mix_GetError() << std::endl;
+	}
+}
 
 bool init()
 {
@@ -69,41 +117,47 @@ bool init()
 		std::cout << "SDL_mixer could not initialise! Error: " << Mix_GetError() << std::endl;
 		success = false;
 	}
+
+	// Load music
+	loadMusic(music, "assets/sounds/music.wav");
+	loadSound(sound, "assets/sounds/sound.wav");
+
+	Mix_PlayMusic(music, -1);
+
 	return success;
 }
 
-void loadFont(TTF_Font *&font, const char *path, const int size)
+void game()
 {
-	font = TTF_OpenFont(path, size);
-	if (font == nullptr)
-	{
-		std::cout << "Failed to load font! Error: " << TTF_GetError() << std::endl;
-	}
-}
+	// Load images
+	loadImage(gameground, "assets/images/gameground.png");
+	loadImage(stand, "assets/images/stand.png");
 
-void loadImage(Texture &texture, const char *path)
-{
-	if (!texture.loadFromFile(renderer, path))
+	SDL_Event event;
+	bool quit = false;
+	while (!quit)
 	{
-		std::cout << "Failed to load image! Error: " << SDL_GetError() << std::endl;
-	}
-}
+		// Handle events on queue
+		while (SDL_PollEvent(&event) != 0)
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				quit = true;
+				break;
+			}
+		}
 
-void loadMusic(Mix_Music *&music, const char *path)
-{
-	music = Mix_LoadMUS(path);
-	if (music == nullptr)
-	{
-		std::cout << "Failed to load music! Error: " << Mix_GetError() << std::endl;
-	}
-}
+		// Clear screen
+		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(renderer);
 
-void loadSound(Mix_Chunk *&sound, const char *path)
-{
-	sound = Mix_LoadWAV(path);
-	if (sound == nullptr)
-	{
-		std::cout << "Failed to load sound! Error: " << Mix_GetError() << std::endl;
+		// Render
+		gameground.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight());
+
+		// Update screen
+		SDL_RenderPresent(renderer);
 	}
 }
 
@@ -112,19 +166,7 @@ void menu()
 	// Const
 	const int NUM_BUTTONS = 3; // Number of buttons
 
-	// Declearation
-	TTF_Font *menuFont, // Menu font
-		*titleFont, *versionFont;		// Title font
-
-	Texture title, version; // Title texture
-
-	Texture background, musicOn, soundOn, musicOff, soundOff; // Background texture
-
-	Mix_Music *music; // Music
-	Mix_Chunk *sound; // Sound
-
-	const char *menuText[NUM_BUTTONS] = {"Play", "Help", "Quit"}; // Menu text
-	std::vector<Button> buttons;								  // Menu buttons
+	std::vector<Button> buttons; // Menu buttons
 
 	// Load fonts
 	loadFont(menuFont, "assets/fonts/menu.ttf", MENU_SIZE);
@@ -141,10 +183,6 @@ void menu()
 	loadImage(soundOn, "assets/icons/soundOn.png");
 	loadImage(musicOff, "assets/icons/musicOff.png");
 	loadImage(soundOff, "assets/icons/soundOff.png");
-
-	// Load music
-	loadMusic(music, "assets/sounds/music.wav");
-	loadSound(sound, "assets/sounds/sound.wav");
 
 	// Load buttons
 	for (int i = 0; i < NUM_BUTTONS; i++)
@@ -168,7 +206,6 @@ void menu()
 	// Main loop
 	SDL_Event event;
 	bool quit = false;
-	Mix_PlayMusic(music, -1);
 	while (!quit)
 	{
 		while (SDL_PollEvent(&event))
@@ -235,7 +272,7 @@ void menu()
 						switch (i)
 						{
 						case 0:
-							// game();
+							game();
 							std::cout << "Play" << std::endl;
 							break;
 						case 1:
