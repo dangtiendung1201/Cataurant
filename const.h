@@ -24,6 +24,20 @@ enum binaryState
     OFF = 0
 };
 
+enum customerType
+{
+    FOX = 0,
+    WOLF = 1
+};
+
+enum customerStatus
+{
+    RUNNING = 0,
+    WAITING = 1,
+    SERVED = 2,
+    LEAVING = 3
+};
+
 
 // Menu
 const int NUM_BUTTONS = 3; // Number of buttons
@@ -59,9 +73,11 @@ const int SELLER_STARTX = 475;
 const int SELLER_STARTY = 350;
 const int SELLER_VEL = 125;
 
-const int NUM_CUSTOMERS = 5;
-const int CUSTOMER_POSX[5] = {0, 0, 0, 0, 0};
-const int CUSTOMER_POSY[5] = {0, 0, 0, 0, 0};
+const int CUSTOMER_STARTX = 1400;
+const int CUSTOMER_STARTY = 625;
+const int CUSTOMER_WAITX = 350;
+const int CUSTOMER_VELOCITY = 5;
+
 
 // Color
 const SDL_Color WHITE = {255, 255, 255, 255};

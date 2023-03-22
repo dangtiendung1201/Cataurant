@@ -21,6 +21,8 @@ bool soundState = ON;
 
 Seller seller;
 
+Customer customer[4];
+
 void loadFont(TTF_Font *&font, const char *path, const int size)
 {
 	font = TTF_OpenFont(path, size);
@@ -76,7 +78,7 @@ bool init()
 		}
 
 		// Create window
-		window = SDL_CreateWindow("Caturant", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow("Cataurant", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
@@ -134,7 +136,13 @@ void game()
 	// Load images
 	loadImage(gameground, "assets/images/gameground.png");
 	loadImage(stand, "assets/images/stand.png");
+
 	seller.loadTexture(renderer);
+	customer[0].loadTexture(renderer, FOX);
+	customer[0].setMotion();
+	// customer[1].loadTexture(renderer, WOLF);
+	// customer[2].loadTexture(renderer, FOX);
+	// customer[3].loadTexture(renderer, WOLF);
 
 	SDL_Event event;
 	bool quit = false;
@@ -163,6 +171,9 @@ void game()
 
 		// seller.render(renderer, SCREEN_WIDTH / 2 - seller.getWidth() / 2, SCREEN_HEIGHT / 2 - seller.getHeight() / 2, seller.getWidth() / 2, seller.getHeight() / 2);
 		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight(), NULL);
+
+		// render customers
+		customer[0].render(renderer);
 
 		// Update screen
 		SDL_RenderPresent(renderer);

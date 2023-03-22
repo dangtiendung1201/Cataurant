@@ -1,30 +1,31 @@
-// #ifndef _CUSTOMER_H
-// #define _CUSTOMER_H
+#ifndef _CUSTOMER_H
+#define _CUSTOMER_H
 
-// #include <iostream>
-// #include <SDL.h>
-// #include <SDL_image.h>
-// #include "const.h"
-// #include "texture.h"
+#include <iostream>
+#include <SDL.h>
+#include <SDL_image.h>
+#include "const.h"
+#include "texture.h"
 
-// class Customer
-// {
-// public:
-//     Customer();
+const int MAX_RECT = 9;
 
-//     void loadTexture(SDL_Renderer *renderer, int type);
+class Customer
+{
+public:
+    Customer();
 
-//     void move();
+    void loadTexture(SDL_Renderer *renderer, int type);
 
-//     void render(SDL_Renderer *renderer);
+    void setMotion();
 
-//     int getPosX();
+    void renderBar(SDL_Renderer *renderer);
 
-//     int getPosY();
+    void render(SDL_Renderer *renderer);
+    
 
-// private:
-//     int type;
-//     int position;
-//     Texture texture;
-// };
-// #endif
+private:
+    int posX, posY, cur, status, type, waitingTime;
+    Texture texture;
+    SDL_Rect rect[MAX_RECT];
+};
+#endif
