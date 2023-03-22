@@ -157,12 +157,12 @@ void game()
 		SDL_RenderClear(renderer);
 
 		// Render
-		gameground.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		gameground.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
 		// render seller equivalent to stand and dishes
 		seller.render(renderer);
 
 		// seller.render(renderer, SCREEN_WIDTH / 2 - seller.getWidth() / 2, SCREEN_HEIGHT / 2 - seller.getHeight() / 2, seller.getWidth() / 2, seller.getHeight() / 2);
-		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight());
+		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight(), NULL);
 
 		// Update screen
 		SDL_RenderPresent(renderer);
@@ -308,18 +308,18 @@ void menu()
 		SDL_RenderClear(renderer);
 
 		// Render
-		background.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		background.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
 		if (musicState == ON)
-			musicOn.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT);
+			musicOn.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT, NULL);
 		else
-			musicOff.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT);
+			musicOff.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT, NULL);
 		if (soundState == ON)
-			soundOn.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT);
+			soundOn.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT, NULL);
 		else
-			soundOff.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT);
+			soundOff.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT, NULL);
 
-		title.render(renderer, SCREEN_WIDTH / 2 - title.getWidth() / 2, SCREEN_HEIGHT / 2 - title.getHeight() / 2 - 200, title.getWidth(), title.getHeight());
-		version.render(renderer, SCREEN_WIDTH - version.getWidth() - 10, 10, version.getWidth(), version.getHeight());
+		title.render(renderer, SCREEN_WIDTH / 2 - title.getWidth() / 2, SCREEN_HEIGHT / 2 - title.getHeight() / 2 - 200, title.getWidth(), title.getHeight(), NULL);
+		version.render(renderer, SCREEN_WIDTH - version.getWidth() - 10, 10, version.getWidth(), version.getHeight(), NULL);
 
 		for (int i = 0; i < 3; i++)
 		{

@@ -25,8 +25,8 @@ public:
     int getPosY();
 
 private:
-    int posX, posY;
+    int posX, posY, cur;
     int status;
-    Texture texture;
+    Texture goRight, goLeft, stand;
 };
 #endif

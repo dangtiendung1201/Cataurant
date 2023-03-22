@@ -11,6 +11,7 @@
 #include "const.h"
 #include "texture.h"
 #include "seller.h"
+#include "customer.h"
 
 bool init();
 

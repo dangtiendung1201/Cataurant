@@ -54,11 +54,14 @@ const int MUSIC_HEIGHT = 30;
 
 // Game
 const int NUM_DISHES = 5;
-const int NUM_CUSTOMERS = 5;
 const int NUM_INGREDIENTS = 5;
-const int SELLER_STARTX = 375;
+const int SELLER_STARTX = 475;
 const int SELLER_STARTY = 350;
-const int SELLER_VEL = 100;
+const int SELLER_VEL = 125;
+
+const int NUM_CUSTOMERS = 5;
+const int CUSTOMER_POSX[5] = {0, 0, 0, 0, 0};
+const int CUSTOMER_POSY[5] = {0, 0, 0, 0, 0};
 
 // Color
 const SDL_Color WHITE = {255, 255, 255, 255};
