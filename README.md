@@ -2,8 +2,11 @@
 This is my own game project using C, C++ and SDL2 library at University of Engineering and Technology, Vietnam National University.
 ## Author's information
 **Name:**  Đặng Tiến Dũng
+
 **Student ID:** 22026523
+
 **Class:** K67J
+
 ## Milestone
 - [x] **08/03/2023:** Have ideas about the game.
 - [x] **12/03/2023:** Initialize all SDL libraries + Implement and refactor some SDL utilities.
