@@ -54,19 +54,40 @@ void Customer::renderBar(SDL_Renderer *renderer)
 
 void Customer::render(SDL_Renderer *renderer, int position)
 {
-    texture.render(renderer, posX, posY, 0, 0, &rect[cur]);
-    renderBar(renderer);
-    if (posX > CUSTOMER_WAITX[position])
+    if (status == RUNNING)
     {
-        posX -= CUSTOMER_VELOCITY;
-        cur++;
-        if (cur == MAX_RECT)
-            cur = 0;
+        texture.render(renderer, posX, posY, 0, 0, &rect[cur]);
+        if (posX > CUSTOMER_WAITX[position])
+        {
+            posX -= CUSTOMER_VELOCITY;
+            cur++;
+            if (cur == MAX_RECT)
+                cur = 0;
+        }
+        else
+            status = WAITING;
     }
-    else
+    else if (status == WAITING)
     {
         cur = 0;
-        status = WAITING;
-        if (waitingTime < MAX_WAITING_TIME) waitingTime++;
+        texture.render(renderer, posX, posY, 0, 0, &rect[cur]);
+        renderBar(renderer);
+        cur = 0;
+        if (waitingTime < MAX_WAITING_TIME)
+            waitingTime++;
+        else
+            status = LEAVING;
+    }
+    else if (status == LEAVING)
+    {
+        texture.render(renderer, posX, posY, 0, 0, &rect[cur]);
+        if (posX > 0)
+        {
+            posX -= CUSTOMER_VELOCITY;
+            cur++;
+            if (cur == MAX_RECT)
+                cur = 0;
+        }
+        else texture.free();
     }
 }
