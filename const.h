@@ -75,7 +75,7 @@ const int SELLER_VEL = 125;
 
 const int CUSTOMER_STARTX = 1400;
 const int CUSTOMER_STARTY = 625;
-const int CUSTOMER_WAITX = 350;
+const int CUSTOMER_WAITX[] = {350, 550, 750, 950, 1150};
 const int CUSTOMER_VELOCITY = 5;
 
 

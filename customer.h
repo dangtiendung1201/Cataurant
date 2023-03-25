@@ -20,7 +20,7 @@ public:
 
     void renderBar(SDL_Renderer *renderer);
 
-    void render(SDL_Renderer *renderer);
+    void render(SDL_Renderer *renderer, int position);
     
 
 private:

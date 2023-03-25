@@ -21,7 +21,7 @@ bool soundState = ON;
 
 Seller seller;
 
-Customer customer[4];
+Customer customer[5];
 
 void loadFont(TTF_Font *&font, const char *path, const int size)
 {
@@ -138,11 +138,12 @@ void game()
 	loadImage(stand, "assets/images/stand.png");
 
 	seller.loadTexture(renderer);
-	customer[0].loadTexture(renderer, FOX);
-	customer[0].setMotion();
-	// customer[1].loadTexture(renderer, WOLF);
-	// customer[2].loadTexture(renderer, FOX);
-	// customer[3].loadTexture(renderer, WOLF);
+
+	for (int i = 0; i < 5; i++)
+	{
+		customer[i].loadTexture(renderer, i % 2);
+		customer[i].setMotion();
+	}
 
 	SDL_Event event;
 	bool quit = false;
@@ -173,7 +174,10 @@ void game()
 		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight(), NULL);
 
 		// render customers
-		customer[0].render(renderer);
+		for (int i = 0; i < 5; i++)
+		{
+			customer[i].render(renderer, i);
+		}
 
 		// Update screen
 		SDL_RenderPresent(renderer);

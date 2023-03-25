@@ -52,11 +52,11 @@ void Customer::renderBar(SDL_Renderer *renderer)
     }
 }
 
-void Customer::render(SDL_Renderer *renderer)
+void Customer::render(SDL_Renderer *renderer, int position)
 {
     texture.render(renderer, posX, posY, 0, 0, &rect[cur]);
     renderBar(renderer);
-    if (posX > CUSTOMER_WAITX)
+    if (posX > CUSTOMER_WAITX[position])
     {
         posX -= CUSTOMER_VELOCITY;
         cur++;
