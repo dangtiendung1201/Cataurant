@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <vector>
+#include <ctime>
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -12,9 +14,12 @@
 #include "texture.h"
 #include "seller.h"
 #include "customer.h"
+#include "ingredients.h"
 
 bool init();
 
 void menu();
+
+void quit();
 
 #endif

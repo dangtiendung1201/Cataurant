@@ -1,5 +1,7 @@
 #include "game.h"
 
+int gameState;
+
 SDL_Window *window;
 SDL_Renderer *renderer;
 
@@ -126,6 +128,24 @@ bool init()
 	loadMusic(music, "assets/sounds/music.wav");
 	loadSound(sound, "assets/sounds/sound.wav");
 
+	// Load font
+	loadFont(menuFont, "assets/fonts/menu.ttf", MENU_SIZE);
+	loadFont(titleFont, "assets/fonts/title.ttf", TITLE_SIZE);
+	loadFont(versionFont, "assets/fonts/version.ttf", VERSION_SIZE);
+
+	// Load images
+	loadImage(background, "assets/images/background.png");
+	loadImage(musicOn, "assets/icons/musicOn.png");
+	loadImage(soundOn, "assets/icons/soundOn.png");
+	loadImage(musicOff, "assets/icons/musicOff.png");
+	loadImage(soundOff, "assets/icons/soundOff.png");
+	loadImage(gameground, "assets/images/gameground.png");
+	loadImage(stand, "assets/images/stand.png");
+
+	// Load texts
+	title.loadFromRenderedText(renderer, "Cataurant", ORANGE, titleFont);
+	version.loadFromRenderedText(renderer, "VERSION: 1.0", BLACK, versionFont);
+
 	Mix_PlayMusic(music, -1);
 
 	return success;
@@ -133,12 +153,10 @@ bool init()
 
 void game()
 {
-	// Load images
-	loadImage(gameground, "assets/images/gameground.png");
-	loadImage(stand, "assets/images/stand.png");
-
+	gameState = PLAY;
+	Uint32 frameStart, frameTime;
 	seller.loadTexture(renderer);
-
+	seller.init(renderer);
 	for (int i = 0; i < 5; i++)
 	{
 		customer[i].loadTexture(renderer, i % 2);
@@ -149,6 +167,7 @@ void game()
 	bool quit = false;
 	while (!quit)
 	{
+		frameStart = SDL_GetTicks();
 		// Handle events on queue
 		while (SDL_PollEvent(&event) != 0)
 		{
@@ -178,34 +197,29 @@ void game()
 		{
 			customer[i].render(renderer, i);
 		}
+		seller.renderIngredients(renderer);
 
 		// Update screen
 		SDL_RenderPresent(renderer);
+		// Frame rate
+		frameTime = SDL_GetTicks() - frameStart;
+		if (frameTime < DELAY_TIME)
+		{
+			SDL_Delay(DELAY_TIME - frameTime);
+		}
 	}
 }
 
 void menu()
 {
+	gameState = MENU;
+
+	Uint32 frameStart, frameTime;
+
 	// Const
 	const int NUM_BUTTONS = 3; // Number of buttons
 
 	std::vector<Button> buttons; // Menu buttons
-
-	// Load fonts
-	loadFont(menuFont, "assets/fonts/menu.ttf", MENU_SIZE);
-	loadFont(titleFont, "assets/fonts/title.ttf", TITLE_SIZE);
-	loadFont(versionFont, "assets/fonts/version.ttf", VERSION_SIZE);
-
-	// Load title
-	title.loadFromRenderedText(renderer, "Cataurant", ORANGE, titleFont);
-	version.loadFromRenderedText(renderer, "VERSION: 1.0", BLACK, versionFont);
-
-	// Load background
-	loadImage(background, "assets/images/background.png");
-	loadImage(musicOn, "assets/icons/musicOn.png");
-	loadImage(soundOn, "assets/icons/soundOn.png");
-	loadImage(musicOff, "assets/icons/musicOff.png");
-	loadImage(soundOff, "assets/icons/soundOff.png");
 
 	// Load buttons
 	for (int i = 0; i < NUM_BUTTONS; i++)
@@ -231,6 +245,7 @@ void menu()
 	bool quit = false;
 	while (!quit)
 	{
+		frameStart = SDL_GetTicks();
 		while (SDL_PollEvent(&event))
 		{
 			switch (event.type)
@@ -340,9 +355,17 @@ void menu()
 		{
 			buttons[i].render(renderer);
 		}
-
 		// Update screen
 		SDL_RenderPresent(renderer);
+
+		// Frame rate
+		frameTime = SDL_GetTicks() - frameStart;
+		if (frameTime < DELAY_TIME)
+		{
+			SDL_Delay(DELAY_TIME - frameTime);
+		}
+		if (gameState != MENU)
+			quit = true;
 	}
 }
 

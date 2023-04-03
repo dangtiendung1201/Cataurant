@@ -9,6 +9,9 @@
 const int SCREEN_WIDTH = 1366;
 const int SCREEN_HEIGHT = 768;
 
+const int FPS = 60;
+const int DELAY_TIME = 1000 / FPS;
+
 // State
 enum State
 {
@@ -38,6 +41,24 @@ enum customerStatus
     LEAVING = 3
 };
 
+enum sellerStatus
+{
+    IDLE = 0,
+    GO_UP = 1,
+    GO_DOWN = 2,
+    GO_LEFT = 3,
+    GO_RIGHT = 4
+};
+
+enum ingredientType
+{
+    NOTHING = 0,
+    UP_BREAD = 1,
+    LETTUCE = 2,
+    BEEF = 3,
+    TOMATO = 4,
+    DOWN_BREAD = 5
+};
 
 // Menu
 const int NUM_BUTTONS = 3; // Number of buttons
@@ -72,12 +93,16 @@ const int NUM_INGREDIENTS = 5;
 const int SELLER_STARTX = 475;
 const int SELLER_STARTY = 350;
 const int SELLER_VEL = 125;
+const int SELLER_MAXINGREDIENTS = 20;
 
 const int CUSTOMER_STARTX = 1400;
 const int CUSTOMER_STARTY = 625;
 const int CUSTOMER_WAITX[] = {350, 550, 750, 950, 1150};
 const int CUSTOMER_VELOCITY = 5;
 
+const int INGREDIENTS_DISTANCE = 15;
+const int INGREDIENTS_STARTX = SELLER_STARTX + 25;
+const int INGREDIENTS_STARTY = SELLER_STARTY - 75;
 
 // Color
 const SDL_Color WHITE = {255, 255, 255, 255};

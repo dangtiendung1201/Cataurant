@@ -6,6 +6,8 @@
 #include <SDL_image.h>
 #include "const.h"
 #include "texture.h"
+#include "ingredients.h"
+
 
 class Seller
 {
@@ -24,9 +26,13 @@ public:
 
     int getPosY();
 
+    void init(SDL_Renderer *renderer);
+
+    void renderIngredients(SDL_Renderer *renderer);
 private:
-    int posX, posY, cur;
+    int posX, posY, cur, position;
     int status;
     Texture goRight, goLeft, stand;
+    Ingredients ingredients[SELLER_MAXINGREDIENTS];
 };
 #endif

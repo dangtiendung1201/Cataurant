@@ -8,6 +8,7 @@
 #include "texture.h"
 
 const int MAX_RECT = 9;
+const int MAX_REQUEST = 10;
 
 class Customer
 {
@@ -21,11 +22,14 @@ public:
     void renderBar(SDL_Renderer *renderer);
 
     void render(SDL_Renderer *renderer, int position);
+
+    void renderRequest(SDL_Renderer *renderer);
     
 
 private:
     int posX, posY, cur, status, type, waitingTime;
     Texture texture;
-    SDL_Rect rect[MAX_RECT];
+    SDL_Rect request, rect[MAX_RECT];
+    // Ingredients requestList[MAX_REQUEST];
 };
 #endif

@@ -54,6 +54,7 @@ void Customer::renderBar(SDL_Renderer *renderer)
 
 void Customer::render(SDL_Renderer *renderer, int position)
 {
+    // renderRequest(renderer);
     if (status == RUNNING)
     {
         texture.render(renderer, posX, posY, 0, 0, &rect[cur]);
@@ -88,6 +89,49 @@ void Customer::render(SDL_Renderer *renderer, int position)
             if (cur == MAX_RECT)
                 cur = 0;
         }
-        else texture.free();
+        else
+            texture.free();
+    }
+}
+
+std::string makeRequest(int numIngredients)
+{
+    std::string request = "1";
+    for (int i = 0; i < numIngredients; i++)
+    {
+        int type = rand() % 4;
+        switch (type)
+        {
+        case LETTUCE:
+            request += "2";
+            break;
+        case BEEF:
+            request += "2";
+            break;
+        case TOMATO:
+            request += "4";
+            break;
+        default:
+            break;
+        }
+    }
+    request += "5";
+    return request;
+}
+
+void Customer::renderRequest(SDL_Renderer *renderer)
+{
+    if (status == WAITING)
+    {
+        request.w = 60;
+        request.h = 80; // Change when more ingredients are added
+        request.x = posX + 100;
+        request.y = posY - request.h;
+        // Render ingredients from request string
+        Texture ingredient;
+        ingredient.loadFromFile(renderer, "assets/images/ingredients/lettuce.png");
+        ingredient.render(renderer, request.x, request.y, 100, 100, NULL);
+        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+        SDL_RenderFillRect(renderer, &request);
     }
 }
