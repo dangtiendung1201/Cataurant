@@ -15,7 +15,8 @@
 #include "seller.h"
 #include "customer.h"
 #include "ingredients.h"
-
+#include "dishes.h"
+extern Dishes dish;
 bool init();
 
 void menu();

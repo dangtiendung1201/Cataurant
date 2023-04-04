@@ -4,7 +4,7 @@ Seller::Seller()
 {
     posX = SELLER_STARTX;
     posY = SELLER_STARTY;
-    position = 4;
+    position = SELLER_START_POSITION;
     status = IDLE;
 }
 
@@ -28,7 +28,8 @@ void Seller::init(SDL_Renderer *renderer)
     }
 }
 
-void Seller::move()
+
+void Seller::move(SDL_Renderer *renderer)
 {
     switch (status)
     {
@@ -36,8 +37,11 @@ void Seller::move()
 
         break;
     case GO_DOWN:
-        ingredients[0].moveDown(400);
-        
+        dish.add(renderer, ingredients[0], position);
+        for (int i = 1; i < SELLER_MAXINGREDIENTS; i++)
+        {
+            ingredients[i - 1] = ingredients[i];
+        }
         break;
     case GO_LEFT:
         if (posX - SELLER_VEL > 0)
@@ -54,6 +58,7 @@ void Seller::move()
         if (posX + SELLER_VEL < SCREEN_WIDTH - goRight.getWidth() / 4)
         {
             posX += SELLER_VEL;
+            position++;
             for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
             {
                 ingredients[i].setX(ingredients[i].getX() + SELLER_VEL);
@@ -63,7 +68,7 @@ void Seller::move()
     }
 }
 
-void Seller::handleEvent(SDL_Event &event)
+void Seller::handleEvent(SDL_Renderer *renderer, SDL_Event &event)
 {
     if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
     {
@@ -82,7 +87,7 @@ void Seller::handleEvent(SDL_Event &event)
             status = GO_RIGHT;
             break;
         }
-        move();
+        move(renderer);
     }
     else if (event.type == SDL_KEYUP)
     {

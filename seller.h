@@ -7,7 +7,8 @@
 #include "const.h"
 #include "texture.h"
 #include "ingredients.h"
-
+#include "dishes.h"
+#include "game.h"
 
 class Seller
 {
@@ -16,9 +17,9 @@ public:
 
     void loadTexture(SDL_Renderer *renderer);
 
-    void handleEvent(SDL_Event &event);
+    void handleEvent(SDL_Renderer *renderer, SDL_Event &event);
 
-    void move();
+    void move(SDL_Renderer *renderer);
 
     void render(SDL_Renderer *renderer);
 

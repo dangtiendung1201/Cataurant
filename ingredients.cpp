@@ -95,3 +95,14 @@ void Ingredients::init()
 {
     setType(rand() % 4 + 2);
 }
+
+Ingredients &Ingredients::operator=(const Ingredients &other)
+{
+    posX = other.posX;
+    posY = other.posY;
+    type = other.type;
+    width = other.width;
+    height = other.height;
+    texture = other.texture;
+    return *this;
+}

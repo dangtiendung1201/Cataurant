@@ -93,6 +93,7 @@ const int NUM_INGREDIENTS = 5;
 const int SELLER_STARTX = 475;
 const int SELLER_STARTY = 350;
 const int SELLER_VEL = 125;
+const int SELLER_START_POSITION = 1;
 const int SELLER_MAXINGREDIENTS = 20;
 
 const int CUSTOMER_STARTX = 1400;
@@ -103,6 +104,10 @@ const int CUSTOMER_VELOCITY = 5;
 const int INGREDIENTS_DISTANCE = 15;
 const int INGREDIENTS_STARTX = SELLER_STARTX + 25;
 const int INGREDIENTS_STARTY = SELLER_STARTY - 75;
+
+const int DISHES_POSX[] = {375, 500, 625, 750, 875};
+const int DISHES_POSY = 400;
+const int DISHES_MAXINGREDIENTS = 20;
 
 // Color
 const SDL_Color WHITE = {255, 255, 255, 255};

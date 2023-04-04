@@ -30,6 +30,7 @@ public:
 
     void init();
     void moveDown(int y);
+    Ingredients &operator=(const Ingredients &other);
 
 private:
     int posX, posY;
