@@ -30,6 +30,8 @@ public:
     void init(SDL_Renderer *renderer);
 
     void renderIngredients(SDL_Renderer *renderer);
+
+    void addNewIngredients(SDL_Renderer *renderer);
 private:
     int posX, posY, cur, position;
     int status;

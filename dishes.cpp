@@ -35,15 +35,30 @@ void Dishes::render(SDL_Renderer *renderer)
 
 void Dishes::add(SDL_Renderer *renderer, Ingredients addIngredents, int position)
 {
-    std::cout << numIngredients[position] << std::endl;
-    ingredients[position][numIngredients[position]] = addIngredents;
-    ingredients[position][numIngredients[position]].loadTexture(renderer);
-    ingredients[position][numIngredients[position]].setX(DISHES_POSX[position]);
-    ingredients[position][numIngredients[position]].setY(DISHES_POSY - INGREDIENTS_DISTANCE * numIngredients[position]);
-    numIngredients[position]++;
-    // std::cout << ingredients[position][numIngredients[position]].getX() << std::endl;
-    // std::cout << ingredients[position][numIngredients[position]].getY() << std::endl;
-    // std::cout << ingredients[position][numIngredients[position]].getType() << std::endl;
-    // std::cout << ingredients[position][numIngredients[position]].getWidth() << std::endl;
-    // std::cout << ingredients[position][numIngredients[position]].getHeight() << std::endl;
+
+    if (0 <= position && position < NUM_DISHES)
+    {
+        // std::cout << numIngredients[position] << std::endl;
+        ingredients[position][numIngredients[position]] = addIngredents;
+        ingredients[position][numIngredients[position]].loadTexture(renderer);
+        ingredients[position][numIngredients[position]].setX(DISHES_POSX[position]);
+        ingredients[position][numIngredients[position]].setY(DISHES_POSY - INGREDIENTS_DISTANCE * numIngredients[position]);
+        numIngredients[position]++;
+        std::cout << "At " << position << ": ";
+        for (int i = 0; i < numIngredients[position]; i++)
+        {
+            std::cout << ingredients[position][i].getType() << " ";
+        }
+        std::cout << std::endl;
+        // std::cout << ingredients[position][numIngredients[position]].getX() << std::endl;
+        // std::cout << ingredients[position][numIngredients[position]].getY() << std::endl;
+        // std::cout << ingredients[position][numIngredients[position]].getType() << std::endl;
+        // std::cout << ingredients[position][numIngredients[position]].getWidth() << std::endl;
+        // std::cout << ingredients[position][numIngredients[position]].getHeight() << std::endl;
+    }
+}
+Ingredients Dishes::remove(SDL_Renderer *renderer, int position)
+{
+    numIngredients[position]--;
+    return ingredients[position][numIngredients[position]];
 }

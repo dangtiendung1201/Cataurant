@@ -21,26 +21,62 @@ void Seller::init(SDL_Renderer *renderer)
     {
         ingredients[i].init();
         ingredients[i].loadTexture(renderer);
-        ingredients[i].setX(INGREDIENTS_STARTX);
+        ingredients[i].setX(INGREDIENTS_STARTX[position]);
         ingredients[i].setY(INGREDIENTS_STARTY - INGREDIENTS_DISTANCE * i);
         ingredients[i].setWidth(ingredients[i].getWidth());
         ingredients[i].setHeight(ingredients[i].getHeight());
     }
 }
 
+void Seller::addNewIngredients(SDL_Renderer *renderer)
+{
+    ingredients[SELLER_MAXINGREDIENTS - 1].init();
+    ingredients[SELLER_MAXINGREDIENTS - 1].loadTexture(renderer);
+    ingredients[SELLER_MAXINGREDIENTS - 1].setX(INGREDIENTS_STARTX[position]);
+    ingredients[SELLER_MAXINGREDIENTS - 1].setY(INGREDIENTS_STARTY - INGREDIENTS_DISTANCE * (SELLER_MAXINGREDIENTS - 1));
+    ingredients[SELLER_MAXINGREDIENTS - 1].setWidth(ingredients[SELLER_MAXINGREDIENTS - 1].getWidth());
+    ingredients[SELLER_MAXINGREDIENTS - 1].setHeight(ingredients[SELLER_MAXINGREDIENTS - 1].getHeight());
+}
 
 void Seller::move(SDL_Renderer *renderer)
 {
     switch (status)
     {
     case GO_UP:
-
-        break;
-    case GO_DOWN:
-        dish.add(renderer, ingredients[0], position);
         for (int i = 1; i < SELLER_MAXINGREDIENTS; i++)
         {
-            ingredients[i - 1] = ingredients[i];
+            ingredients[i] = ingredients[i - 1];
+            ingredients[i].loadTexture(renderer);
+            ingredients[i].setX(INGREDIENTS_STARTX[position]);
+            ingredients[i].setY(INGREDIENTS_STARTY - INGREDIENTS_DISTANCE * i);
+        }
+        // ingredients[0] = dish.remove(renderer, position);
+        // ingredients[0].loadTexture(renderer);
+        // ingredients[0].setX(INGREDIENTS_STARTX);
+        // ingredients[0].setY(INGREDIENTS_STARTY);
+        break;
+    case GO_DOWN:
+        // for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
+        // {
+        //     std::cout << ingredients[i].getType() << " ";
+        // }
+        // std::cout << std::endl;
+        if (0 <= position && position < NUM_DISHES)
+        {
+            // dish.add(renderer, ingredients[0], position);
+            for (int i = 1; i < SELLER_MAXINGREDIENTS; i++)
+            {
+                ingredients[i - 1] = ingredients[i];
+                ingredients[i - 1].loadTexture(renderer);
+                ingredients[i - 1].setX(INGREDIENTS_STARTX[position]);
+                ingredients[i - 1].setY(INGREDIENTS_STARTY - INGREDIENTS_DISTANCE * (i - 1));
+            }
+            addNewIngredients(renderer);
+            for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
+            {
+                std::cout << ingredients[i].getType() << " ";
+            }
+            std::cout << std::endl;
         }
         break;
     case GO_LEFT:
@@ -111,7 +147,7 @@ void Seller::handleEvent(SDL_Renderer *renderer, SDL_Event &event)
 
 void Seller::renderIngredients(SDL_Renderer *renderer)
 {
-    for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
+    for (int i = 0; i < SELLER_MAXINGREDIENTS_RENDER; i++)
     {
         ingredients[i].render(renderer);
     }
