@@ -4,7 +4,6 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-
 // Screen size
 const int SCREEN_WIDTH = 1366;
 const int SCREEN_HEIGHT = 768;
@@ -93,7 +92,7 @@ const int NUM_INGREDIENTS = 5;
 const int SELLER_STARTX = 475;
 const int SELLER_STARTY = 350;
 const int SELLER_VEL = 125;
-const int SELLER_START_POSITION = 1;
+const int SELLER_START_POSITION = 3;
 const int SELLER_MAXINGREDIENTS_RENDER = 8;
 const int SELLER_MAXINGREDIENTS = 20;
 
@@ -103,7 +102,7 @@ const int CUSTOMER_WAITX[] = {350, 550, 750, 950, 1150};
 const int CUSTOMER_VELOCITY = 5;
 
 const int INGREDIENTS_DISTANCE = 20;
-const int INGREDIENTS_STARTX[] = {375, 500, 625, 750, 875};
+const int INGREDIENTS_STARTX[] = {125, 250, 375, 500, 625, 750, 875, 1000, 1125};
 const int INGREDIENTS_STARTY = SELLER_STARTY - 100;
 
 const int DISHES_POSX[] = {375, 500, 625, 750, 875};

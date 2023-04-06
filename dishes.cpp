@@ -1,24 +1,62 @@
 #include "dishes.h"
 
+Ingredients up_bread, lettuce, beef, tomato, down_bread;
+
 Dishes::Dishes()
 {
     for (int i = 0; i < NUM_DISHES; i++)
     {
-        numIngredients[i] = 0;
+        for (int j = 0; j < DISHES_MAXINGREDIENTS; j++)
+        {
+            ingredients[i][j] = NOTHING;
+        }
     }
 }
 
-void Dishes::init(SDL_Renderer *renderer)
+void Dishes::loadTexture(SDL_Renderer *renderer)
+{
+    up_bread.setType(UP_BREAD);
+    up_bread.loadTexture(renderer);
+    lettuce.setType(LETTUCE);
+    lettuce.loadTexture(renderer);
+    beef.setType(BEEF);
+    beef.loadTexture(renderer);
+    tomato.setType(TOMATO);
+    tomato.loadTexture(renderer);
+    down_bread.setType(DOWN_BREAD);
+    down_bread.loadTexture(renderer);
+}
+
+void Dishes::renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type)
+{
+    switch (type)
+    {
+    case UP_BREAD:
+        up_bread.render(renderer, posX, posY);
+        break;
+    case LETTUCE:
+        lettuce.render(renderer, posX, posY);
+        break;
+    case BEEF:
+        beef.render(renderer, posX, posY);
+        break;
+    case TOMATO:
+        tomato.render(renderer, posX, posY);
+        break;
+    case DOWN_BREAD:
+        down_bread.render(renderer, posX, posY);
+        break;
+    default:
+        break;
+    }
+}
+
+void Dishes::init()
 {
     for (int i = 0; i < NUM_DISHES; i++)
     {
+        ingredients[i][0] = UP_BREAD;
         numIngredients[i] = 1;
-        ingredients[i][0].setType(UP_BREAD);
-        ingredients[i][0].loadTexture(renderer);
-        ingredients[i][0].setX(DISHES_POSX[i]);
-        ingredients[i][0].setY(DISHES_POSY);
-        ingredients[i][0].setWidth(ingredients[i][0].getWidth());
-        ingredients[i][0].setHeight(ingredients[i][0].getHeight());
     }
 }
 
@@ -28,37 +66,22 @@ void Dishes::render(SDL_Renderer *renderer)
     {
         for (int j = 0; j < numIngredients[i]; j++)
         {
-            ingredients[i][j].render(renderer);
+            renderIngredients(renderer, DISHES_POSX[i], DISHES_POSY - INGREDIENTS_DISTANCE * j, ingredients[i][j]);
         }
     }
 }
 
-void Dishes::add(SDL_Renderer *renderer, Ingredients addIngredents, int position)
+void Dishes::addIngredient(int addDish, int addIngredient)
 {
+    ingredients[addDish][numIngredients[addDish]] = addIngredient;
+    numIngredients[addDish]++;
+}
 
-    if (0 <= position && position < NUM_DISHES)
-    {
-        // std::cout << numIngredients[position] << std::endl;
-        ingredients[position][numIngredients[position]] = addIngredents;
-        ingredients[position][numIngredients[position]].loadTexture(renderer);
-        ingredients[position][numIngredients[position]].setX(DISHES_POSX[position]);
-        ingredients[position][numIngredients[position]].setY(DISHES_POSY - INGREDIENTS_DISTANCE * numIngredients[position]);
-        numIngredients[position]++;
-        std::cout << "At " << position << ": ";
-        for (int i = 0; i < numIngredients[position]; i++)
-        {
-            std::cout << ingredients[position][i].getType() << " ";
-        }
-        std::cout << std::endl;
-        // std::cout << ingredients[position][numIngredients[position]].getX() << std::endl;
-        // std::cout << ingredients[position][numIngredients[position]].getY() << std::endl;
-        // std::cout << ingredients[position][numIngredients[position]].getType() << std::endl;
-        // std::cout << ingredients[position][numIngredients[position]].getWidth() << std::endl;
-        // std::cout << ingredients[position][numIngredients[position]].getHeight() << std::endl;
-    }
-}
-Ingredients Dishes::remove(SDL_Renderer *renderer, int position)
+int Dishes::removeIngredient(int removeDish)
 {
-    numIngredients[position]--;
-    return ingredients[position][numIngredients[position]];
+    int removeIngredient = ingredients[removeDish][numIngredients[removeDish] - 1];
+    ingredients[removeDish][numIngredients[removeDish] - 1] = NOTHING;
+    numIngredients[removeDish]--;
+    return removeIngredient;
 }
+

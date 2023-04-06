@@ -1,10 +1,9 @@
 #ifndef _DISHES_H
 #define _DISHES_H
 
-#include <iostream>
-#include "const.h"
 #include "ingredients.h"
-#include "texture.h"
+#include "const.h"
+#include <string>
 
 class Dishes
 {
@@ -12,14 +11,20 @@ public:
     Dishes();
     // ~Dishes();
 
-    void init(SDL_Renderer *renderer);
+    void loadTexture(SDL_Renderer *renderer);
+
+    void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
+
     void render(SDL_Renderer *renderer);
-    void add(SDL_Renderer *renderer, Ingredients addIngredents, int position);
-    Ingredients remove(SDL_Renderer *renderer, int position);
+
+    void init();
+
+    void addIngredient(int addDish, int addIngredient);
+    int removeIngredient(int removeDish);
 
 private:
-    int numIngredients[NUM_DISHES], position;
-    Ingredients ingredients[NUM_DISHES][DISHES_MAXINGREDIENTS];
+    int ingredients[NUM_DISHES][DISHES_MAXINGREDIENTS];
+    int numIngredients[NUM_DISHES];
 };
 
 #endif

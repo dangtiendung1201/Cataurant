@@ -23,19 +23,22 @@ public:
 
     void render(SDL_Renderer *renderer);
 
-    int getPosX();
+    void init();
 
-    int getPosY();
+    void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
 
-    void init(SDL_Renderer *renderer);
+    void renderDeque(SDL_Renderer *renderer);
 
-    void renderIngredients(SDL_Renderer *renderer);
+    int getDishPosition();
 
-    void addNewIngredients(SDL_Renderer *renderer);
+    int removeBottomIngredient();
+    void addBottomIngredient(int addIngredient);
+    void addTopIngredient();
+
 private:
     int posX, posY, cur, position;
     int status;
     Texture goRight, goLeft, stand;
-    Ingredients ingredients[SELLER_MAXINGREDIENTS];
+    int ingredients[SELLER_MAXINGREDIENTS];
 };
 #endif
