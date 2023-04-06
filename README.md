@@ -16,7 +16,7 @@ This is my own game project using C, C++ and SDL2 library at University of Engin
 - [x] **17/03/2023:** Make first game character move.
 - [x] **22/03/2023:** Make more game characters
 - [x] **25/03/2023:** Render more characters
-- [ ] **Before 07/04/2023:** Finish the game logic + Implement burger ingredients.
+- [x] **06/04/2023:** Implement burger ingredients.
 - [ ] **Before 14/04/2023:** Add "change language" features
 - [ ] **Before 30/04/2023:** Finish the game
 
