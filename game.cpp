@@ -22,8 +22,9 @@ bool musicState = ON;
 bool soundState = ON;
 
 Seller seller;
-Dishes dish;
 Customer customer[5];
+Dishes dish;
+
 void loadFont(TTF_Font *&font, const char *path, const int size)
 {
 	font = TTF_OpenFont(path, size);
@@ -155,9 +156,10 @@ void game()
 	gameState = PLAY;
 	Uint32 frameStart, frameTime;
 	seller.loadTexture(renderer);
-	seller.init(renderer);
+	seller.init();
 
-	dish.init(renderer);
+	dish.loadTexture(renderer);
+	dish.init();
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -200,10 +202,8 @@ void game()
 			customer[i].render(renderer, i);
 		}
 
+		seller.renderDeque(renderer);
 		dish.render(renderer);
-
-		seller.renderIngredients(renderer);
-
 		// Update screen
 		SDL_RenderPresent(renderer);
 		// Frame rate

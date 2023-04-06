@@ -14,9 +14,11 @@
 #include "texture.h"
 #include "seller.h"
 #include "customer.h"
-#include "ingredients.h"
 #include "dishes.h"
+#include "ingredients.h"
+
 extern Dishes dish;
+
 bool init();
 
 void menu();
