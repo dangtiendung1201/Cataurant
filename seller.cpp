@@ -98,11 +98,16 @@ void Seller::renderDeque(SDL_Renderer *renderer)
 
 int Seller::getDishPosition()
 {
-    if (position == 2) return 0;
-    if (position == 3) return 1;
-    if (position == 4) return 2;
-    if (position == 5) return 3;
-    if (position == 6) return 4;
+    if (position == 2)
+        return 0;
+    if (position == 3)
+        return 1;
+    if (position == 4)
+        return 2;
+    if (position == 5)
+        return 3;
+    if (position == 6)
+        return 4;
 }
 
 void Seller::move(SDL_Renderer *renderer)
@@ -110,11 +115,15 @@ void Seller::move(SDL_Renderer *renderer)
     switch (status)
     {
     case GO_UP:
-        addBottomIngredient(dish.removeIngredient(getDishPosition()));
+        if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) > 1)
+            addBottomIngredient(dish.removeIngredient(getDishPosition()));
         break;
     case GO_DOWN:
-        dish.addIngredient(getDishPosition(), removeBottomIngredient());
-        addTopIngredient();
+        if (2 <= position && position <= 6)
+        {
+            dish.addIngredient(getDishPosition(), removeBottomIngredient());
+            addTopIngredient();
+        }
         break;
     case GO_LEFT:
         if (posX - SELLER_VEL > 0)

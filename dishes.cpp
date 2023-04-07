@@ -85,3 +85,7 @@ int Dishes::removeIngredient(int removeDish)
     return removeIngredient;
 }
 
+int Dishes::getNumIngredients(int currentDish)
+{
+    return numIngredients[currentDish];
+}

@@ -21,6 +21,7 @@ public:
 
     void addIngredient(int addDish, int addIngredient);
     int removeIngredient(int removeDish);
+    int getNumIngredients(int currentDish);
 
 private:
     int ingredients[NUM_DISHES][DISHES_MAXINGREDIENTS];
