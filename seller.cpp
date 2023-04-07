@@ -15,11 +15,6 @@ void Seller::loadTexture(SDL_Renderer *renderer)
     stand.loadFromFile(renderer, "assets/images/seller/sellerStand.png");
 }
 
-int random(int min, int max)
-{
-    return min + rand() % (max - min + 1);
-}
-
 void Seller::init()
 {
     for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)

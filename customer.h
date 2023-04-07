@@ -1,26 +1,30 @@
-// #ifndef _CUSTOMER_H
-// #define _CUSTOMER_H
+#ifndef _CUSTOMER_H
+#define _CUSTOMER_H
 
-// #include "const.h"
-// #include "texture.h"
+#include "const.h"
+#include "texture.h"
+#include "ultils.h"
 
-// class Customer
-// {
-// public:
-//     Customer();
+class Customer
+{
+public:
+    Customer();
 
-//     void loadTexture(SDL_Renderer *renderer, int type);
+    void init();
 
-//     void setMotion();
+    void renderBar(SDL_Renderer *renderer);
 
-//     void renderBar(SDL_Renderer *renderer);
+    void render(SDL_Renderer *renderer, int position);
 
-//     void render(SDL_Renderer *renderer, int position);
-
-//     void renderRequest(SDL_Renderer *renderer);
+    // void renderRequest(SDL_Renderer *renderer);
     
 
-// private:
-//     int posX, posY, cur, status, type, waitingTime, request[CUSTOMER_MAXREQUESTS], numRequests;
-// };
-// #endif
+private:
+    int posX, posY, cur, status, type, request[CUSTOMER_MAXREQUESTS], numRequests;
+    float waitingTime;
+};
+
+extern Texture fox, wolf;
+extern SDL_Rect customerRect[CUSTOMER_MOTION_RECTANGLE];
+
+#endif
