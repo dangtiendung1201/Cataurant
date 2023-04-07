@@ -22,8 +22,9 @@ bool musicState = ON;
 bool soundState = ON;
 
 Seller seller;
-Customer customer[5];
+// Customer customer[NUM_CUSTOMERS];
 Dishes dish;
+Ingredients up_bread, lettuce, beef, tomato, down_bread;
 
 void loadFont(TTF_Font *&font, const char *path, const int size)
 {
@@ -142,6 +143,17 @@ bool init()
 	loadImage(gameground, "assets/images/gameground.png");
 	loadImage(stand, "assets/images/stand.png");
 
+	up_bread.setType(UP_BREAD);
+	up_bread.loadTexture(renderer);
+	lettuce.setType(LETTUCE);
+	lettuce.loadTexture(renderer);
+	beef.setType(BEEF);
+	beef.loadTexture(renderer);
+	tomato.setType(TOMATO);
+	tomato.loadTexture(renderer);
+	down_bread.setType(DOWN_BREAD);
+	down_bread.loadTexture(renderer);
+
 	// Load texts
 	title.loadFromRenderedText(renderer, "Cataurant", ORANGE, titleFont);
 	version.loadFromRenderedText(renderer, "VERSION: 1.0", BLACK, versionFont);
@@ -161,11 +173,11 @@ void game()
 	dish.loadTexture(renderer);
 	dish.init();
 
-	for (int i = 0; i < 5; i++)
-	{
-		customer[i].loadTexture(renderer, i % 2);
-		customer[i].setMotion();
-	}
+	// for (int i = 0; i < 5; i++)
+	// {
+	// 	customer[i].loadTexture(renderer, i % 2);
+	// 	customer[i].setMotion();
+	// }
 
 	SDL_Event event;
 	bool quit = false;
@@ -197,10 +209,10 @@ void game()
 		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight(), NULL);
 
 		// render customers
-		for (int i = 0; i < 5; i++)
-		{
-			customer[i].render(renderer, i);
-		}
+		// for (int i = 0; i < 5; i++)
+		// {
+		// 	customer[i].render(renderer, i);
+		// }
 
 		seller.renderDeque(renderer);
 		dish.render(renderer);

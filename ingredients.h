@@ -24,4 +24,7 @@ private:
     int type;
     Texture texture;
 };
+
+extern Ingredients up_bread, lettuce, beef, tomato, down_bread;
+
 #endif

@@ -28,16 +28,18 @@ enum binaryState
 
 enum customerType
 {
-    FOX = 0,
-    WOLF = 1
+    GHOST = 0,
+    FOX = 1,
+    WOLF = 2
 };
 
 enum customerStatus
 {
-    RUNNING = 0,
-    WAITING = 1,
-    SERVED = 2,
-    LEAVING = 3
+    OUTBOUND = 0,
+    RUNNING = 1,
+    WAITING = 2,
+    SERVED = 3,
+    LEAVING = 4
 };
 
 enum sellerStatus
@@ -96,10 +98,16 @@ const int SELLER_START_POSITION = 3;
 const int SELLER_MAXINGREDIENTS_RENDER = 8;
 const int SELLER_MAXINGREDIENTS = 20;
 
+const int NUM_CUSTOMERS = 5;
+const int CUSTOMER_MOTION_RECTANGLE = 9;
+const int CUSTOMER_MAXREQUESTS = 10;
 const int CUSTOMER_STARTX = 1400;
 const int CUSTOMER_STARTY = 625;
 const int CUSTOMER_WAITX[] = {350, 550, 750, 950, 1150};
 const int CUSTOMER_VELOCITY = 5;
+const int CUSTOMER_BAR_WIDTH = 100;
+const int CUSTOMER_BAR_HEIGHT = 10;
+const int CUSTOMER_MAXWAITINGTIME = 100;
 
 const int INGREDIENTS_DISTANCE = 20;
 const int INGREDIENTS_STARTX[] = {125, 250, 375, 500, 625, 750, 875, 1000, 1125};

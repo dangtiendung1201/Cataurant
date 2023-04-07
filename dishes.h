@@ -28,4 +28,6 @@ private:
     int numIngredients[NUM_DISHES];
 };
 
+extern Dishes dish;
+
 #endif

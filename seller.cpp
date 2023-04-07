@@ -1,5 +1,5 @@
 #include "seller.h"
-Ingredients seller_up_bread, seller_lettuce, seller_beef, seller_tomato, seller_down_bread;
+
 Seller::Seller()
 {
     posX = SELLER_STARTX;
@@ -13,17 +13,6 @@ void Seller::loadTexture(SDL_Renderer *renderer)
     goRight.loadFromFile(renderer, "assets/images/seller/sellerRight.png");
     goLeft.loadFromFile(renderer, "assets/images/seller/sellerLeft.png");
     stand.loadFromFile(renderer, "assets/images/seller/sellerStand.png");
-
-    seller_up_bread.setType(UP_BREAD);
-    seller_lettuce.setType(LETTUCE);
-    seller_beef.setType(BEEF);
-    seller_tomato.setType(TOMATO);
-    seller_down_bread.setType(DOWN_BREAD);
-    seller_up_bread.loadTexture(renderer);
-    seller_lettuce.loadTexture(renderer);
-    seller_beef.loadTexture(renderer);
-    seller_tomato.loadTexture(renderer);
-    seller_down_bread.loadTexture(renderer);
 }
 
 int random(int min, int max)
@@ -69,19 +58,19 @@ void Seller::renderIngredients(SDL_Renderer *renderer, int posX, int posY, int t
     switch (type)
     {
     case UP_BREAD:
-        seller_up_bread.render(renderer, posX, posY);
+        up_bread.render(renderer, posX, posY);
         break;
     case LETTUCE:
-        seller_lettuce.render(renderer, posX, posY);
+        lettuce.render(renderer, posX, posY);
         break;
     case BEEF:
-        seller_beef.render(renderer, posX, posY);
+        beef.render(renderer, posX, posY);
         break;
     case TOMATO:
-        seller_tomato.render(renderer, posX, posY);
+        tomato.render(renderer, posX, posY);
         break;
     case DOWN_BREAD:
-        seller_down_bread.render(renderer, posX, posY);
+        down_bread.render(renderer, posX, posY);
         break;
     default:
         break;

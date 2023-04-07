@@ -8,7 +8,6 @@
 #include "texture.h"
 #include "ingredients.h"
 #include "dishes.h"
-#include "game.h"
 
 class Seller
 {

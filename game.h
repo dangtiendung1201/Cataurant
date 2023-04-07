@@ -17,8 +17,6 @@
 #include "dishes.h"
 #include "ingredients.h"
 
-extern Dishes dish;
-
 bool init();
 
 void menu();

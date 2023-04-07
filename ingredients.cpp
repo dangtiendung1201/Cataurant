@@ -1,5 +1,5 @@
 #include "ingredients.h"
-#include "const.h"
+
 Ingredients::Ingredients()
 {
     type = NOTHING;

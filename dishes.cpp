@@ -1,7 +1,5 @@
 #include "dishes.h"
 
-Ingredients up_bread, lettuce, beef, tomato, down_bread;
-
 Dishes::Dishes()
 {
     for (int i = 0; i < NUM_DISHES; i++)
