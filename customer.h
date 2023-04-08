@@ -24,6 +24,8 @@ public:
     void renderRequest(SDL_Renderer *renderer, int position);
     void renderCharacter(SDL_Renderer *renderer);
     
+    int getNumRequests();
+    int *getRequestList();
 
 private:
     int posX, posY, cur, status, type, request[CUSTOMER_MAXREQUESTS], numRequests;
@@ -32,5 +34,6 @@ private:
 
 extern Texture fox, wolf, talkBubble;
 extern SDL_Rect customerRect[CUSTOMER_MOTION_RECTANGLE];
+extern Customer customer[NUM_CUSTOMERS];
 
 #endif

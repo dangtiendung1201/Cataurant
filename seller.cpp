@@ -107,6 +107,8 @@ void Seller::move(SDL_Renderer *renderer)
         {
             dish.addIngredient(getDishPosition(), removeBottomIngredient());
             addTopIngredient();
+            if (dish.checkBurger(getDishPosition()) >= 0)
+                score++;
         }
         break;
     case GO_LEFT:

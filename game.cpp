@@ -7,7 +7,7 @@ SDL_Renderer *renderer;
 
 // Declearation
 TTF_Font *menuFont,			  // Menu font
-	*titleFont, *versionFont; // Title font
+	*titleFont, *versionFont, *scoreFont; // Title font
 
 Texture title, version; // Title texture
 
@@ -31,6 +31,8 @@ Dishes dish;
 
 Ingredients up_bread, lettuce, beef, tomato, down_bread;
 Texture talkBubble;
+
+int score;
 
 void loadFont(TTF_Font *&font, const char *path, const int size)
 {
@@ -139,6 +141,7 @@ bool init()
 	loadFont(menuFont, "assets/fonts/menu.ttf", MENU_SIZE);
 	loadFont(titleFont, "assets/fonts/title.ttf", TITLE_SIZE);
 	loadFont(versionFont, "assets/fonts/version.ttf", VERSION_SIZE);
+	loadFont(scoreFont, "assets/fonts/version.ttf", SCORE_SIZE);
 
 	// Load images
 	loadImage(background, "assets/images/background.png");
@@ -185,6 +188,9 @@ void game()
 {
 	gameState = PLAY;
 	Uint32 frameStart, frameTime;
+
+	score = 0;
+
 	seller.loadTexture(renderer);
 	seller.init();
 
@@ -233,6 +239,7 @@ void game()
 
 		seller.renderDeque(renderer);
 		dish.render(renderer);
+		showScore(renderer);
 		// Update screen
 		SDL_RenderPresent(renderer);
 		// Frame rate

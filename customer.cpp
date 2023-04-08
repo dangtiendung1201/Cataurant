@@ -99,6 +99,10 @@ void Customer::renderBar(SDL_Renderer *renderer)
 
 void Customer::render(SDL_Renderer *renderer, int position)
 {
+    if (status == OUTBOUND)
+    {
+
+    }
     if (status == RUNNING)
     {
         renderCharacter(renderer);
@@ -137,4 +141,14 @@ void Customer::render(SDL_Renderer *renderer, int position)
         else
             status = OUTBOUND;
     }
+}
+
+int Customer::getNumRequests()
+{
+    return numRequests;
+}
+
+int *Customer::getRequestList()
+{
+    return request;
 }

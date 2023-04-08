@@ -2,6 +2,7 @@
 #define _DISHES_H
 
 #include "ingredients.h"
+#include "customer.h"
 #include "const.h"
 #include <string>
 
@@ -22,6 +23,8 @@ public:
     void addIngredient(int addDish, int addIngredient);
     int removeIngredient(int removeDish);
     int getNumIngredients(int currentDish);
+
+    int checkBurger(int currentDish);
 
 private:
     int ingredients[NUM_DISHES][DISHES_MAXINGREDIENTS];

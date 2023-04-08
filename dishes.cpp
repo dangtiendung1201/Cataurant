@@ -87,3 +87,26 @@ int Dishes::getNumIngredients(int currentDish)
 {
     return numIngredients[currentDish];
 }
+
+int Dishes::checkBurger(int currentDish)
+{
+    for (int i = 0; i < NUM_CUSTOMERS; i++)
+    {
+        int num = customer[i].getNumRequests();
+        if (num != numIngredients[currentDish])
+            continue;
+        int *list = customer[i].getRequestList();
+        bool done = true;
+        for (int j = 0; j < num; j++)
+        {
+            if (list[j] != ingredients[currentDish][j])
+            {
+                done = false;
+                break;
+            }
+        }
+        if (done)
+            return i;
+    }
+    return -1;
+}

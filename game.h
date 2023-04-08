@@ -16,6 +16,9 @@
 #include "customer.h"
 #include "dishes.h"
 #include "ingredients.h"
+#include "ultils.h"
+
+extern TTF_Font *scoreFont;
 
 bool init();
 

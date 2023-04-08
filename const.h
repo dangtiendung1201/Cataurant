@@ -75,6 +75,9 @@ const int VERSION_POSY = 10;
 const int VERSION_SIZE = 25;
 const int VERSION_WIDTH = 100;
 const int VERSION_HEIGHT = 50;
+const int SCORE_POSX = 10;
+const int SCORE_POSY = 10;
+const int SCORE_SIZE = 25;
 
 const int SOUND_POSX = 10;
 const int SOUND_POSY = 10;
