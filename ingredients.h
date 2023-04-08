@@ -7,20 +7,20 @@
 class Ingredients
 {
 public:
-    Ingredients();
-    // ~Ingredients();
+	Ingredients();
+	// ~Ingredients();
 
-    void render(SDL_Renderer *renderer, int posX, int posY, int reduceSize = 1);
-    void loadTexture(SDL_Renderer *renderer);
-    void free();
+	void render(SDL_Renderer *renderer, int posX, int posY, int reduceSize = 1);
+	void loadTexture(SDL_Renderer *renderer);
+	void free();
 
-    void setType(int type);
+	void setType(int type);
 
-    int getType();
+	int getType();
 
 private:
-    int type;
-    Texture texture;
+	int type;
+	Texture texture;
 };
 
 extern Ingredients up_bread, lettuce, beef, tomato, down_bread;

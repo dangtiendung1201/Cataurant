@@ -11,6 +11,7 @@ public:
 
 	bool isMouseInside(const int x, const int y) const;
 	void changeColor(const SDL_Color &color);
+
 private:
 	SDL_Point position;
 };

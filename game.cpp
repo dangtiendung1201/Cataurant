@@ -6,7 +6,7 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 
 // Declearation
-TTF_Font *menuFont,			  // Menu font
+TTF_Font *menuFont,						  // Menu font
 	*titleFont, *versionFont, *scoreFont; // Title font
 
 Texture title, version; // Title texture

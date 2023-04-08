@@ -2,12 +2,12 @@
 
 int main(int argc, char *argv[])
 {
-    srand(time(NULL));
-    
-    init();
+	srand(time(NULL));
 
-    menu();
+	init();
 
-    quit();
-    return 0;
+	menu();
+
+	quit();
+	return 0;
 }

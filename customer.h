@@ -10,26 +10,29 @@
 class Customer
 {
 public:
-    Customer();
+	Customer();
 
-    void init();
+	void init();
+	void reset();
 
-    void renderBar(SDL_Renderer *renderer);
+	void renderBar(SDL_Renderer *renderer);
 
-    void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
+	void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
 
-    void render(SDL_Renderer *renderer, int position);
+	void render(SDL_Renderer *renderer, int position);
 
-    void getRequest();
-    void renderRequest(SDL_Renderer *renderer, int position);
-    void renderCharacter(SDL_Renderer *renderer);
-    
-    int getNumRequests();
-    int *getRequestList();
+	void getRequest();
+	void renderRequest(SDL_Renderer *renderer, int position);
+	void renderCharacter(SDL_Renderer *renderer);
+	
+	int getNumRequests();
+	int *getRequestList();
+
+	void setStatus(int curStatus);
 
 private:
-    int posX, posY, cur, status, type, request[CUSTOMER_MAXREQUESTS], numRequests;
-    float waitingTime;
+	int posX, posY, cur, status, type, request[CUSTOMER_MAXREQUESTS], numRequests;
+	float waitingTime;
 };
 
 extern Texture fox, wolf, talkBubble;

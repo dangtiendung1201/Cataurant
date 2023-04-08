@@ -9,26 +9,27 @@
 class Dishes
 {
 public:
-    Dishes();
-    // ~Dishes();
+	Dishes();
+	// ~Dishes();
 
-    void loadTexture(SDL_Renderer *renderer);
+	void loadTexture(SDL_Renderer *renderer);
 
-    void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
+	void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
 
-    void render(SDL_Renderer *renderer);
+	void render(SDL_Renderer *renderer);
 
-    void init();
+	void init();
 
-    void addIngredient(int addDish, int addIngredient);
-    int removeIngredient(int removeDish);
-    int getNumIngredients(int currentDish);
+	void addIngredient(int addDish, int addIngredient);
+	int removeIngredient(int removeDish);
+	int getNumIngredients(int currentDish);
 
-    int checkBurger(int currentDish);
+	void reset(int currentDish);
+	int checkBurger(int currentDish);
 
 private:
-    int ingredients[NUM_DISHES][DISHES_MAXINGREDIENTS];
-    int numIngredients[NUM_DISHES];
+	int ingredients[NUM_DISHES][DISHES_MAXINGREDIENTS];
+	int numIngredients[NUM_DISHES];
 };
 
 extern Dishes dish;

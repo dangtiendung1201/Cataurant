@@ -13,32 +13,32 @@
 class Seller
 {
 public:
-    Seller();
+	Seller();
 
-    void loadTexture(SDL_Renderer *renderer);
+	void loadTexture(SDL_Renderer *renderer);
 
-    void handleEvent(SDL_Renderer *renderer, SDL_Event &event);
+	void handleEvent(SDL_Renderer *renderer, SDL_Event &event);
 
-    void move(SDL_Renderer *renderer);
+	void move(SDL_Renderer *renderer);
 
-    void render(SDL_Renderer *renderer);
+	void render(SDL_Renderer *renderer);
 
-    void init();
+	void init();
 
-    void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
+	void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
 
-    void renderDeque(SDL_Renderer *renderer);
+	void renderDeque(SDL_Renderer *renderer);
 
-    int getDishPosition();
+	int getDishPosition();
 
-    int removeBottomIngredient();
-    void addBottomIngredient(int addIngredient);
-    void addTopIngredient();
+	int removeBottomIngredient();
+	void addBottomIngredient(int addIngredient);
+	void addTopIngredient();
 
 private:
-    int posX, posY, cur, position;
-    int status;
-    Texture goRight, goLeft, stand;
-    int ingredients[SELLER_MAXINGREDIENTS];
+	int posX, posY, cur, position;
+	int status;
+	Texture goRight, goLeft, stand;
+	int ingredients[SELLER_MAXINGREDIENTS];
 };
 #endif

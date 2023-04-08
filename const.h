@@ -14,51 +14,51 @@ const int DELAY_TIME = 1000 / FPS;
 // State
 enum State
 {
-    MENU = 0,
-    PLAY = 1,
-    HELP = 2,
-    QUIT = 3
+	MENU = 0,
+	PLAY = 1,
+	HELP = 2,
+	QUIT = 3
 };
 
 enum binaryState
 {
-    ON = 1,
-    OFF = 0
+	ON = 1,
+	OFF = 0
 };
 
 enum customerType
 {
-    GHOST = 0,
-    FOX = 1,
-    WOLF = 2
+	GHOST = 0,
+	FOX = 1,
+	WOLF = 2
 };
 
 enum customerStatus
 {
-    OUTBOUND = 0,
-    RUNNING = 1,
-    WAITING = 2,
-    SERVED = 3,
-    LEAVING = 4
+	OUTBOUND = 0,
+	RUNNING = 1,
+	WAITING = 2,
+	SERVED = 3,
+	LEAVING = 4
 };
 
 enum sellerStatus
 {
-    IDLE = 0,
-    GO_UP = 1,
-    GO_DOWN = 2,
-    GO_LEFT = 3,
-    GO_RIGHT = 4
+	IDLE = 0,
+	GO_UP = 1,
+	GO_DOWN = 2,
+	GO_LEFT = 3,
+	GO_RIGHT = 4
 };
 
 enum ingredientType
 {
-    NOTHING = 0,
-    UP_BREAD = 1,
-    LETTUCE = 2,
-    BEEF = 3,
-    TOMATO = 4,
-    DOWN_BREAD = 5
+	NOTHING = 0,
+	UP_BREAD = 1,
+	LETTUCE = 2,
+	BEEF = 3,
+	TOMATO = 4,
+	DOWN_BREAD = 5
 };
 
 // Menu
