@@ -2,4 +2,4 @@
 .vscode/
 *.rc
 *.res
-.bin/
+bin/
