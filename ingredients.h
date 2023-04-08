@@ -1,8 +1,6 @@
 #ifndef _INGREDIENTS_H
 #define _INGREDIENTS_H
 
-#include <SDL.h>
-#include <SDL_image.h>
 #include "const.h"
 #include "texture.h"
 
@@ -12,7 +10,7 @@ public:
     Ingredients();
     // ~Ingredients();
 
-    void render(SDL_Renderer *renderer, int posX, int posY);
+    void render(SDL_Renderer *renderer, int posX, int posY, int reduceSize = 1);
     void loadTexture(SDL_Renderer *renderer);
     void free();
 

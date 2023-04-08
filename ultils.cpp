@@ -2,5 +2,5 @@
 
 int random(int min, int max)
 {
-    return min + rand() % (max - min + 1);
+    return min + (rand() % static_cast<int>(max - min + 1));
 }

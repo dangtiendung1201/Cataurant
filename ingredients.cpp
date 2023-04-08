@@ -36,9 +36,9 @@ void Ingredients::loadTexture(SDL_Renderer *renderer)
         break;
     }
 }
-void Ingredients::render(SDL_Renderer *renderer, int posX, int posY)
+void Ingredients::render(SDL_Renderer *renderer, int posX, int posY, int reduceSize)
 {
-    texture.render(renderer, posX, posY, texture.getWidth(), texture.getHeight(), NULL);
+    texture.render(renderer, posX, posY, texture.getWidth() / reduceSize, texture.getHeight() / reduceSize, NULL);
 }
 
 void Ingredients::setType(int type)

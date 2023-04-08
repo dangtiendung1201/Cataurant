@@ -1,9 +1,11 @@
 #ifndef _CUSTOMER_H
 #define _CUSTOMER_H
 
+#include <iostream>
 #include "const.h"
 #include "texture.h"
 #include "ultils.h"
+#include  "ingredients.h"
 
 class Customer
 {
@@ -14,9 +16,13 @@ public:
 
     void renderBar(SDL_Renderer *renderer);
 
+    void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
+
     void render(SDL_Renderer *renderer, int position);
 
-    // void renderRequest(SDL_Renderer *renderer);
+    void getRequest();
+    void renderRequest(SDL_Renderer *renderer, int position);
+    void renderCharacter(SDL_Renderer *renderer);
     
 
 private:
@@ -24,7 +30,7 @@ private:
     float waitingTime;
 };
 
-extern Texture fox, wolf;
+extern Texture fox, wolf, talkBubble;
 extern SDL_Rect customerRect[CUSTOMER_MOTION_RECTANGLE];
 
 #endif

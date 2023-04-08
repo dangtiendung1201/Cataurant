@@ -30,6 +30,7 @@ SDL_Rect customerRect[CUSTOMER_MOTION_RECTANGLE];
 Dishes dish;
 
 Ingredients up_bread, lettuce, beef, tomato, down_bread;
+Texture talkBubble;
 
 void loadFont(TTF_Font *&font, const char *path, const int size)
 {
@@ -169,6 +170,8 @@ bool init()
 		customerRect[i].h = 134;
 	}
 
+	loadImage(talkBubble, "assets/images/customer/talk_bubble.png");
+
 	// Load texts
 	title.loadFromRenderedText(renderer, "Cataurant", ORANGE, titleFont);
 	version.loadFromRenderedText(renderer, "VERSION: 1.0", BLACK, versionFont);
@@ -192,12 +195,6 @@ void game()
 	{
 		customer[i].init();
 	}
-
-	// for (int i = 0; i < 5; i++)
-	// {
-	// 	customer[i].loadTexture(renderer, i % 2);
-	// 	customer[i].setMotion();
-	// }
 
 	SDL_Event event;
 	bool quit = false;
