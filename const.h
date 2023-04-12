@@ -4,7 +4,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-// Screen size
+// Screen size fefw
 const int SCREEN_WIDTH = 1366;
 const int SCREEN_HEIGHT = 768;
 
