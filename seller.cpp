@@ -103,7 +103,17 @@ void Seller::move(SDL_Renderer *renderer)
 			addBottomIngredient(dish.removeIngredient(getDishPosition()));
 		break;
 	case GO_DOWN:
-		if (2 <= position && position <= 6)
+		if (position == 0)
+		{
+			if (hungrycat.getEating() == false)
+			{
+				hungrycat.setType(removeBottomIngredient());
+				hungrycat.setEating();
+				addTopIngredient();
+				std::cout << "Hungry cat ate your burger" << std::endl;
+			}
+		}
+		else if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) < DISHES_MAXINGREDIENTS)
 		{
 			dish.addIngredient(getDishPosition(), removeBottomIngredient());
 			addTopIngredient();

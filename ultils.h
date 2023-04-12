@@ -1,11 +1,10 @@
 #ifndef _ULTILS_H
 #define _ULTILS_H
 
-#include <iostream>
 #include <string>
 #include <stdlib.h>
-#include "texture.h"
 #include "game.h"
+#include "texture.h"
 #include "const.h"
 
 extern int score;

@@ -16,6 +16,7 @@
 #include "customer.h"
 #include "dishes.h"
 #include "ingredients.h"
+#include "hungrycat.h"
 #include "ultils.h"
 
 extern TTF_Font *scoreFont;

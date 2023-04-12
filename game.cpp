@@ -32,6 +32,8 @@ Dishes dish;
 Ingredients up_bread, lettuce, beef, tomato, down_bread;
 Texture talkBubble;
 
+Hungrycat hungrycat;
+
 int score;
 
 void loadFont(TTF_Font *&font, const char *path, const int size)
@@ -240,6 +242,10 @@ void game()
 		seller.renderDeque(renderer);
 		dish.render(renderer);
 		showScore(renderer);
+		if (hungrycat.getEating() == true)
+		{
+			hungrycat.eat(renderer, 1.0 * HUNGRYCAT_START_POSX, 1.0 * HUNGRYCAT_START_POSY, 1.0 * HUNGRYCAT_END_POSX, 1.0 * HUNGRYCAT_END_POSY);
+		}
 		// Update screen
 		SDL_RenderPresent(renderer);
 		// Frame rate

@@ -3,3 +3,5 @@
 *.rc
 *.res
 bin/
+Release/
+Makefile
