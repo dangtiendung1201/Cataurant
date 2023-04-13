@@ -1,9 +1,11 @@
 #ifndef _UI_H
 #define _UI_H
 
+// C++ libraries
+#include <iostream>
+// SDL libraries
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include <iostream>
 
 class UserInterface
 {

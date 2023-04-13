@@ -1,18 +1,17 @@
 #include "ingredients.h"
 
+// Constructor and destructor
 Ingredients::Ingredients()
 {
 	type = NOTHING;
 }
-// ~Ingredients::Ingredients()
-// {
-//     free();
-// }
-void Ingredients::free()
+
+Ingredients::~Ingredients()
 {
 	texture.free();
 }
 
+// Load
 void Ingredients::loadTexture(SDL_Renderer *renderer)
 {
 	switch (type)
@@ -36,17 +35,21 @@ void Ingredients::loadTexture(SDL_Renderer *renderer)
 		break;
 	}
 }
-void Ingredients::render(SDL_Renderer *renderer, int posX, int posY, int reduceSize)
+
+// Get
+int Ingredients::getType()
 {
-	texture.render(renderer, posX, posY, texture.getWidth() / reduceSize, texture.getHeight() / reduceSize, NULL);
+	return type;
 }
 
-void Ingredients::setType(int type)
+// Set
+void Ingredients::setType(const int &type)
 {
 	this->type = type;
 }
 
-int Ingredients::getType()
+// Render
+void Ingredients::render(SDL_Renderer *renderer, const int &posX, const int &posY, const int &reduceSize)
 {
-	return type;
+	texture.render(renderer, posX, posY, texture.getWidth() / reduceSize, texture.getHeight() / reduceSize, NULL);
 }

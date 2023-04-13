@@ -1,22 +1,28 @@
 #ifndef _INGREDIENTS_H
 #define _INGREDIENTS_H
 
+// My libraries
 #include "const.h"
 #include "texture.h"
 
 class Ingredients
 {
 public:
+	// Constructor and destructor
 	Ingredients();
-	// ~Ingredients();
+	~Ingredients();
 
-	void render(SDL_Renderer *renderer, int posX, int posY, int reduceSize = 1);
+	// Load
 	void loadTexture(SDL_Renderer *renderer);
-	void free();
 
-	void setType(int type);
-
+	// Get
 	int getType();
+
+	// Set
+	void setType(const int &type);
+
+	// Render
+	void render(SDL_Renderer *renderer, const int &posX, const int &posY, const int &reduceSize = 1);
 
 private:
 	int type;

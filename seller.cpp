@@ -1,5 +1,6 @@
 #include "seller.h"
 
+// Constructor and destructor
 Seller::Seller()
 {
 	posX = SELLER_STARTX;
@@ -7,7 +8,20 @@ Seller::Seller()
 	position = SELLER_START_POSITION;
 	status = IDLE;
 }
+Seller::~Seller()
+{
+}
 
+// Init and reset
+void Seller::init()
+{
+	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
+	{
+		ingredients[i] = random(2, 5);
+	}
+}
+
+// Load
 void Seller::loadTexture(SDL_Renderer *renderer)
 {
 	goRight.loadFromFile(renderer, "assets/images/seller/sellerRight.png");
@@ -15,129 +29,7 @@ void Seller::loadTexture(SDL_Renderer *renderer)
 	stand.loadFromFile(renderer, "assets/images/seller/sellerStand.png");
 }
 
-void Seller::init()
-{
-	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
-	{
-		ingredients[i] = random(2, 5);
-		std::cout << ingredients[i] << " ";
-	}
-}
-
-void Seller::addTopIngredient()
-{
-	ingredients[SELLER_MAXINGREDIENTS - 1] = random(2, 5);
-}
-
-void Seller::addBottomIngredient(int addIngredient)
-{
-	for (int i = SELLER_MAXINGREDIENTS - 1; i > 0; i--)
-	{
-		ingredients[i] = ingredients[i - 1];
-	}
-	ingredients[0] = addIngredient;
-}
-
-int Seller::removeBottomIngredient()
-{
-	int removeIngredient = ingredients[0];
-	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
-	{
-		ingredients[i] = ingredients[i + 1];
-	}
-	return removeIngredient;
-}
-
-void Seller::renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type)
-{
-	switch (type)
-	{
-	case UP_BREAD:
-		up_bread.render(renderer, posX, posY);
-		break;
-	case LETTUCE:
-		lettuce.render(renderer, posX, posY);
-		break;
-	case BEEF:
-		beef.render(renderer, posX, posY);
-		break;
-	case TOMATO:
-		tomato.render(renderer, posX, posY);
-		break;
-	case DOWN_BREAD:
-		down_bread.render(renderer, posX, posY);
-		break;
-	default:
-		break;
-	}
-}
-
-void Seller::renderDeque(SDL_Renderer *renderer)
-{
-	for (int i = 0; i < SELLER_MAXINGREDIENTS_RENDER; i++)
-	{
-		renderIngredients(renderer, INGREDIENTS_STARTX[position], INGREDIENTS_STARTY - INGREDIENTS_DISTANCE * i, ingredients[i]);
-	}
-}
-
-int Seller::getDishPosition()
-{
-	if (position == 2)
-		return 0;
-	if (position == 3)
-		return 1;
-	if (position == 4)
-		return 2;
-	if (position == 5)
-		return 3;
-	if (position == 6)
-		return 4;
-}
-
-void Seller::move(SDL_Renderer *renderer)
-{
-	switch (status)
-	{
-	case GO_UP:
-		if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) > 1)
-			addBottomIngredient(dish.removeIngredient(getDishPosition()));
-		break;
-	case GO_DOWN:
-		if (position == 0)
-		{
-			if (hungrycat.getEating() == false)
-			{
-				hungrycat.setType(removeBottomIngredient());
-				hungrycat.setEating();
-				addTopIngredient();
-				std::cout << "Hungry cat ate your burger" << std::endl;
-			}
-		}
-		else if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) < DISHES_MAXINGREDIENTS)
-		{
-			dish.addIngredient(getDishPosition(), removeBottomIngredient());
-			addTopIngredient();
-			if (dish.checkBurger(getDishPosition()) >= 0)
-				score++;
-		}
-		break;
-	case GO_LEFT:
-		if (posX - SELLER_VEL > 0)
-		{
-			posX -= SELLER_VEL;
-			position--;
-		}
-		break;
-	case GO_RIGHT:
-		if (posX + SELLER_VEL < SCREEN_WIDTH - goRight.getWidth() / 4)
-		{
-			posX += SELLER_VEL;
-			position++;
-		}
-		break;
-	}
-}
-
+// Handle event
 void Seller::handleEvent(SDL_Renderer *renderer, SDL_Event &event)
 {
 	if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
@@ -157,7 +49,7 @@ void Seller::handleEvent(SDL_Renderer *renderer, SDL_Event &event)
 			status = GO_RIGHT;
 			break;
 		}
-		move(renderer);
+		move();
 	}
 	else if (event.type == SDL_KEYUP)
 	{
@@ -179,14 +71,22 @@ void Seller::handleEvent(SDL_Renderer *renderer, SDL_Event &event)
 	}
 }
 
-// void Seller::renderIngredients(SDL_Renderer *renderer)
-// {
-//     for (int i = 0; i < SELLER_MAXINGREDIENTS_RENDER; i++)
-//     {
-//         ingredients[i].render(renderer);
-//     }
-// }
+// Get
+int Seller::getDishPosition()
+{
+	if (position == 2)
+		return 0;
+	if (position == 3)
+		return 1;
+	if (position == 4)
+		return 2;
+	if (position == 5)
+		return 3;
+	if (position == 6)
+		return 4;
+}
 
+// Render
 void Seller::render(SDL_Renderer *renderer)
 {
 	if (status == GO_LEFT)
@@ -220,5 +120,104 @@ void Seller::render(SDL_Renderer *renderer)
 	{
 		stand.render(renderer, posX, posY, stand.getWidth() / 3, stand.getHeight() / 3, NULL);
 	}
-	// std::cout << position << std::endl;
+}
+
+void Seller::renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type)
+{
+	switch (type)
+	{
+	case UP_BREAD:
+		up_bread.render(renderer, posX, posY);
+		break;
+	case LETTUCE:
+		lettuce.render(renderer, posX, posY);
+		break;
+	case BEEF:
+		beef.render(renderer, posX, posY);
+		break;
+	case TOMATO:
+		tomato.render(renderer, posX, posY);
+		break;
+	case DOWN_BREAD:
+		down_bread.render(renderer, posX, posY);
+		break;
+	default:
+		break;
+	}
+}
+
+void Seller::renderDeque(SDL_Renderer *renderer)
+{
+	for (int i = 0; i < SELLER_MAXINGREDIENTS_RENDER; i++)
+	{
+		renderIngredients(renderer, INGREDIENTS_STARTX[position], INGREDIENTS_STARTY - INGREDIENTS_DISTANCE * i, ingredients[i]);
+	}
+}
+
+// Logic
+void Seller::addBottomIngredient(const int &addIngredient)
+{
+	for (int i = SELLER_MAXINGREDIENTS - 1; i > 0; i--)
+	{
+		ingredients[i] = ingredients[i - 1];
+	}
+	ingredients[0] = addIngredient;
+}
+
+int Seller::removeBottomIngredient()
+{
+	int removeIngredient = ingredients[0];
+	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
+	{
+		ingredients[i] = ingredients[i + 1];
+	}
+	return removeIngredient;
+}
+
+void Seller::addTopIngredient()
+{
+	ingredients[SELLER_MAXINGREDIENTS - 1] = random(2, 5);
+}
+
+void Seller::move()
+{
+	switch (status)
+	{
+	case GO_UP:
+		if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) > 1)
+			addBottomIngredient(dish.removeIngredient(getDishPosition()));
+		break;
+	case GO_DOWN:
+		if (position == 0)
+		{
+			if (hungrycat.getEating() == false)
+			{
+				hungrycat.setType(removeBottomIngredient());
+				hungrycat.setEating();
+				addTopIngredient();
+			}
+		}
+		else if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) < DISHES_MAXINGREDIENTS)
+		{
+			dish.addIngredient(getDishPosition(), removeBottomIngredient());
+			addTopIngredient();
+			if (dish.checkBurger(getDishPosition()) >= 0)
+				score++;
+		}
+		break;
+	case GO_LEFT:
+		if (posX - SELLER_STEP > 0)
+		{
+			posX -= SELLER_STEP;
+			position--;
+		}
+		break;
+	case GO_RIGHT:
+		if (posX + SELLER_STEP < SCREEN_WIDTH - goRight.getWidth() / 4)
+		{
+			posX += SELLER_STEP;
+			position++;
+		}
+		break;
+	}
 }

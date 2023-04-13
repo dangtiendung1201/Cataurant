@@ -5,7 +5,7 @@ Button::Button(const SDL_Rect &rect, const SDL_Color &color, TTF_Font *const fon
 {
 }
 
-bool Button::isMouseInside(const int x, const int y) const
+bool Button::isMouseInside(const int &x, const int &y) const
 {
 	// Assume mouse is inside tile
 	bool inside = true;

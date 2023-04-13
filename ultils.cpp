@@ -2,9 +2,9 @@
 
 Texture scoreTexture;
 
-int random(int min, int max)
+int random(const int &min, const int &max)
 {
-	return min + (rand() % static_cast<int>(max - min + 1));
+	return rand() % (max - min + 1) + min;
 }
 
 void showScore(SDL_Renderer *renderer)

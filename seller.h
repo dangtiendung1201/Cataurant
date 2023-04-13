@@ -1,9 +1,12 @@
 #ifndef _SELLER_H
 #define _SELLER_H
 
+// C++ libraries
 #include <iostream>
+// SDL libraries
 #include <SDL.h>
 #include <SDL_image.h>
+// My libraries
 #include "const.h"
 #include "texture.h"
 #include "ingredients.h"
@@ -13,27 +16,34 @@
 class Seller
 {
 public:
+	// Constructor and destructor
 	Seller();
+	~Seller();
 
-	void loadTexture(SDL_Renderer *renderer);
-
-	void handleEvent(SDL_Renderer *renderer, SDL_Event &event);
-
-	void move(SDL_Renderer *renderer);
-
-	void render(SDL_Renderer *renderer);
-
+	// Init and reset
 	void init();
 
-	void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
+	// Load
+	void loadTexture(SDL_Renderer *renderer);
 
-	void renderDeque(SDL_Renderer *renderer);
+	// Handle event
+	void handleEvent(SDL_Renderer *renderer, SDL_Event &event);
 
+	// Get
 	int getDishPosition();
 
+	// Render
+	void render(SDL_Renderer *renderer);
+	void renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type);
+	void renderDeque(SDL_Renderer *renderer);
+
+	// Logic
+	void addBottomIngredient(const int &addIngredient);
 	int removeBottomIngredient();
-	void addBottomIngredient(int addIngredient);
+
 	void addTopIngredient();
+
+	void move();
 
 private:
 	int posX, posY, cur, position;
