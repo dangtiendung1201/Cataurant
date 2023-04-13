@@ -113,7 +113,6 @@ void Seller::render(SDL_Renderer *renderer)
 	}
 	else if (status == GO_DOWN)
 	{
-
 		stand.render(renderer, posX, posY, stand.getWidth() / 3, stand.getHeight() / 3, NULL);
 	}
 	else if (status == IDLE)

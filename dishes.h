@@ -17,9 +17,6 @@ public:
 	void init();
 	void reset(const int &currentDish);
 
-	// Load
-	void loadTexture(SDL_Renderer *renderer);
-
 	// Get
 	int getNumIngredients(const int &currentDish);
 

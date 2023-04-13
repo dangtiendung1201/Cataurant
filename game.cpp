@@ -199,7 +199,6 @@ void game()
 	seller.loadTexture(renderer);
 	seller.init();
 
-	dish.loadTexture(renderer);
 	dish.init();
 
 	for (int i = 0; i < NUM_CUSTOMERS; i++)
@@ -212,6 +211,7 @@ void game()
 	while (!quit)
 	{
 		frameStart = SDL_GetTicks();
+
 		// Handle events on queue
 		while (SDL_PollEvent(&event) != 0)
 		{
@@ -233,7 +233,6 @@ void game()
 		// render seller equivalent to stand and dishes
 		seller.render(renderer);
 
-		// seller.render(renderer, SCREEN_WIDTH / 2 - seller.getWidth() / 2, SCREEN_HEIGHT / 2 - seller.getHeight() / 2, seller.getWidth() / 2, seller.getHeight() / 2);
 		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight(), NULL);
 
 		// render customers

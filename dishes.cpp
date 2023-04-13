@@ -43,25 +43,6 @@ void Dishes::reset(const int &currentDish)
 	ingredients[currentDish][0] = UP_BREAD;
 }
 
-// Load
-void Dishes::loadTexture(SDL_Renderer *renderer)
-{
-	up_bread.setType(UP_BREAD);
-	up_bread.loadTexture(renderer);
-
-	lettuce.setType(LETTUCE);
-	lettuce.loadTexture(renderer);
-
-	beef.setType(BEEF);
-	beef.loadTexture(renderer);
-
-	tomato.setType(TOMATO);
-	tomato.loadTexture(renderer);
-
-	down_bread.setType(DOWN_BREAD);
-	down_bread.loadTexture(renderer);
-}
-
 // Get
 int Dishes::getNumIngredients(const int &currentDish)
 {
