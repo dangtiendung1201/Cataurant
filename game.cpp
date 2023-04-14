@@ -282,8 +282,8 @@ void menu()
 	Button musicButton(musicRect, TRANSPARENT, menuFont, TRANSPARENT);
 	Button soundButton(soundRect, TRANSPARENT, menuFont, TRANSPARENT);
 
-	musicButton.loadTexture(renderer, "");
-	soundButton.loadTexture(renderer, "");
+	musicButton.loadTexture(renderer, " ");
+	soundButton.loadTexture(renderer, " ");
 
 	// Main loop
 	SDL_Event event;
