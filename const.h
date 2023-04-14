@@ -1,18 +1,21 @@
 #ifndef _CONST_H
 #define _CONST_H
 
+// SDL LIBRARIES
 #include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
+
+// WINDOWS VARIABLES
 // Screen size
 const int SCREEN_WIDTH = 1366;
 const int SCREEN_HEIGHT = 768;
 
+// Frane rate
 const int FPS = 60;
 const int DELAY_TIME = 1000 / FPS;
 
-// State
-enum State
+// MENU VARIABLES
+// Game state
+enum gameState
 {
 	MENU = 0,
 	PLAY = 1,
@@ -20,65 +23,25 @@ enum State
 	QUIT = 3
 };
 
-enum binaryState
-{
-	ON = 1,
-	OFF = 0
-};
-
-enum customerType
-{
-	GHOST = 0,
-	FOX = 1,
-	WOLF = 2
-};
-
-enum customerStatus
-{
-	OUTBOUND = 0,
-	RUNNING = 1,
-	WAITING = 2,
-	SERVED = 3,
-	LEAVING = 4
-};
-
-enum sellerStatus
-{
-	IDLE = 0,
-	GO_UP = 1,
-	GO_DOWN = 2,
-	GO_LEFT = 3,
-	GO_RIGHT = 4
-};
-
-enum ingredientType
-{
-	NOTHING = 0,
-	UP_BREAD = 1,
-	LETTUCE = 2,
-	BEEF = 3,
-	TOMATO = 4,
-	DOWN_BREAD = 5
-};
-
-// Menu
-const int NUM_BUTTONS = 3; // Number of buttons
+// Buttons
+const int NUM_BUTTONS = 3;
 const int BUTTON_WIDTH = 150;
 const int BUTTON_HEIGHT = 75;
+
+// Fonts
 const int MENU_SIZE = 45;
 
 const int TITLE_WIDTH = 500;
 const int TITLE_HEIGHT = 100;
 const int TITLE_SIZE = 250;
+
 const int VERSION_POSX = SCREEN_WIDTH - 10;
 const int VERSION_POSY = 10;
 const int VERSION_SIZE = 25;
 const int VERSION_WIDTH = 100;
 const int VERSION_HEIGHT = 50;
-const int SCORE_POSX = 10;
-const int SCORE_POSY = 10;
-const int SCORE_SIZE = 25;
 
+// Icons
 const int SOUND_POSX = 10;
 const int SOUND_POSY = 10;
 
@@ -91,49 +54,127 @@ const int SOUND_HEIGHT = 30;
 const int MUSIC_WIDTH = 30;
 const int MUSIC_HEIGHT = 30;
 
-// Game
-const int NUM_DISHES = 5;
-const int NUM_INGREDIENTS = 5;
-const int SELLER_STARTX = 475;
-const int SELLER_STARTY = 350;
-const int SELLER_VEL = 125;
-const int SELLER_START_POSITION = 3;
-const int SELLER_MAXINGREDIENTS_RENDER = 8;
-const int SELLER_MAXINGREDIENTS = 20;
+// Button state: Music, Sound
+enum binaryState
+{
+	ON = 1,
+	OFF = 0
+};
 
+// GAME VARIABLES
+// Score
+const int SCORE_POSX = 10;
+const int SCORE_POSY = 10;
+const int SCORE_SIZE = 25;
+
+// CUSTOMER VARIABLES
 const int NUM_CUSTOMERS = 5;
-const int CUSTOMER_MOTION_RECTANGLE = 9;
-const int CUSTOMER_MAXREQUESTS = 10;
+
+// Customer position
 const int CUSTOMER_STARTX = 1400;
 const int CUSTOMER_STARTY = 625;
 const int CUSTOMER_WAITX[] = {350, 550, 750, 950, 1150};
 const int CUSTOMER_VELOCITY = 5;
-const int CUSTOMER_BAR_WIDTH = 100;
-const int CUSTOMER_BAR_HEIGHT = 10;
-const float CUSTOMER_MAXWAITINGTIME = 100;
+
+// Customer motion
+const int CUSTOMER_MOTION_RECTANGLE = 9;
+
+// Customer's requests
+const int CUSTOMER_MAXREQUESTS = 10;
+
 const int CUSTOMER_REQUESTS_POSX[] = {475, 675, 875, 1075, 1275};
 const int CUSTOMER_REQUESTS_POSY = 625;
+
 const int CUSTOMER_BUBBLE_POSX[] = {475, 675, 875, 1075, 1275};
 const int CUSTOMER_BUBBLE_POSY = 700;
-const int CUSTOMER_REQUESTS_DISTANCE = 10;
 const int CUSTOMER_BUBBLE_WIDTH = 65;
 const int CUSTOMER_BUBBLE_DISTANCE = 20;
 
+const int CUSTOMER_REQUESTS_DISTANCE = 10;
+
+// Customer's waiting state
+const int CUSTOMER_BAR_WIDTH = 100;
+const int CUSTOMER_BAR_HEIGHT = 10;
+
+const float CUSTOMER_MAXWAITINGTIME = 100;
+
+// Customer type
+enum customerType
+{
+	GHOST = 0,
+	FOX = 1,
+	WOLF = 2
+};
+
+// Customer status
+enum customerStatus
+{
+	OUTBOUND = 0,
+	RUNNING = 1,
+	WAITING = 2,
+	SERVED = 3,
+	LEAVING = 4
+};
+
+// SELLER VARIABLES
+// Seller status
+enum sellerStatus
+{
+	IDLE = 0,
+	GO_UP = 1,
+	GO_DOWN = 2,
+	GO_LEFT = 3,
+	GO_RIGHT = 4
+};
+
+// Seller position
+const int SELLER_STARTX = 475;
+const int SELLER_STARTY = 350;
+const int SELLER_STEP = 125;
+const int SELLER_START_POSITION = 3;
+
+// Seller's ingredients
+const int SELLER_MAXINGREDIENTS_RENDER = 8;
+const int SELLER_MAXINGREDIENTS = 20;
+
+// INGREDIENT VARIABLES
+const int NUM_INGREDIENTS = 5;
+
+// Ingredient type
+enum ingredientType
+{
+	NOTHING = 0,
+	UP_BREAD = 1,
+	LETTUCE = 2,
+	BEEF = 3,
+	TOMATO = 4,
+	DOWN_BREAD = 5
+};
+
+// Ingredient position
 const int INGREDIENTS_DISTANCE = 20;
+
 const int INGREDIENTS_STARTX[] = {125, 250, 375, 500, 625, 750, 875, 1000, 1125};
 const int INGREDIENTS_STARTY = SELLER_STARTY - 200;
 
+// DISHES VARIABLES
+const int NUM_DISHES = 5;
+
+// Dishes position
 const int DISHES_POSX[] = {375, 500, 625, 750, 875};
 const int DISHES_POSY = 400;
+
 const int DISHES_MAXINGREDIENTS = 20;
 
-const int HUNGRYCAT_SPEED = 10;
+// HUNGRY CAT VARIABLES
+// Hungry cat position
 const int HUNGRYCAT_START_POSX = 100;
 const int HUNGRYCAT_START_POSY = 600;
+
 const int HUNGRYCAT_END_POSX = INGREDIENTS_STARTX[0];
 const int HUNGRYCAT_END_POSY = INGREDIENTS_STARTY;
 
-// Color
+// COLORS
 const SDL_Color WHITE = {255, 255, 255, 255};
 const SDL_Color BLACK = {0, 0, 0, 255};
 const SDL_Color YELLOW = {255, 255, 0, 255};

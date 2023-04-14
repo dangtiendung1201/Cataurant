@@ -1,31 +1,35 @@
 #ifndef _DISHES_H
 #define _DISHES_H
 
+// My libraries
 #include "ingredients.h"
 #include "customer.h"
 #include "const.h"
-#include <string>
 
 class Dishes
 {
 public:
+	// Constructor and destructor
 	Dishes();
-	// ~Dishes();
+	~Dishes();
 
-	void loadTexture(SDL_Renderer *renderer);
+	// Init and reset
+	void init();
+	void reset(const int &currentDish);
 
-	void renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type);
+	// Get
+	int getNumIngredients(const int &currentDish);
 
+	// Render
 	void render(SDL_Renderer *renderer);
 
-	void init();
+	void renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type);
 
-	void addIngredient(int addDish, int addIngredient);
-	int removeIngredient(int removeDish);
-	int getNumIngredients(int currentDish);
-
-	void reset(int currentDish);
-	int checkBurger(int currentDish);
+	// Logic
+	void addIngredient(const int &addDish, const int &addIngredient);
+	int removeIngredient(const int &removeDish);
+	
+	int checkBurger(const int &currentDish);
 
 private:
 	int ingredients[NUM_DISHES][DISHES_MAXINGREDIENTS];

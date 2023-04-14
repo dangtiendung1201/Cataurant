@@ -36,7 +36,7 @@ Hungrycat hungrycat;
 
 int score;
 
-void loadFont(TTF_Font *&font, const char *path, const int size)
+void loadFont(TTF_Font *&font, const char *path, const int &size)
 {
 	font = TTF_OpenFont(path, size);
 	if (font == nullptr)
@@ -135,6 +135,11 @@ bool init()
 		success = false;
 	}
 
+	return success;
+}
+
+void load()
+{
 	// Load music
 	loadMusic(music, "assets/sounds/music.wav");
 	loadSound(sound, "assets/sounds/sound.wav");
@@ -182,8 +187,6 @@ bool init()
 	version.loadFromRenderedText(renderer, "VERSION: 1.0", BLACK, versionFont);
 
 	Mix_PlayMusic(music, -1);
-
-	return success;
 }
 
 void game()
@@ -196,7 +199,6 @@ void game()
 	seller.loadTexture(renderer);
 	seller.init();
 
-	dish.loadTexture(renderer);
 	dish.init();
 
 	for (int i = 0; i < NUM_CUSTOMERS; i++)
@@ -209,6 +211,7 @@ void game()
 	while (!quit)
 	{
 		frameStart = SDL_GetTicks();
+
 		// Handle events on queue
 		while (SDL_PollEvent(&event) != 0)
 		{
@@ -230,7 +233,6 @@ void game()
 		// render seller equivalent to stand and dishes
 		seller.render(renderer);
 
-		// seller.render(renderer, SCREEN_WIDTH / 2 - seller.getWidth() / 2, SCREEN_HEIGHT / 2 - seller.getHeight() / 2, seller.getWidth() / 2, seller.getHeight() / 2);
 		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight(), NULL);
 
 		// render customers
@@ -263,9 +265,6 @@ void menu()
 
 	Uint32 frameStart, frameTime;
 
-	// Const
-	const int NUM_BUTTONS = 3; // Number of buttons
-
 	std::vector<Button> buttons; // Menu buttons
 
 	// Load buttons
@@ -274,7 +273,6 @@ void menu()
 		SDL_Rect rect = {SCREEN_WIDTH / 2 - BUTTON_WIDTH / 2, SCREEN_HEIGHT / 2 - BUTTON_HEIGHT / 2 + i * (BUTTON_HEIGHT + 50), BUTTON_WIDTH, BUTTON_HEIGHT};
 		Button button(rect, PINK, menuFont, ORANGE);
 		button.loadTexture(renderer, menuText[i]);
-		// set button position
 
 		buttons.push_back(button);
 	}
@@ -284,8 +282,8 @@ void menu()
 	Button musicButton(musicRect, TRANSPARENT, menuFont, TRANSPARENT);
 	Button soundButton(soundRect, TRANSPARENT, menuFont, TRANSPARENT);
 
-	musicButton.loadTexture(renderer, "");
-	soundButton.loadTexture(renderer, "");
+	musicButton.loadTexture(renderer, " ");
+	soundButton.loadTexture(renderer, " ");
 
 	// Main loop
 	SDL_Event event;
@@ -358,16 +356,13 @@ void menu()
 						{
 						case 0:
 							game();
-							std::cout << "Play" << std::endl;
 							break;
 						case 1:
 							// help();
-							std::cout << "Help" << std::endl;
 							break;
 						case 2:
 							// quit();
 							quit = true;
-							std::cout << "Quit" << std::endl;
 							break;
 						}
 					}
@@ -398,7 +393,7 @@ void menu()
 		title.render(renderer, SCREEN_WIDTH / 2 - title.getWidth() / 2, SCREEN_HEIGHT / 2 - title.getHeight() / 2 - 200, title.getWidth(), title.getHeight(), NULL);
 		version.render(renderer, SCREEN_WIDTH - version.getWidth() - 10, 10, version.getWidth(), version.getHeight(), NULL);
 
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < NUM_BUTTONS; i++)
 		{
 			buttons[i].render(renderer);
 		}

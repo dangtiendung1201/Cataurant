@@ -1,11 +1,14 @@
 #ifndef _TEXTURE_H
 #define _TEXTURE_H
 
+// C++ libraries
+#include <stdio.h>
+#include <string>
+// SDL libraries
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <stdio.h>
-#include <string>
+
 
 // Texture wrapper class
 class Texture

@@ -1,5 +1,6 @@
 #include "customer.h"
 
+// Constructor and destructor
 Customer::Customer()
 {
 	posX = CUSTOMER_STARTX;
@@ -11,91 +12,17 @@ Customer::Customer()
 	numRequests = 0;
 }
 
+Customer::~Customer()
+{
+	reset();
+}
+
+// Init and reset
 void Customer::init()
 {
 	type = random(1, 2);
 	status = RUNNING;
 	getRequest();
-}
-
-void Customer::getRequest()
-{
-	numRequests = random(3, 10);
-	request[0] = UP_BREAD;
-	request[numRequests - 1] = DOWN_BREAD;
-	for (int i = 1; i < numRequests - 1; i++)
-	{
-		request[i] = random(2, 4);
-	}
-	std::cout << std::endl
-			  << "Customer request: " << numRequests << " ingredients:";
-	for (int i = 0; i < numRequests; i++)
-	{
-		std::cout << request[i] << " ";
-	}
-}
-
-void Customer::renderIngredients(SDL_Renderer *renderer, int posX, int posY, int type)
-{
-	switch (type)
-	{
-	case UP_BREAD:
-		up_bread.render(renderer, posX, posY, 2);
-		break;
-	case LETTUCE:
-		lettuce.render(renderer, posX, posY, 2);
-		break;
-	case BEEF:
-		beef.render(renderer, posX, posY, 2);
-		break;
-	case TOMATO:
-		tomato.render(renderer, posX, posY, 2);
-		break;
-	case DOWN_BREAD:
-		down_bread.render(renderer, posX, posY, 2);
-		break;
-	default:
-		break;
-	}
-}
-
-void Customer::renderRequest(SDL_Renderer *renderer, int position)
-{
-	talkBubble.render(renderer, CUSTOMER_BUBBLE_POSX[position], CUSTOMER_BUBBLE_POSY - CUSTOMER_BUBBLE_DISTANCE * numRequests, CUSTOMER_BUBBLE_WIDTH, CUSTOMER_BUBBLE_DISTANCE * numRequests, NULL);
-
-	for (int i = 0; i < numRequests; i++)
-	{
-		renderIngredients(renderer, CUSTOMER_REQUESTS_POSX[position], CUSTOMER_REQUESTS_POSY - CUSTOMER_REQUESTS_DISTANCE * i, request[i]);
-	}
-}
-
-void Customer::renderCharacter(SDL_Renderer *renderer)
-{
-	if (type == FOX)
-		fox.render(renderer, posX, posY, 0, 0, &customerRect[cur]);
-	else if (type == WOLF)
-		wolf.render(renderer, posX, posY, 0, 0, &customerRect[cur]);
-}
-
-// // Render a waitng bar above customer's head and run to 0
-void Customer::renderBar(SDL_Renderer *renderer)
-{
-	SDL_Rect barGreen, barRed;
-	if (status == WAITING)
-	{
-		barGreen.x = posX + 20;
-		barGreen.y = posY - 10;
-		barGreen.w = waitingTime;
-		barGreen.h = CUSTOMER_BAR_HEIGHT;
-		barRed.x = barGreen.x + barGreen.w;
-		barRed.y = posY - 10;
-		barRed.w = CUSTOMER_MAXWAITINGTIME - barGreen.w;
-		barRed.h = CUSTOMER_BAR_HEIGHT;
-		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
-		SDL_RenderFillRect(renderer, &barGreen);
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
-		SDL_RenderFillRect(renderer, &barRed);
-	}
 }
 
 void Customer::reset()
@@ -107,7 +34,36 @@ void Customer::reset()
 	numRequests = 0;
 }
 
-void Customer::render(SDL_Renderer *renderer, int position)
+void Customer::getRequest()
+{
+	numRequests = random(3, 10);
+	request[0] = UP_BREAD;
+	request[numRequests - 1] = DOWN_BREAD;
+	for (int i = 1; i < numRequests - 1; i++)
+	{
+		request[i] = random(2, 4);
+	}
+}
+
+// Get
+int Customer::getNumRequests()
+{
+	return numRequests;
+}
+
+int *Customer::getRequestList()
+{
+	return request;
+}
+
+// Set
+void Customer::setStatus(const int &status)
+{
+	this->status = status;
+}
+
+// Render
+void Customer::render(SDL_Renderer *renderer, const int &position)
 {
 	if (status == OUTBOUND)
 	{
@@ -154,17 +110,64 @@ void Customer::render(SDL_Renderer *renderer, int position)
 	}
 }
 
-int Customer::getNumRequests()
+void Customer::renderBar(SDL_Renderer *renderer)
 {
-	return numRequests;
+	SDL_Rect barGreen, barRed;
+	if (status == WAITING)
+	{
+		barGreen.x = posX + 20;
+		barGreen.y = posY - 10;
+		barGreen.w = waitingTime;
+		barGreen.h = CUSTOMER_BAR_HEIGHT;
+		barRed.x = barGreen.x + barGreen.w;
+		barRed.y = posY - 10;
+		barRed.w = CUSTOMER_MAXWAITINGTIME - barGreen.w;
+		barRed.h = CUSTOMER_BAR_HEIGHT;
+		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
+		SDL_RenderFillRect(renderer, &barGreen);
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
+		SDL_RenderFillRect(renderer, &barRed);
+	}
 }
 
-int *Customer::getRequestList()
+void Customer::renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type)
 {
-	return request;
+	switch (type)
+	{
+	case UP_BREAD:
+		up_bread.render(renderer, posX, posY, 2);
+		break;
+	case LETTUCE:
+		lettuce.render(renderer, posX, posY, 2);
+		break;
+	case BEEF:
+		beef.render(renderer, posX, posY, 2);
+		break;
+	case TOMATO:
+		tomato.render(renderer, posX, posY, 2);
+		break;
+	case DOWN_BREAD:
+		down_bread.render(renderer, posX, posY, 2);
+		break;
+	default:
+		break;
+	}
 }
 
-void Customer::setStatus(int curStatus)
+void Customer::renderRequest(SDL_Renderer *renderer, const int &position)
 {
-	status = curStatus;
+	talkBubble.render(renderer, CUSTOMER_BUBBLE_POSX[position], CUSTOMER_BUBBLE_POSY - CUSTOMER_BUBBLE_DISTANCE * numRequests, CUSTOMER_BUBBLE_WIDTH, CUSTOMER_BUBBLE_DISTANCE * numRequests, NULL);
+
+	for (int i = 0; i < numRequests; i++)
+	{
+		renderIngredients(renderer, CUSTOMER_REQUESTS_POSX[position], CUSTOMER_REQUESTS_POSY - CUSTOMER_REQUESTS_DISTANCE * i, request[i]);
+	}
+}
+
+void Customer::renderCharacter(SDL_Renderer *renderer)
+{
+	if (type == FOX)
+		fox.render(renderer, posX, posY, 0, 0, &customerRect[cur]);
+	else if (type == WOLF)
+		wolf.render(renderer, posX, posY, 0, 0, &customerRect[cur]);
 }
