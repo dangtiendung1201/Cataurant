@@ -200,7 +200,7 @@ void Seller::move()
 				addTopIngredient();
 			}
 		}
-		else if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) < DISHES_MAX_INGREDIENTS)
+		else if (DISHES_FIRST_POSITION <= position && position <= DISHES_LAST_POSITION && dish.getNumIngredients(getDishPosition()) < DISHES_MAX_INGREDIENTS)
 		{
 			int dishPosition = getDishPosition();
 

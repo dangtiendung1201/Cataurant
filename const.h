@@ -6,6 +6,9 @@
 
 // WINDOWS VARIABLES
 // Screen size
+const char WINDOW_TITLE[] = "Cataurant";
+const char VERSION_INFO[] = "VERSION: 1.1";
+
 const int SCREEN_WIDTH = 1366;
 const int SCREEN_HEIGHT = 768;
 
@@ -188,6 +191,8 @@ const int NUM_DISHES = 5;
 // Dishes position
 const int DISHES_POSX[] = {375, 500, 625, 750, 875};
 const int DISHES_POSY = 400;
+const int DISHES_FIRST_POSITION = 2;
+const int DISHES_LAST_POSITION = 6;
 
 const int DISHES_MAX_INGREDIENTS = 20;
 const int DISHES_LIMIT_INGREDIENTS = 12;

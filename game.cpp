@@ -170,8 +170,8 @@ void load()
 	loadImage(renderer, talkBubble, "assets/images/customer/talk_bubble.png");
 
 	// Load texts
-	title.loadFromRenderedText(renderer, "Cataurant", ORANGE, titleFont);
-	version.loadFromRenderedText(renderer, "VERSION: 1.0", BLACK, versionFont);
+	title.loadFromRenderedText(renderer, WINDOW_TITLE, ORANGE, titleFont);
+	version.loadFromRenderedText(renderer, VERSION_INFO, BLACK, versionFont);
 
 	// Load buttons
 	for (int i = 0; i < NUM_BUTTONS; i++)
