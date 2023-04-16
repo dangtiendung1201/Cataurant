@@ -83,16 +83,9 @@ void Seller::handleEvent(SDL_Renderer *renderer, SDL_Event &event)
 // Get
 int Seller::getDishPosition()
 {
-	if (position == 2)
-		return 0;
-	if (position == 3)
-		return 1;
-	if (position == 4)
-		return 2;
-	if (position == 5)
-		return 3;
-	if (position == 6)
-		return 4;
+	if (position >= 2 && position <= 6)
+		return position - 2;
+	return 0;
 }
 
 // Render
@@ -198,6 +191,8 @@ void Seller::move()
 	case GO_DOWN:
 		if (position == 0)
 		{
+			Mix_PlayChannel(-1, receiveSound, 0);
+
 			if (hungrycat.getEating() == false)
 			{
 				hungrycat.setType(removeBottomIngredient());
@@ -205,13 +200,26 @@ void Seller::move()
 				addTopIngredient();
 			}
 		}
-		else if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) < DISHES_MAXINGREDIENTS)
+		else if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) < DISHES_MAX_INGREDIENTS)
 		{
-			dish.addIngredient(getDishPosition(), removeBottomIngredient());
-			addTopIngredient();
-			if (dish.checkBurger(getDishPosition()) >= 0)
-				score++;
+			int dishPosition = getDishPosition();
+
+			if (dish.getNumIngredients(dishPosition) <= DISHES_LIMIT_INGREDIENTS)
+			{
+				dish.addIngredient(getDishPosition(), removeBottomIngredient());
+				addTopIngredient();
+				if (dish.checkBurger(getDishPosition()) >= 0)
+				{
+					score++;
+					Mix_PlayChannel(-1, receiveSound, 0);
+					levelUp();
+				}
+			}
+			else
+				Mix_PlayChannel(-1, warningSound, 0);
 		}
+		else
+			Mix_PlayChannel(-1, wasteSound, 0);
 		break;
 	case GO_LEFT:
 		if (posX - SELLER_STEP > 0)

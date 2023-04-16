@@ -5,7 +5,7 @@ Dishes::Dishes()
 {
 	for (int i = 0; i < NUM_DISHES; i++)
 	{
-		for (int j = 0; j < DISHES_MAXINGREDIENTS; j++)
+		for (int j = 0; j < DISHES_MAX_INGREDIENTS; j++)
 		{
 			ingredients[i][j] = NOTHING;
 		}
@@ -16,7 +16,7 @@ Dishes::~Dishes()
 {
 	for (int i = 0; i < NUM_DISHES; i++)
 	{
-		for (int j = 0; j < DISHES_MAXINGREDIENTS; j++)
+		for (int j = 0; j < DISHES_MAX_INGREDIENTS; j++)
 		{
 			ingredients[i][j] = NOTHING;
 		}
@@ -35,7 +35,7 @@ void Dishes::init()
 
 void Dishes::reset(const int &currentDish)
 {
-	for (int i = 0; i < DISHES_MAXINGREDIENTS; i++)
+	for (int i = 0; i < DISHES_MAX_INGREDIENTS; i++)
 	{
 		ingredients[currentDish][i] = NOTHING;
 	}

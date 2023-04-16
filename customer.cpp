@@ -95,6 +95,7 @@ void Customer::render(SDL_Renderer *renderer, const int &position)
 		else
 		{
 			status = LEAVING;
+			Mix_PlayChannel(-1, leaveSound, 0);
 			live--;
 		}
 	}

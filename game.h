@@ -23,6 +23,8 @@
 
 extern int gameState;
 extern TTF_Font *scoreFont, *highestScoreFont;
+extern Texture heart;
+extern Mix_Chunk *leaveSound, *levelSound, *loseSound, *receiveSound, *wasteSound, *warningSound;
 
 bool init();
 

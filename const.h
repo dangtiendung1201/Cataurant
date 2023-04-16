@@ -66,12 +66,27 @@ enum binaryState
 // Score
 const int SCORE_POSX = 10;
 const int SCORE_POSY = 10;
-const int SCORE_SIZE = 25;
+const int SCORE_SIZE = 35;
 
 // Highest score
 const int HIGHEST_SCORE_POSX = SCREEN_WIDTH / 2 - 200;
 const int HIGHEST_SCORE_POSY = SCREEN_HEIGHT / 2;
 const int HIGHEST_SCORE_SIZE = 50;
+
+// Live
+const int MAX_LIVE = 3;
+const int MIN_LIVE = 1;
+
+const int LIVE_POSX = SCREEN_WIDTH - 150;
+const int LIVE_POSY = 10;
+const int LIVE_DISTANCE = 40;
+const int LIVE_WIDTH = 30;
+const int LIVE_HEIGHT = 30;
+
+// Level
+const int MIN_LEVEL = 1;
+const int MAX_LEVEL = 5;
+const int LEVEL_POINT[] = {0, 10, 20, 30, 40};
 
 // CUSTOMER VARIABLES
 const int NUM_CUSTOMERS = 5;
@@ -174,7 +189,8 @@ const int NUM_DISHES = 5;
 const int DISHES_POSX[] = {375, 500, 625, 750, 875};
 const int DISHES_POSY = 400;
 
-const int DISHES_MAXINGREDIENTS = 20;
+const int DISHES_MAX_INGREDIENTS = 20;
+const int DISHES_LIMIT_INGREDIENTS = 12;
 
 // HUNGRY CAT VARIABLES
 // Hungry cat position

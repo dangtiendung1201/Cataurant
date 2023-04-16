@@ -32,7 +32,7 @@ public:
 	int checkBurger(const int &currentDish);
 
 private:
-	int ingredients[NUM_DISHES][DISHES_MAXINGREDIENTS];
+	int ingredients[NUM_DISHES][DISHES_MAX_INGREDIENTS];
 	int numIngredients[NUM_DISHES];
 };
 

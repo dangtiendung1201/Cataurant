@@ -11,10 +11,10 @@ TTF_Font *menuFont,											 // Menu font
 
 Texture title, version; // Title texture
 
-Texture background, musicOn, soundOn, musicOff, soundOff, gameground, stand, loseground; // Background texture
+Texture background, musicOn, soundOn, musicOff, soundOff, gameground, stand, loseground, heart; // Background texture
 
-Mix_Music *music; // Music
-Mix_Chunk *sound; // Sound
+Mix_Music *music;																						 // Music
+Mix_Chunk *clickSound, *leaveSound, *levelSound, *loseSound, *receiveSound, *wasteSound, *warningSound; // Sound
 
 const char *menuText[NUM_BUTTONS] = {"Play", "Help", "Quit"}; // Menu text
 
@@ -46,41 +46,6 @@ int live;
 int highestScore;
 
 bool loop = true;
-
-void loadFont(TTF_Font *&font, const char *path, const int &size)
-{
-	font = TTF_OpenFont(path, size);
-	if (font == nullptr)
-	{
-		std::cout << "Failed to load font! Error: " << TTF_GetError() << std::endl;
-	}
-}
-
-void loadImage(Texture &texture, const char *path)
-{
-	if (!texture.loadFromFile(renderer, path))
-	{
-		std::cout << "Failed to load image! Error: " << SDL_GetError() << std::endl;
-	}
-}
-
-void loadMusic(Mix_Music *&music, const char *path)
-{
-	music = Mix_LoadMUS(path);
-	if (music == nullptr)
-	{
-		std::cout << "Failed to load music! Error: " << Mix_GetError() << std::endl;
-	}
-}
-
-void loadSound(Mix_Chunk *&sound, const char *path)
-{
-	sound = Mix_LoadWAV(path);
-	if (sound == nullptr)
-	{
-		std::cout << "Failed to load sound! Error: " << Mix_GetError() << std::endl;
-	}
-}
 
 bool init()
 {
@@ -153,7 +118,13 @@ void load()
 {
 	// Load music
 	loadMusic(music, "assets/sounds/music.wav");
-	loadSound(sound, "assets/sounds/sound.wav");
+	loadSound(clickSound, "assets/sounds/click_sound.wav");
+	loadSound(leaveSound, "assets/sounds/leave_sound.wav");
+	loadSound(levelSound, "assets/sounds/level_sound.wav");
+	loadSound(loseSound, "assets/sounds/lose_sound.wav");
+	loadSound(receiveSound, "assets/sounds/receive_sound.wav");
+	loadSound(wasteSound, "assets/sounds/waste_sound.wav");
+	loadSound(warningSound, "assets/sounds/warning_sound.wav");
 
 	// Load font
 	loadFont(menuFont, "assets/fonts/menu.ttf", MENU_SIZE);
@@ -163,14 +134,15 @@ void load()
 	loadFont(highestScoreFont, "assets/fonts/version.ttf", HIGHEST_SCORE_SIZE);
 
 	// Load images
-	loadImage(background, "assets/images/background.png");
-	loadImage(musicOn, "assets/icons/musicOn.png");
-	loadImage(soundOn, "assets/icons/soundOn.png");
-	loadImage(musicOff, "assets/icons/musicOff.png");
-	loadImage(soundOff, "assets/icons/soundOff.png");
-	loadImage(gameground, "assets/images/gameground.png");
-	loadImage(stand, "assets/images/stand.png");
-	loadImage(loseground, "assets/images/loseground.png");
+	loadImage(renderer, background, "assets/images/background.png");
+	loadImage(renderer, musicOn, "assets/icons/musicOn.png");
+	loadImage(renderer, soundOn, "assets/icons/soundOn.png");
+	loadImage(renderer, musicOff, "assets/icons/musicOff.png");
+	loadImage(renderer, soundOff, "assets/icons/soundOff.png");
+	loadImage(renderer, gameground, "assets/images/gameground.png");
+	loadImage(renderer, stand, "assets/images/stand.png");
+	loadImage(renderer, loseground, "assets/images/loseground.png");
+	loadImage(renderer, heart, "assets/images/heart.png");
 
 	seller.loadTexture(renderer);
 
@@ -185,8 +157,8 @@ void load()
 	down_bread.setType(DOWN_BREAD);
 	down_bread.loadTexture(renderer);
 
-	loadImage(fox, "assets/images/customer/fox.png");
-	loadImage(wolf, "assets/images/customer/wolf.png");
+	loadImage(renderer, fox, "assets/images/customer/fox.png");
+	loadImage(renderer, wolf, "assets/images/customer/wolf.png");
 	for (int i = 0; i < CUSTOMER_MOTION_RECTANGLE; i++)
 	{
 		customerRect[i].x = i * 152;
@@ -195,7 +167,7 @@ void load()
 		customerRect[i].h = 134;
 	}
 
-	loadImage(talkBubble, "assets/images/customer/talk_bubble.png");
+	loadImage(renderer, talkBubble, "assets/images/customer/talk_bubble.png");
 
 	// Load texts
 	title.loadFromRenderedText(renderer, "Cataurant", ORANGE, titleFont);
@@ -216,9 +188,9 @@ void gameReset()
 {
 	score = 0;
 
-	level = 5;
+	level = MIN_LEVEL;
 
-	live = 3;
+	live = MAX_LIVE;
 
 	seller.reset();
 	seller.init();
@@ -280,6 +252,7 @@ void game()
 		seller.renderDeque(renderer);
 		dish.render(renderer);
 		showScore(renderer);
+		showLive(renderer);
 		if (hungrycat.getEating() == true)
 		{
 			hungrycat.eat(renderer, 1.0 * HUNGRYCAT_START_POSX, 1.0 * HUNGRYCAT_START_POSY, 1.0 * HUNGRYCAT_END_POSX, 1.0 * HUNGRYCAT_END_POSY);
@@ -294,7 +267,10 @@ void game()
 		}
 
 		if (live == 0)
+		{
 			gameState = LOSE;
+			Mix_PlayChannel(-1, loseSound, 0);
+		}
 
 		if (gameState != PLAY)
 			quit = true;
@@ -305,6 +281,8 @@ void menuReset()
 {
 	if (musicState)
 		Mix_PlayMusic(music, -1);
+	if (soundState)
+		Mix_Resume(-1);
 }
 
 void menu()
@@ -346,7 +324,7 @@ void menu()
 					{
 						buttons[i].changeColor(ORANGE);
 						if (soundState == ON)
-							Mix_PlayChannel(-1, sound, 0);
+							Mix_PlayChannel(-1, clickSound, 0);
 					}
 				}
 				if (musicButton.isMouseInside(event.motion.x, event.motion.y))
@@ -366,10 +344,12 @@ void menu()
 				{
 					if (soundState == ON)
 					{
+						Mix_Pause(-1);
 						soundState = OFF;
 					}
 					else
 					{
+						Mix_Resume(-1);
 						soundState = ON;
 					}
 				}
