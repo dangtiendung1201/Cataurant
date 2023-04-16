@@ -21,13 +21,14 @@
 #include "hungrycat.h"
 #include "ultils.h"
 
-extern TTF_Font *scoreFont;
+extern int gameState;
+extern TTF_Font *scoreFont, *highestScoreFont;
 
 bool init();
 
 void load();
 
-void menu();
+void manageState();
 
 void quit();
 

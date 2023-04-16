@@ -17,10 +17,11 @@ const int DELAY_TIME = 1000 / FPS;
 // Game state
 enum gameState
 {
-	MENU = 0,
-	PLAY = 1,
-	HELP = 2,
-	QUIT = 3
+	QUIT = 0,
+	MENU = 1,
+	PLAY = 2,
+	HELP = 3,
+	LOSE = 4
 };
 
 // Buttons
@@ -67,6 +68,11 @@ const int SCORE_POSX = 10;
 const int SCORE_POSY = 10;
 const int SCORE_SIZE = 25;
 
+// Highest score
+const int HIGHEST_SCORE_POSX = SCREEN_WIDTH / 2 - 200;
+const int HIGHEST_SCORE_POSY = SCREEN_HEIGHT / 2;
+const int HIGHEST_SCORE_SIZE = 50;
+
 // CUSTOMER VARIABLES
 const int NUM_CUSTOMERS = 5;
 
@@ -82,6 +88,9 @@ const int CUSTOMER_MOTION_RECTANGLE = 9;
 // Customer's requests
 const int CUSTOMER_MAXREQUESTS = 10;
 
+const int CUSTOMER_MIN_INGREDIENTS_REQUEST[] = {0, 3, 3, 5, 7, 7};
+const int CUSTOMER_MAX_INGREDIENTS_REQUEST[] = {0, 5, 5, 7, 10, 10};
+
 const int CUSTOMER_REQUESTS_POSX[] = {475, 675, 875, 1075, 1275};
 const int CUSTOMER_REQUESTS_POSY = 625;
 
@@ -96,7 +105,8 @@ const int CUSTOMER_REQUESTS_DISTANCE = 10;
 const int CUSTOMER_BAR_WIDTH = 100;
 const int CUSTOMER_BAR_HEIGHT = 10;
 
-const float CUSTOMER_MAXWAITINGTIME = 100;
+const float CUSTOMER_MAX_WAITING_TIME = 100;
+const float CUSTOMER_WAITING_TIME[] = {0.0, 0.01, 0.02, 0.03, 0.04, 0.05};
 
 // Customer type
 enum customerType
@@ -155,7 +165,7 @@ enum ingredientType
 const int INGREDIENTS_DISTANCE = 20;
 
 const int INGREDIENTS_STARTX[] = {125, 250, 375, 500, 625, 750, 875, 1000, 1125};
-const int INGREDIENTS_STARTY = SELLER_STARTY - 200;
+const int INGREDIENTS_STARTY = SELLER_STARTY - 225;
 
 // DISHES VARIABLES
 const int NUM_DISHES = 5;

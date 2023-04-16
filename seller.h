@@ -22,6 +22,7 @@ public:
 
 	// Init and reset
 	void init();
+	void reset();
 
 	// Load
 	void loadTexture(SDL_Renderer *renderer);

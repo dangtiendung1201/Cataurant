@@ -7,7 +7,8 @@ int main(int argc, char *argv[])
 	if (init())
 		load();
 
-	menu();
+	gameState = MENU;
+	manageState();
 
 	quit();
 	return 0;

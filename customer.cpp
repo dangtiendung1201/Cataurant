@@ -36,12 +36,12 @@ void Customer::reset()
 
 void Customer::getRequest()
 {
-	numRequests = random(3, 10);
+	numRequests = random(CUSTOMER_MIN_INGREDIENTS_REQUEST[level], CUSTOMER_MAX_INGREDIENTS_REQUEST[level]);
 	request[0] = UP_BREAD;
 	request[numRequests - 1] = DOWN_BREAD;
 	for (int i = 1; i < numRequests - 1; i++)
 	{
-		request[i] = random(2, 4);
+		request[i] = random(LETTUCE, TOMATO);
 	}
 }
 
@@ -90,10 +90,13 @@ void Customer::render(SDL_Renderer *renderer, const int &position)
 		renderCharacter(renderer);
 		renderBar(renderer);
 		cur = 0;
-		if (waitingTime < CUSTOMER_MAXWAITINGTIME)
-			waitingTime += 0.01;
+		if (waitingTime < CUSTOMER_MAX_WAITING_TIME)
+			waitingTime += CUSTOMER_WAITING_TIME[level];
 		else
+		{
 			status = LEAVING;
+			live--;
+		}
 	}
 	else if (status == LEAVING)
 	{
@@ -121,7 +124,7 @@ void Customer::renderBar(SDL_Renderer *renderer)
 		barGreen.h = CUSTOMER_BAR_HEIGHT;
 		barRed.x = barGreen.x + barGreen.w;
 		barRed.y = posY - 10;
-		barRed.w = CUSTOMER_MAXWAITINGTIME - barGreen.w;
+		barRed.w = CUSTOMER_MAX_WAITING_TIME - barGreen.w;
 		barRed.h = CUSTOMER_BAR_HEIGHT;
 		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 0);
 		SDL_RenderFillRect(renderer, &barGreen);

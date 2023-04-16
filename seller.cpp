@@ -10,6 +10,7 @@ Seller::Seller()
 }
 Seller::~Seller()
 {
+	reset();
 }
 
 // Init and reset
@@ -17,7 +18,15 @@ void Seller::init()
 {
 	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
 	{
-		ingredients[i] = random(2, 5);
+		ingredients[i] = random(LETTUCE, DOWN_BREAD);
+	}
+}
+
+void Seller::reset()
+{
+	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
+	{
+		ingredients[i] = NOTHING;
 	}
 }
 

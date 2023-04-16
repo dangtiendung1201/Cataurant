@@ -6,17 +6,23 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 
 // Declearation
-TTF_Font *menuFont,						  // Menu font
-	*titleFont, *versionFont, *scoreFont; // Title font
+TTF_Font *menuFont,											 // Menu font
+	*titleFont, *versionFont, *scoreFont, *highestScoreFont; // Title font
 
 Texture title, version; // Title texture
 
-Texture background, musicOn, soundOn, musicOff, soundOff, gameground, stand; // Background texture
+Texture background, musicOn, soundOn, musicOff, soundOff, gameground, stand, loseground; // Background texture
 
 Mix_Music *music; // Music
 Mix_Chunk *sound; // Sound
 
 const char *menuText[NUM_BUTTONS] = {"Play", "Help", "Quit"}; // Menu text
+
+std::vector<Button> buttons;
+SDL_Rect musicRect = {MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT};
+SDL_Rect soundRect = {SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT};
+Button musicButton(musicRect, TRANSPARENT, menuFont, TRANSPARENT);
+Button soundButton(soundRect, TRANSPARENT, menuFont, TRANSPARENT);
 
 bool musicState = ON;
 bool soundState = ON;
@@ -35,6 +41,11 @@ Texture talkBubble;
 Hungrycat hungrycat;
 
 int score;
+int level;
+int live;
+int highestScore;
+
+bool loop = true;
 
 void loadFont(TTF_Font *&font, const char *path, const int &size)
 {
@@ -149,6 +160,7 @@ void load()
 	loadFont(titleFont, "assets/fonts/title.ttf", TITLE_SIZE);
 	loadFont(versionFont, "assets/fonts/version.ttf", VERSION_SIZE);
 	loadFont(scoreFont, "assets/fonts/version.ttf", SCORE_SIZE);
+	loadFont(highestScoreFont, "assets/fonts/version.ttf", HIGHEST_SCORE_SIZE);
 
 	// Load images
 	loadImage(background, "assets/images/background.png");
@@ -158,6 +170,9 @@ void load()
 	loadImage(soundOff, "assets/icons/soundOff.png");
 	loadImage(gameground, "assets/images/gameground.png");
 	loadImage(stand, "assets/images/stand.png");
+	loadImage(loseground, "assets/images/loseground.png");
+
+	seller.loadTexture(renderer);
 
 	up_bread.setType(UP_BREAD);
 	up_bread.loadTexture(renderer);
@@ -186,25 +201,46 @@ void load()
 	title.loadFromRenderedText(renderer, "Cataurant", ORANGE, titleFont);
 	version.loadFromRenderedText(renderer, "VERSION: 1.0", BLACK, versionFont);
 
-	Mix_PlayMusic(music, -1);
+	// Load buttons
+	for (int i = 0; i < NUM_BUTTONS; i++)
+	{
+		SDL_Rect rect = {SCREEN_WIDTH / 2 - BUTTON_WIDTH / 2, SCREEN_HEIGHT / 2 - BUTTON_HEIGHT / 2 + i * (BUTTON_HEIGHT + 50), BUTTON_WIDTH, BUTTON_HEIGHT};
+		Button button(rect, PINK, menuFont, ORANGE);
+		button.loadTexture(renderer, menuText[i]);
+
+		buttons.push_back(button);
+	}
 }
 
-void game()
+void gameReset()
 {
-	gameState = PLAY;
-	Uint32 frameStart, frameTime;
-
 	score = 0;
 
-	seller.loadTexture(renderer);
+	level = 5;
+
+	live = 3;
+
+	seller.reset();
 	seller.init();
 
+	for (int i = 0; i < NUM_DISHES; i++)
+	{
+		dish.reset(i);
+	}
 	dish.init();
 
 	for (int i = 0; i < NUM_CUSTOMERS; i++)
 	{
+		customer[i].reset();
 		customer[i].init();
 	}
+}
+
+void game()
+{
+	Uint32 frameStart, frameTime;
+
+	gameReset();
 
 	SDL_Event event;
 	bool quit = false;
@@ -218,7 +254,7 @@ void game()
 			switch (event.type)
 			{
 			case SDL_QUIT:
-				quit = true;
+				gameState = QUIT;
 				break;
 			}
 			seller.handleEvent(renderer, event);
@@ -256,34 +292,26 @@ void game()
 		{
 			SDL_Delay(DELAY_TIME - frameTime);
 		}
+
+		if (live == 0)
+			gameState = LOSE;
+
+		if (gameState != PLAY)
+			quit = true;
 	}
+}
+
+void menuReset()
+{
+	if (musicState)
+		Mix_PlayMusic(music, -1);
 }
 
 void menu()
 {
-	gameState = MENU;
-
 	Uint32 frameStart, frameTime;
 
-	std::vector<Button> buttons; // Menu buttons
-
-	// Load buttons
-	for (int i = 0; i < NUM_BUTTONS; i++)
-	{
-		SDL_Rect rect = {SCREEN_WIDTH / 2 - BUTTON_WIDTH / 2, SCREEN_HEIGHT / 2 - BUTTON_HEIGHT / 2 + i * (BUTTON_HEIGHT + 50), BUTTON_WIDTH, BUTTON_HEIGHT};
-		Button button(rect, PINK, menuFont, ORANGE);
-		button.loadTexture(renderer, menuText[i]);
-
-		buttons.push_back(button);
-	}
-
-	SDL_Rect musicRect = {MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT};
-	SDL_Rect soundRect = {SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT};
-	Button musicButton(musicRect, TRANSPARENT, menuFont, TRANSPARENT);
-	Button soundButton(soundRect, TRANSPARENT, menuFont, TRANSPARENT);
-
-	musicButton.loadTexture(renderer, " ");
-	soundButton.loadTexture(renderer, " ");
+	menuReset();
 
 	// Main loop
 	SDL_Event event;
@@ -296,7 +324,7 @@ void menu()
 			switch (event.type)
 			{
 			case SDL_QUIT:
-				quit = true;
+				gameState = QUIT;
 				break;
 			case SDL_MOUSEMOTION:
 				for (int i = 0; i < NUM_BUTTONS; i++)
@@ -355,14 +383,13 @@ void menu()
 						switch (i)
 						{
 						case 0:
-							game();
+							gameState = PLAY;
 							break;
 						case 1:
 							// help();
 							break;
 						case 2:
-							// quit();
-							quit = true;
+							gameState = QUIT;
 							break;
 						}
 					}
@@ -408,6 +435,89 @@ void menu()
 		}
 		if (gameState != MENU)
 			quit = true;
+	}
+}
+
+void lose()
+{
+	Uint32 frameStart, frameTime;
+
+	updateHighestScore();
+	readHighestScore();
+
+	Mix_HaltMusic();
+
+	SDL_Event event;
+	bool quit = false;
+	while (!quit)
+	{
+		frameStart = SDL_GetTicks();
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				gameState = QUIT;
+				break;
+			}
+			if (event.type == SDL_KEYDOWN)
+			{
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					gameState = QUIT;
+				case SDLK_SPACE:
+					gameState = MENU;
+					break;
+				}
+			}
+		}
+
+		// Clear screen
+		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(renderer);
+
+		// Render
+		loseground.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
+		showHighestScore(renderer);
+
+		// Update screen
+		SDL_RenderPresent(renderer);
+
+		// Frame rate
+		frameTime = SDL_GetTicks() - frameStart;
+		if (frameTime < DELAY_TIME)
+		{
+			SDL_Delay(DELAY_TIME - frameTime);
+		}
+		if (gameState != LOSE)
+			quit = true;
+	}
+}
+
+// manage all states of the game
+void manageState()
+{
+	while (loop)
+	{
+		switch (gameState)
+		{
+		case MENU:
+			menu();
+			break;
+		// case HELP:
+		// 	gameState = help();
+		// 	break;
+		case PLAY:
+			game();
+			break;
+		case LOSE:
+			lose();
+			break;
+		case QUIT:
+			loop = false;
+			break;
+		}
 	}
 }
 
