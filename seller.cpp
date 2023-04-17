@@ -191,10 +191,10 @@ void Seller::move()
 	case GO_DOWN:
 		if (position == 0)
 		{
-			Mix_PlayChannel(-1, receiveSound, 0);
-
 			if (hungrycat.getEating() == false)
 			{
+				Mix_PlayChannel(-1, receiveSound, 0);
+
 				hungrycat.setType(removeBottomIngredient());
 				hungrycat.setEating();
 				addTopIngredient();
