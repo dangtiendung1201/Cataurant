@@ -2,7 +2,11 @@
 #define _CONST_H
 
 // SDL LIBRARIES
-#include <SDL_image.h>
+#if defined(_WIN64) || defined(_WIN32)
+#include <SDL.h>
+#else
+#include <SDL2/SDL.h>
+#endif
 
 // WINDOWS VARIABLES
 // Screen size

@@ -2,8 +2,13 @@
 #define _BUTTON_H
 
 // SDL libraries
+#if defined(_WIN64) || defined(_WIN32)
 #include <SDL.h>
 #include <SDL_ttf.h>
+#else
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#endif
 // My libraries
 #include "ui.h"
 
