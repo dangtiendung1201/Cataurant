@@ -1,0 +1,24 @@
+name: MacOS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: install dependencies
+      run: |
+          brew install sdl2
+          brew install sdl2_image
+          brew install sdl2_ttf
+          brew install sdl2_mixer
+    - name: make
+      run: |
+          make

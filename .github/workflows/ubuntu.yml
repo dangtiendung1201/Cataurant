@@ -1,0 +1,25 @@
+name: Ubuntu
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: install dependencies
+      run: |
+          sudo apt-get update
+          sudo apt install libsdl2-dev
+          sudo apt install libsdl2-image-dev
+          sudo apt install libsdl2-ttf-dev
+          sudo apt install libsdl2-mixer-dev
+    - name: make
+      run: |
+          make
