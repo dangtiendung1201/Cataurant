@@ -1,7 +1,5 @@
 *.exe
 .vscode/
-*.rc
-*.res
 bin/
 Release/
 Makefile
