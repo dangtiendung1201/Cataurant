@@ -1,8 +1,8 @@
 <h1 align="center">🐈Cataurant🐈</h1>
 
-[![Actions Status](https://github.com/dangtiendung1201/TestAction/workflows/MacOS/badge.svg)](https://github.com/dangtiendung1201/TestAction/actions)
-[![Actions Status](https://github.com/dangtiendung1201/TestAction/workflows/Windows/badge.svg)](https://github.com/dangtiendung1201/TestAction/actions)
-[![Actions Status](https://github.com/dangtiendung1201/TestAction/workflows/Ubuntu/badge.svg)](https://github.com/dangtiendung1201/TestAction/actions)
+[![Actions Status](https://github.com/dangtiendung1201/Cataurant/workflows/MacOS/badge.svg)](https://github.com/dangtiendung1201/Cataurant/actions)
+[![Actions Status](https://github.com/dangtiendung1201/Cataurant/workflows/Windows/badge.svg)](https://github.com/dangtiendung1201/Cataurant/actions)
+[![Actions Status](https://github.com/dangtiendung1201/Cataurant/workflows/Ubuntu/badge.svg)](https://github.com/dangtiendung1201/Cataurant/actions)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/dangtiendung1201/Cataurant)](https://github.com/dangtiendung1201/Cataurant)
 
 This is my own game project using `C`, `C++` and `SDL2 libraries` at University of Engineering and Technology, Vietnam National University.
