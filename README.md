@@ -68,7 +68,7 @@ git clone https://github.com/dangtiendung1201/Cataurant.git
 ```
 - Create a `Makefile` at **the same** folder with source code
 ```
-OBJS = $(wildcard *.cpp)
+OBJS = $(wildcard src/*.cpp)
 OBJ_NAME = cataurant.exe
 RESOURCES_SCRIPT = cataurant.rc
 RESOURCES_FILE = cataurant.res
@@ -94,7 +94,7 @@ git clone https://github.com/dangtiendung1201/Cataurant.git
 ```
 - Create a `Makefile` at **the same** folder with source code
 ```
-OBJS = $(wildcard *.cpp)
+OBJS = $(wildcard src/*.cpp)
 OBJ_NAME = cataurant.exe
 RESOURCES_SCRIPT = cataurant.rc
 RESOURCES_FILE = cataurant.res
@@ -127,7 +127,7 @@ brew install sdl2_mixer
 ```
 - Create a `Makefile` at **the same** folder with source code
 ```
-OBJS = $(wildcard *.cpp)
+OBJS = $(wildcard src/*.cpp)
 OBJ_NAME = cataurant.exe
 COMPILER_FLAGS = -std=c++17
 LINKER_FLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
@@ -155,7 +155,7 @@ sudo apt install libsdl2-mixer-dev
 ```
 - Create a `Makefile` at **the same** folder with source code
 ```
-OBJS = $(wildcard *.cpp)
+OBJS = $(wildcard src/*.cpp)
 OBJ_NAME = cataurant.exe
 COMPILER_FLAGS = -std=c++17 -static-libgcc -static-libstdc++
 LINKER_FLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
