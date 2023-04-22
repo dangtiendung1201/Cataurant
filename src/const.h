@@ -81,10 +81,11 @@ const int HIGHEST_SCORE_POSY = SCREEN_HEIGHT / 2;
 const int HIGHEST_SCORE_SIZE = 50;
 
 // Live
-const int MAX_LIVE = 3;
+const int START_LIVE = 3;
+const int MAX_LIVE = 5;
 const int MIN_LIVE = 1;
 
-const int LIVE_POSX = SCREEN_WIDTH - 150;
+const int LIVE_POSX = SCREEN_WIDTH - 225;
 const int LIVE_POSY = 10;
 const int LIVE_DISTANCE = 40;
 const int LIVE_WIDTH = 30;

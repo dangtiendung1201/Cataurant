@@ -14,7 +14,6 @@ This is my own game project using `C`, `C++` and `SDL2 libraries` at University 
 - [Prerequisites](https://github.com/dangtiendung1201/Cataurant#prerequisites)
 - [Build](https://github.com/dangtiendung1201/Cataurant#bulid)
 - [Gameplay](https://github.com/dangtiendung1201/Cataurant#gameplay)
-- [Controls](https://github.com/dangtiendung1201/Cataurant#controls)
 - [Credits](https://github.com/dangtiendung1201/Cataurant#credits)
 - [Notes](https://github.com/dangtiendung1201/Cataurant#notes)
 
@@ -60,13 +59,13 @@ All dependencies **(for Windows only)**[^fn2] are in [bin](https://github.com/da
 $\color{red}{\textrm{Note: Because of the differences in coding environments, Makefile provided below could not work.}}$
 $\color{red}{\textrm{In this case, please contact me via email/facebook above or compile it yourself}}$
 
-**For Windows with 32 bit MinGW**
+**For Windows with 32 bit MinGW and equivalent**
 
 - Clone the project
 ```
 git clone https://github.com/dangtiendung1201/Cataurant.git
 ```
-- Create a `Makefile` at **the same** folder with source code
+- Create a `Makefile` at the root directory
 ```
 OBJS = $(wildcard src/*.cpp)
 OBJ_NAME = cataurant.exe
@@ -86,13 +85,13 @@ compile:
 make
 ```
 
-**For Windows with 64 bit MinGW**
+**For Windows with 64 bit MinGW and equivalent**
 
 - Clone the project
 ```
 git clone https://github.com/dangtiendung1201/Cataurant.git
 ```
-- Create a `Makefile` at **the same** folder with source code
+- Create a `Makefile` at the root directory
 ```
 OBJS = $(wildcard src/*.cpp)
 OBJ_NAME = cataurant.exe
@@ -125,7 +124,7 @@ brew install sdl2_image
 brew install sdl2_ttf
 brew install sdl2_mixer
 ```
-- Create a `Makefile` at **the same** folder with source code
+- Create a `Makefile` at the root directory
 ```
 OBJS = $(wildcard src/*.cpp)
 OBJ_NAME = cataurant.exe
@@ -140,7 +139,7 @@ compile:
 make
 ```
 
-**For Ubuntu**
+**For Ubuntu and equivalent**
 
 ```
 git clone https://github.com/dangtiendung1201/Cataurant.git
@@ -153,7 +152,7 @@ sudo apt install libsdl2-image-dev
 sudo apt install libsdl2-ttf-dev
 sudo apt install libsdl2-mixer-dev
 ```
-- Create a `Makefile` at **the same** folder with source code
+- Create a `Makefile` at the root directory
 ```
 OBJS = $(wildcard src/*.cpp)
 OBJ_NAME = cataurant.exe
@@ -170,6 +169,8 @@ make
 
 ## Run
 
+$\color{red}{\textrm{Note: For Windows only, please add bin to Environment variable}}$
+
 After building the project successfully, please run it.
 ```
 .\cataurant
@@ -177,9 +178,38 @@ After building the project successfully, please run it.
 
 ## Gameplay
 
-### How to play
+### Objective
 
-In this game, you are the seller (Doraemon). You have to serve your lovely customers as fast as possible. There is also a hungry cat waiting for free food 😂. You have 3 lives. If you fail to serve a customer, you will lose 1 life. If you lose all 3 lives, the game is over.
+Your objective in this game is to serve your customers as quickly as possible, while also feeding hungry cat (bottom-left corner) if you want. You have 3 lives, so try to serve as many customers as possible without making mistakes.
+
+### Ingredients
+
+There are 4 types of ingredients in the game: `Bread`, `Meat`, `Tomato`, `Lettuce`.
+
+### Seller
+
+You are the seller (Doraemon) who will serve the customers. You can move left and right to serve customers. You can also control the deque of ingredients by using up and down arrow keys.
+
+### Customers
+
+At the start of the game, customers will begin to appear at your stall with their requests. Each customer has a patience bar, which will decrease if you take too long to serve them. If a customer's patience bar runs out, they will leave and you will lose a life.
+
+### Hungry Cat
+
+Hungry cat will appear at the bottom-left corner of the screen. You can feed him if you want. He may give you some bonuses randomly (play the game to find out them) after being feed.
+
+### Score
+
+You will get score for each customer you serve. You will also get score for each customer you feed. The score will be displayed at the top-right corner of the screen.
+
+### Lives
+
+Lives will be displayed at the top-left corner of the screen. You will lose when you run out of lives.
+
+### Controls
+
+- `Left, Right arrow keys` to move the seller (Doraemon).
+- `Up, Down arrow keys` to control the deque of ingredients.
 
 ### Screenshots
 
@@ -187,14 +217,9 @@ In this game, you are the seller (Doraemon). You have to serve your lovely custo
 ![Game](https://user-images.githubusercontent.com/53939861/233418243-7105a9cf-bb7d-4623-9ab3-20fc718566e4.jpg)
 ![Lose](https://user-images.githubusercontent.com/53939861/233418229-65c780b6-2514-418a-a2b0-6c8caba91d67.jpg)
 
-### Demo: 
+### Demo
 
 [Link](\null "Youtube video").
-
-## Controls
-
-- Left, Right arrow keys to move the seller (Doraemon).
-- Up, Down arrow keys to control the deque of ingredients.
 
 ## Credits
 

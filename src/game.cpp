@@ -190,7 +190,7 @@ void gameReset()
 
 	level = MIN_LEVEL;
 
-	live = MAX_LIVE;
+	live = START_LIVE;
 
 	seller.reset();
 	seller.init();
