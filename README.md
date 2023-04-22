@@ -17,7 +17,11 @@ This is my own game project using `C`, `C++` and `SDL2 libraries` at University 
 - [Controls](https://github.com/dangtiendung1201/Cataurant#controls)
 - [Credits](https://github.com/dangtiendung1201/Cataurant#credits)
 - [Notes](https://github.com/dangtiendung1201/Cataurant#notes)
+
+
 <span style="color:blue">some *This is Blue italic.* text</span>
+
+
 ## Information
 
 **Name:**  Đặng Tiến Dũng <br />
