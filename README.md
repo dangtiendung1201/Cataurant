@@ -17,10 +17,6 @@ This is my own game project using `C`, `C++` and `SDL2 libraries` at University 
 - [Credits](https://github.com/dangtiendung1201/Cataurant#credits)
 - [Notes](https://github.com/dangtiendung1201/Cataurant#notes)
 
-
-<span style="color:blue">some *This is Blue italic.* text</span>
-
-
 ## Information
 
 **Name:**  Đặng Tiến Dũng <br />
@@ -200,11 +196,11 @@ Hungry cat will appear at the bottom-left corner of the screen. You can feed him
 
 ### Score
 
-You will get score for each customer you serve. You will also get score for each customer you feed. The score will be displayed at the top-right corner of the screen.
+You will get score for each customer you serve. You will also get score for each customer you feed. The score will be displayed at the top-left corner of the screen.
 
 ### Lives
 
-Lives will be displayed at the top-left corner of the screen. You will lose when you run out of lives.
+Lives will be displayed at the top-right corner of the screen. You will lose when you run out of lives.
 
 ### Controls
 

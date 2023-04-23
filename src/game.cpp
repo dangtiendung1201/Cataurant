@@ -5,15 +5,14 @@ int gameState;
 SDL_Window *window;
 SDL_Renderer *renderer;
 
-// Declearation
 TTF_Font *menuFont,											 // Menu font
 	*titleFont, *versionFont, *scoreFont, *highestScoreFont; // Title font
 
 Texture title, version; // Title texture
 
-Texture background, musicOn, soundOn, musicOff, soundOff, gameground, stand, loseground, heart; // Background texture
+Texture background, helpground, musicOn, soundOn, musicOff, soundOff, gameground, stand, loseground, heart; // Background texture
 
-Mix_Music *music;																						 // Music
+Mix_Music *music;																						// Music
 Mix_Chunk *clickSound, *leaveSound, *levelSound, *loseSound, *receiveSound, *wasteSound, *warningSound; // Sound
 
 const char *menuText[NUM_BUTTONS] = {"Play", "Help", "Quit"}; // Menu text
@@ -135,6 +134,7 @@ void load()
 
 	// Load images
 	loadImage(renderer, background, "assets/images/background.png");
+	loadImage(renderer, helpground, "assets/images/helpground.png");
 	loadImage(renderer, musicOn, "assets/icons/musicOn.png");
 	loadImage(renderer, soundOn, "assets/icons/soundOn.png");
 	loadImage(renderer, musicOff, "assets/icons/musicOff.png");
@@ -238,27 +238,31 @@ void game()
 
 		// Render
 		gameground.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
-		// render seller equivalent to stand and dishes
+
 		seller.render(renderer);
 
 		stand.render(renderer, SCREEN_WIDTH / 2 - stand.getWidth() / 2, SCREEN_HEIGHT / 2 - stand.getHeight() / 2, stand.getWidth(), stand.getHeight(), NULL);
 
-		// render customers
 		for (int i = 0; i < NUM_CUSTOMERS; i++)
 		{
 			customer[i].render(renderer, i);
 		}
 
 		seller.renderDeque(renderer);
+
 		dish.render(renderer);
+
 		showScore(renderer);
 		showLive(renderer);
+
 		if (hungrycat.getEating() == true)
 		{
 			hungrycat.eat(renderer, 1.0 * HUNGRYCAT_START_POSX, 1.0 * HUNGRYCAT_START_POSY, 1.0 * HUNGRYCAT_END_POSX, 1.0 * HUNGRYCAT_END_POSY);
 		}
+
 		// Update screen
 		SDL_RenderPresent(renderer);
+
 		// Frame rate
 		frameTime = SDL_GetTicks() - frameStart;
 		if (frameTime < DELAY_TIME)
@@ -266,12 +270,15 @@ void game()
 			SDL_Delay(DELAY_TIME - frameTime);
 		}
 
+		// Change state
 		if (live == 0)
 		{
 			gameState = LOSE;
+
 			Mix_PlayChannel(-1, loseSound, 0);
 		}
 
+		// Quit
 		if (gameState != PLAY)
 			quit = true;
 	}
@@ -281,6 +288,7 @@ void menuReset()
 {
 	if (musicState)
 		Mix_PlayMusic(music, -1);
+
 	if (soundState)
 		Mix_Resume(-1);
 }
@@ -291,7 +299,6 @@ void menu()
 
 	menuReset();
 
-	// Main loop
 	SDL_Event event;
 	bool quit = false;
 	while (!quit)
@@ -366,7 +373,7 @@ void menu()
 							gameState = PLAY;
 							break;
 						case 1:
-							// help();
+							gameState = HELP;
 							break;
 						case 2:
 							gameState = QUIT;
@@ -388,22 +395,26 @@ void menu()
 
 		// Render
 		background.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
+
 		if (musicState == ON)
 			musicOn.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT, NULL);
 		else
 			musicOff.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT, NULL);
+
 		if (soundState == ON)
 			soundOn.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT, NULL);
 		else
 			soundOff.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT, NULL);
 
 		title.render(renderer, SCREEN_WIDTH / 2 - title.getWidth() / 2, SCREEN_HEIGHT / 2 - title.getHeight() / 2 - 200, title.getWidth(), title.getHeight(), NULL);
+
 		version.render(renderer, SCREEN_WIDTH - version.getWidth() - 10, 10, version.getWidth(), version.getHeight(), NULL);
 
 		for (int i = 0; i < NUM_BUTTONS; i++)
 		{
 			buttons[i].render(renderer);
 		}
+
 		// Update screen
 		SDL_RenderPresent(renderer);
 
@@ -413,7 +424,64 @@ void menu()
 		{
 			SDL_Delay(DELAY_TIME - frameTime);
 		}
+
+		// Quit
 		if (gameState != MENU)
+			quit = true;
+	}
+}
+
+void help()
+{
+	Uint32 frameStart, frameTime;
+
+	SDL_Event event;
+	bool quit = false;
+	while (!quit)
+	{
+		frameStart = SDL_GetTicks();
+
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				gameState = QUIT;
+				break;
+			}
+			if (event.type == SDL_KEYDOWN)
+			{
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					gameState = MENU;
+					break;
+				case SDLK_SPACE:
+					gameState = PLAY;
+					break;
+				}
+			}
+		}
+
+		// Clear screen
+		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(renderer);
+
+		// Render
+		helpground.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
+
+		// Update screen
+		SDL_RenderPresent(renderer);
+
+		// Frame rate
+		frameTime = SDL_GetTicks() - frameStart;
+		if (frameTime < DELAY_TIME)
+		{
+			SDL_Delay(DELAY_TIME - frameTime);
+		}
+
+		// Quit
+		if (gameState != HELP)
 			quit = true;
 	}
 }
@@ -432,6 +500,7 @@ void lose()
 	while (!quit)
 	{
 		frameStart = SDL_GetTicks();
+
 		while (SDL_PollEvent(&event))
 		{
 			switch (event.type)
@@ -470,6 +539,8 @@ void lose()
 		{
 			SDL_Delay(DELAY_TIME - frameTime);
 		}
+
+		// Quit
 		if (gameState != LOSE)
 			quit = true;
 	}
@@ -485,9 +556,9 @@ void manageState()
 		case MENU:
 			menu();
 			break;
-		// case HELP:
-		// 	gameState = help();
-		// 	break;
+		case HELP:
+			help();
+			break;
 		case PLAY:
 			game();
 			break;

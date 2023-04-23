@@ -59,6 +59,5 @@ private:
 	// Image dimensions
 	int mWidth;
 	int mHeight;
-	// TTF_Font *gFont;
 };
 #endif

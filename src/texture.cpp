@@ -3,7 +3,6 @@
 Texture::Texture()
 {
 	// Initialize
-	// gFont = NULL;
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;

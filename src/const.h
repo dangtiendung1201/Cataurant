@@ -145,8 +145,7 @@ enum customerStatus
 	OUTBOUND = 0,
 	RUNNING = 1,
 	WAITING = 2,
-	SERVED = 3,
-	LEAVING = 4
+	LEAVING = 3
 };
 
 // SELLER VARIABLES

@@ -58,6 +58,7 @@ void Seller::handleEvent(SDL_Renderer *renderer, SDL_Event &event)
 			status = GO_RIGHT;
 			break;
 		}
+
 		move();
 	}
 	else if (event.type == SDL_KEYUP)
@@ -94,19 +95,23 @@ void Seller::render(SDL_Renderer *renderer)
 	if (status == GO_LEFT)
 	{
 		SDL_Rect clip[1];
+
 		clip[0].x = 0;
 		clip[0].y = 0;
 		clip[0].w = goLeft.getWidth() / 4 + 50;
 		clip[0].h = goLeft.getHeight() / 2;
+
 		goLeft.render(renderer, posX, posY, 0, 0, &clip[cur]);
 	}
 	else if (status == GO_RIGHT)
 	{
 		SDL_Rect clip[1];
+
 		clip[0].x = 0;
 		clip[0].y = 0;
 		clip[0].w = goRight.getWidth() / 4 - 10;
 		clip[0].h = goRight.getHeight() / 2;
+
 		goRight.render(renderer, posX, posY, 0, 0, &clip[cur]);
 	}
 	else if (status == GO_UP)
@@ -156,28 +161,43 @@ void Seller::renderDeque(SDL_Renderer *renderer)
 }
 
 // Logic
+/***
+	Args:
+		addIngredient (int): ingredient to add to the top of the deque
+	Returns:
+		double: None
+***/
 void Seller::addBottomIngredient(const int &addIngredient)
 {
 	for (int i = SELLER_MAXINGREDIENTS - 1; i > 0; i--)
 	{
 		ingredients[i] = ingredients[i - 1];
 	}
+
 	ingredients[0] = addIngredient;
 }
 
+/***
+	Args:
+		None
+	Returns:
+		int: ingredient to remove from the bottom of the deque
+***/
 int Seller::removeBottomIngredient()
 {
 	int removeIngredient = ingredients[0];
+
 	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
 	{
 		ingredients[i] = ingredients[i + 1];
 	}
+
 	return removeIngredient;
 }
 
 void Seller::addTopIngredient()
 {
-	ingredients[SELLER_MAXINGREDIENTS - 1] = random(2, 5);
+	ingredients[SELLER_MAXINGREDIENTS - 1] = random(LETTUCE, DOWN_BREAD);
 }
 
 void Seller::move()
@@ -197,6 +217,7 @@ void Seller::move()
 
 				hungrycat.setType(removeBottomIngredient());
 				hungrycat.setEating();
+
 				addTopIngredient();
 			}
 		}
@@ -208,10 +229,13 @@ void Seller::move()
 			{
 				dish.addIngredient(getDishPosition(), removeBottomIngredient());
 				addTopIngredient();
+
 				if (dish.checkBurger(getDishPosition()) >= 0)
 				{
 					score++;
+
 					Mix_PlayChannel(-1, receiveSound, 0);
+					
 					levelUp();
 				}
 			}

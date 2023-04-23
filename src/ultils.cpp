@@ -97,6 +97,7 @@ void levelUp()
 	if (score >= LEVEL_POINT[level] && level < MAX_LEVEL)
 	{
 		level++;
+		
 		Mix_PlayChannel(-1, levelSound, 0);
 	}
 }

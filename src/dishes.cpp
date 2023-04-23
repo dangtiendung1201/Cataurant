@@ -86,12 +86,25 @@ void Dishes::renderIngredients(SDL_Renderer *renderer, const int &posX, const in
 }
 
 // Logic
+/***
+	Args:
+		addDish (int): dish to add ingredient
+		addIngredient (int): ingredient to add
+	Returns:
+		None
+***/
 void Dishes::addIngredient(const int &addDish, const int &addIngredient)
 {
 	ingredients[addDish][numIngredients[addDish]] = addIngredient;
 	numIngredients[addDish]++;
 }
 
+/***
+	Args:
+		removeDish (int): dish to remove ingredient
+	Returns:
+		int: ingredient removed
+***/
 int Dishes::removeIngredient(const int &removeDish)
 {
 	int removeIngredient = ingredients[removeDish][numIngredients[removeDish] - 1];
@@ -100,6 +113,12 @@ int Dishes::removeIngredient(const int &removeDish)
 	return removeIngredient;
 }
 
+/***
+	Args:
+		currentDish (int): dish to check
+	Returns:
+		int: customer index if burger is done, -1 if not
+***/
 int Dishes::checkBurger(const int &currentDish)
 {
 	for (int i = 0; i < NUM_CUSTOMERS; i++)

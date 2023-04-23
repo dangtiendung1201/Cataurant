@@ -30,7 +30,12 @@ bool Hungrycat::getEating()
 }
 
 // Logic
-
+/***
+	Args:
+		bonus (double): bonus lives
+	Returns:
+		None
+***/
 void Hungrycat::applyBonus(const int &bonus)
 {
 	if (bonus == 0)
@@ -39,6 +44,12 @@ void Hungrycat::applyBonus(const int &bonus)
 	live = std::min(live + bonus, MAX_LIVE);
 }
 
+/***
+	Args:
+		None
+	Returns:
+		int: bonus lives
+***/
 int Hungrycat::randomBonus()
 {
 	int randomNumber = random(1, 100), bonus = 0;
@@ -50,7 +61,7 @@ int Hungrycat::randomBonus()
 	}
 	else if (randomNumber <= 8)
 	{
-		// 8% chance to get a bonus of 2 lives
+		// 3% chance to get a bonus of 2 lives
 		bonus = 2;
 	}
 	else if (randomNumber <= 10)
@@ -68,6 +79,7 @@ void Hungrycat::eat(SDL_Renderer *renderer, const float &fromX, const float &fro
 	// Move from fromX, fromY to toX, toY
 	float dx = fromX + (toX - fromX) * frame / FPS;
 	float dy = fromY + (toY - fromY) * frame / FPS;
+
 	// Render the ingredient
 	switch (type)
 	{
@@ -89,10 +101,13 @@ void Hungrycat::eat(SDL_Renderer *renderer, const float &fromX, const float &fro
 	default:
 		break;
 	}
+
 	frame--;
+
 	if (frame == 0)
 	{
 		eating = false;
+
 		applyBonus(randomBonus());
 	}
 }
