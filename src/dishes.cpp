@@ -123,6 +123,9 @@ int Dishes::checkBurger(const int &currentDish)
 {
 	for (int i = 0; i < NUM_CUSTOMERS; i++)
 	{
+		if (customer[i].getStatus() != WAITING)
+			continue;
+
 		int num = customer[i].getNumRequests();
 		if (num != numIngredients[currentDish])
 			continue;

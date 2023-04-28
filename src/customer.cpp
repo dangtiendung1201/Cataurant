@@ -74,72 +74,92 @@ int *Customer::getRequestList()
 	return request;
 }
 
+int Customer::getStatus()
+{
+	return status;
+}
+
 // Set
 void Customer::setStatus(const int &status)
 {
 	this->status = status;
 }
 
+void Customer::processOutbound()
+{
+	reset();
+	init();
+}
+
+void Customer::processRunning(SDL_Renderer *renderer, const int &position)
+{
+	renderCharacter(renderer);
+
+	if (posX > CUSTOMER_WAITX[position])
+	{
+		posX -= CUSTOMER_VELOCITY;
+
+		cur++;
+		if (cur == CUSTOMER_MOTION_RECTANGLE)
+			cur = 0;
+	}
+	else
+		status = WAITING;
+}
+
+void Customer::processWaiting(SDL_Renderer *renderer, const int &position)
+{
+	renderRequest(renderer, position);
+
+	cur = 0;
+
+	renderCharacter(renderer);
+	renderBar(renderer);
+
+	cur = 0;
+
+	if (waitingTime < CUSTOMER_MAX_WAITING_TIME)
+		waitingTime += CUSTOMER_WAITING_TIME[level];
+	else
+	{
+		status = LEAVING;
+
+		Mix_PlayChannel(-1, leaveSound, 0);
+
+		live--;
+	}
+}
+
+void Customer::processLeaving(SDL_Renderer *renderer)
+{
+	renderCharacter(renderer);
+
+	if (posX > 0)
+	{
+		posX -= CUSTOMER_VELOCITY;
+
+		cur++;
+		if (cur == CUSTOMER_MOTION_RECTANGLE)
+			cur = 0;
+	}
+	else
+		status = OUTBOUND;
+}
+
 // Render
 void Customer::render(SDL_Renderer *renderer, const int &position)
 {
 	if (status == OUTBOUND)
-	{
-		reset();
-		init();
-	}
+		processOutbound();
+
 	else if (status == RUNNING)
-	{
-		renderCharacter(renderer);
+		processRunning(renderer, position);
 
-		if (posX > CUSTOMER_WAITX[position])
-		{
-			posX -= CUSTOMER_VELOCITY;
-
-			cur++;
-			if (cur == CUSTOMER_MOTION_RECTANGLE)
-				cur = 0;
-		}
-		else
-			status = WAITING;
-	}
 	else if (status == WAITING)
-	{
-		renderRequest(renderer, position);
+		processWaiting(renderer, position);
 
-		cur = 0;
-
-		renderCharacter(renderer);
-		renderBar(renderer);
-
-		cur = 0;
-
-		if (waitingTime < CUSTOMER_MAX_WAITING_TIME)
-			waitingTime += CUSTOMER_WAITING_TIME[level];
-		else
-		{
-			status = LEAVING;
-
-			Mix_PlayChannel(-1, leaveSound, 0);
-
-			live--;
-		}
-	}
 	else if (status == LEAVING)
-	{
-		renderCharacter(renderer);
-
-		if (posX > 0)
-		{
-			posX -= CUSTOMER_VELOCITY;
-
-			cur++;
-			if (cur == CUSTOMER_MOTION_RECTANGLE)
-				cur = 0;
-		}
-		else
-			status = OUTBOUND;
-	}
+		processLeaving(renderer);
 }
 
 void Customer::renderBar(SDL_Renderer *renderer)

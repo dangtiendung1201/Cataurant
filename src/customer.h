@@ -22,9 +22,17 @@ public:
 	// Get
 	int getNumRequests();
 	int *getRequestList();
+	
+	int getStatus();
 
 	// Set
 	void setStatus(const int &status);
+
+	// Logic
+	void processOutbound();
+	void processRunning(SDL_Renderer *renderer, const int &position);
+	void processWaiting(SDL_Renderer *renderer, const int &position);
+	void processLeaving(SDL_Renderer *renderer);
 
 	// Render
 	void render(SDL_Renderer *renderer, const int &position);
