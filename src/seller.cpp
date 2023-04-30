@@ -18,7 +18,7 @@ void Seller::init()
 {
 	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
 	{
-		ingredients[i] = random(LETTUCE, DOWN_BREAD);
+		typeIngredients[i] = random(LETTUCE, DOWN_BREAD);
 	}
 }
 
@@ -26,16 +26,8 @@ void Seller::reset()
 {
 	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
 	{
-		ingredients[i] = NOTHING;
+		typeIngredients[i] = NOTHING;
 	}
-}
-
-// Load
-void Seller::loadTexture(SDL_Renderer *renderer)
-{
-	goRight.loadFromFile(renderer, "assets/images/seller/sellerRight.png");
-	goLeft.loadFromFile(renderer, "assets/images/seller/sellerLeft.png");
-	stand.loadFromFile(renderer, "assets/images/seller/sellerStand.png");
 }
 
 // Handle event
@@ -98,10 +90,10 @@ void Seller::render(SDL_Renderer *renderer)
 
 		clip[0].x = 0;
 		clip[0].y = 0;
-		clip[0].w = goLeft.getWidth() / 4 + 50;
-		clip[0].h = goLeft.getHeight() / 2;
+		clip[0].w = customerLeft.getWidth() / 4 + 50;
+		clip[0].h = customerLeft.getHeight() / 2;
 
-		goLeft.render(renderer, posX, posY, 0, 0, &clip[cur]);
+		customerLeft.render(renderer, posX, posY, 0, 0, &clip[cur]);
 	}
 	else if (status == GO_RIGHT)
 	{
@@ -109,46 +101,22 @@ void Seller::render(SDL_Renderer *renderer)
 
 		clip[0].x = 0;
 		clip[0].y = 0;
-		clip[0].w = goRight.getWidth() / 4 - 10;
-		clip[0].h = goRight.getHeight() / 2;
+		clip[0].w = customerRight.getWidth() / 4 - 10;
+		clip[0].h = customerRight.getHeight() / 2;
 
-		goRight.render(renderer, posX, posY, 0, 0, &clip[cur]);
+		customerRight.render(renderer, posX, posY, 0, 0, &clip[cur]);
 	}
 	else if (status == GO_UP)
 	{
-		stand.render(renderer, posX, posY, stand.getWidth() / 3, stand.getHeight() / 3, NULL);
+		customerStand.render(renderer, posX, posY, customerStand.getWidth() / 3, customerStand.getHeight() / 3, NULL);
 	}
 	else if (status == GO_DOWN)
 	{
-		stand.render(renderer, posX, posY, stand.getWidth() / 3, stand.getHeight() / 3, NULL);
+		customerStand.render(renderer, posX, posY, customerStand.getWidth() / 3, customerStand.getHeight() / 3, NULL);
 	}
 	else if (status == IDLE)
 	{
-		stand.render(renderer, posX, posY, stand.getWidth() / 3, stand.getHeight() / 3, NULL);
-	}
-}
-
-void Seller::renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type)
-{
-	switch (type)
-	{
-	case UP_BREAD:
-		up_bread.render(renderer, posX, posY);
-		break;
-	case LETTUCE:
-		lettuce.render(renderer, posX, posY);
-		break;
-	case BEEF:
-		beef.render(renderer, posX, posY);
-		break;
-	case TOMATO:
-		tomato.render(renderer, posX, posY);
-		break;
-	case DOWN_BREAD:
-		down_bread.render(renderer, posX, posY);
-		break;
-	default:
-		break;
+		customerStand.render(renderer, posX, posY, customerStand.getWidth() / 3, customerStand.getHeight() / 3, NULL);
 	}
 }
 
@@ -156,7 +124,7 @@ void Seller::renderDeque(SDL_Renderer *renderer)
 {
 	for (int i = 0; i < SELLER_MAXINGREDIENTS_RENDER; i++)
 	{
-		renderIngredients(renderer, INGREDIENTS_STARTX[position], INGREDIENTS_STARTY - INGREDIENTS_DISTANCE * i, ingredients[i]);
+		ingredients.render(renderer, INGREDIENTS_STARTX[position], INGREDIENTS_STARTY - INGREDIENTS_DISTANCE * i, typeIngredients[i]);
 	}
 }
 
@@ -171,10 +139,10 @@ void Seller::addBottomIngredient(const int &addIngredient)
 {
 	for (int i = SELLER_MAXINGREDIENTS - 1; i > 0; i--)
 	{
-		ingredients[i] = ingredients[i - 1];
+		typeIngredients[i] = typeIngredients[i - 1];
 	}
 
-	ingredients[0] = addIngredient;
+	typeIngredients[0] = addIngredient;
 }
 
 /***
@@ -185,11 +153,11 @@ void Seller::addBottomIngredient(const int &addIngredient)
 ***/
 int Seller::removeBottomIngredient()
 {
-	int removeIngredient = ingredients[0];
+	int removeIngredient = typeIngredients[0];
 
 	for (int i = 0; i < SELLER_MAXINGREDIENTS; i++)
 	{
-		ingredients[i] = ingredients[i + 1];
+		typeIngredients[i] = typeIngredients[i + 1];
 	}
 
 	return removeIngredient;
@@ -197,7 +165,7 @@ int Seller::removeBottomIngredient()
 
 void Seller::addTopIngredient()
 {
-	ingredients[SELLER_MAXINGREDIENTS - 1] = random(LETTUCE, DOWN_BREAD);
+	typeIngredients[SELLER_MAXINGREDIENTS - 1] = random(LETTUCE, DOWN_BREAD);
 }
 
 void Seller::move()
@@ -253,7 +221,7 @@ void Seller::move()
 		}
 		break;
 	case GO_RIGHT:
-		if (posX + SELLER_STEP < SCREEN_WIDTH - goRight.getWidth() / 4)
+		if (posX + SELLER_STEP < SCREEN_WIDTH - customerRight.getWidth() / 4)
 		{
 			posX += SELLER_STEP;
 			position++;

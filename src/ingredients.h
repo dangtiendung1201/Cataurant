@@ -4,6 +4,7 @@
 // My libraries
 #include "const.h"
 #include "texture.h"
+#include "res.h"
 
 class Ingredients
 {
@@ -12,23 +13,10 @@ public:
 	Ingredients();
 	~Ingredients();
 
-	// Load
-	void loadTexture(SDL_Renderer *renderer);
-
-	// Get
-	int getType();
-
-	// Set
-	void setType(const int &type);
-
 	// Render
-	void render(SDL_Renderer *renderer, const int &posX, const int &posY, const int &reduceSize = 1);
-
-private:
-	int type;
-	Texture texture;
+	void render(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type, const int &reduceSize = 1);
 };
 
-extern Ingredients up_bread, lettuce, beef, tomato, down_bread;
+extern Ingredients ingredients;
 
 #endif

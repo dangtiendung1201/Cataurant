@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
+// SDL libraries
 #if defined(_WIN64) || defined(_WIN32)
 #include <SDL.h>
 #include <SDL_image.h>
@@ -26,18 +27,13 @@
 #include "ingredients.h"
 #include "hungrycat.h"
 #include "ultils.h"
+#include "res.h"
 
 extern int gameState;
 extern TTF_Font *scoreFont, *highestScoreFont;
 extern Texture heart;
 extern Mix_Chunk *leaveSound, *levelSound, *loseSound, *receiveSound, *wasteSound, *warningSound;
 
-bool init();
-
-void load();
-
-void manageState();
-
-void quit();
+void manageState(SDL_Renderer *renderer);
 
 #endif

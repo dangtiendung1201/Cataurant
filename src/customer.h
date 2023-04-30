@@ -5,6 +5,7 @@
 #include "const.h"
 #include "ultils.h"
 #include "ingredients.h"
+#include "res.h"
 
 class Customer
 {
@@ -38,7 +39,6 @@ public:
 	void render(SDL_Renderer *renderer, const int &position);
 
 	void renderBar(SDL_Renderer *renderer);
-	void renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type);
 	void renderRequest(SDL_Renderer *renderer, const int &position);
 	void renderCharacter(SDL_Renderer *renderer);
 
@@ -47,8 +47,6 @@ private:
 	float waitingTime;
 };
 
-extern Texture fox, wolf, talkBubble;
-extern SDL_Rect customerRect[CUSTOMER_MOTION_RECTANGLE];
 extern Customer customer[NUM_CUSTOMERS];
 
 #endif

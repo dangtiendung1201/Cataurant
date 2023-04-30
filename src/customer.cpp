@@ -185,37 +185,13 @@ void Customer::renderBar(SDL_Renderer *renderer)
 	}
 }
 
-void Customer::renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type)
-{
-	switch (type)
-	{
-	case UP_BREAD:
-		up_bread.render(renderer, posX, posY, 2);
-		break;
-	case LETTUCE:
-		lettuce.render(renderer, posX, posY, 2);
-		break;
-	case BEEF:
-		beef.render(renderer, posX, posY, 2);
-		break;
-	case TOMATO:
-		tomato.render(renderer, posX, posY, 2);
-		break;
-	case DOWN_BREAD:
-		down_bread.render(renderer, posX, posY, 2);
-		break;
-	default:
-		break;
-	}
-}
-
 void Customer::renderRequest(SDL_Renderer *renderer, const int &position)
 {
 	talkBubble.render(renderer, CUSTOMER_BUBBLE_POSX[position], CUSTOMER_BUBBLE_POSY - CUSTOMER_BUBBLE_DISTANCE * numRequests, CUSTOMER_BUBBLE_WIDTH, CUSTOMER_BUBBLE_DISTANCE * numRequests, NULL);
 
 	for (int i = 0; i < numRequests; i++)
 	{
-		renderIngredients(renderer, CUSTOMER_REQUESTS_POSX[position], CUSTOMER_REQUESTS_POSY - CUSTOMER_REQUESTS_DISTANCE * i, request[i]);
+		ingredients.render(renderer, CUSTOMER_REQUESTS_POSX[position], CUSTOMER_REQUESTS_POSY - CUSTOMER_REQUESTS_DISTANCE * i, request[i], 2);
 	}
 }
 

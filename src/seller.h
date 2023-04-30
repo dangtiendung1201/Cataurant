@@ -29,9 +29,6 @@ public:
 	void init();
 	void reset();
 
-	// Load
-	void loadTexture(SDL_Renderer *renderer);
-
 	// Handle event
 	void handleEvent(SDL_Renderer *renderer, SDL_Event &event);
 
@@ -40,7 +37,6 @@ public:
 
 	// Render
 	void render(SDL_Renderer *renderer);
-	void renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type);
 	void renderDeque(SDL_Renderer *renderer);
 
 	// Logic
@@ -54,7 +50,6 @@ public:
 private:
 	int posX, posY, cur, position;
 	int status;
-	Texture goRight, goLeft, stand;
-	int ingredients[SELLER_MAXINGREDIENTS];
+	int typeIngredients[SELLER_MAXINGREDIENTS];
 };
 #endif

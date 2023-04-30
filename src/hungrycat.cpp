@@ -81,26 +81,7 @@ void Hungrycat::eat(SDL_Renderer *renderer, const float &fromX, const float &fro
 	float dy = fromY + (toY - fromY) * frame / FPS;
 
 	// Render the ingredient
-	switch (type)
-	{
-	case UP_BREAD:
-		up_bread.render(renderer, dx, dy);
-		break;
-	case LETTUCE:
-		lettuce.render(renderer, dx, dy);
-		break;
-	case BEEF:
-		beef.render(renderer, dx, dy);
-		break;
-	case TOMATO:
-		tomato.render(renderer, dx, dy);
-		break;
-	case DOWN_BREAD:
-		down_bread.render(renderer, dx, dy);
-		break;
-	default:
-		break;
-	}
+	ingredients.render(renderer, dx, dy, type, 2);
 
 	frame--;
 

@@ -5,6 +5,7 @@
 #include "ingredients.h"
 #include "customer.h"
 #include "const.h"
+#include  "res.h"
 
 class Dishes
 {
@@ -23,8 +24,6 @@ public:
 	// Render
 	void render(SDL_Renderer *renderer);
 
-	void renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type);
-
 	// Logic
 	void addIngredient(const int &addDish, const int &addIngredient);
 	int removeIngredient(const int &removeDish);
@@ -32,7 +31,7 @@ public:
 	int checkBurger(const int &currentDish);
 
 private:
-	int ingredients[NUM_DISHES][DISHES_MAX_INGREDIENTS];
+	int typeIngredients[NUM_DISHES][DISHES_MAX_INGREDIENTS];
 	int numIngredients[NUM_DISHES];
 };
 

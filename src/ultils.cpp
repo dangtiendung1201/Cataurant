@@ -2,41 +2,6 @@
 
 Texture scoreTexture;
 
-void loadFont(TTF_Font *&font, const char *path, const int &size)
-{
-	font = TTF_OpenFont(path, size);
-	if (font == nullptr)
-	{
-		std::cout << "Failed to load font! Error: " << TTF_GetError() << std::endl;
-	}
-}
-
-void loadImage(SDL_Renderer *renderer, Texture &texture, const char *path)
-{
-	if (!texture.loadFromFile(renderer, path))
-	{
-		std::cout << "Failed to load image! Error: " << SDL_GetError() << std::endl;
-	}
-}
-
-void loadMusic(Mix_Music *&music, const char *path)
-{
-	music = Mix_LoadMUS(path);
-	if (music == nullptr)
-	{
-		std::cout << "Failed to load music! Error: " << Mix_GetError() << std::endl;
-	}
-}
-
-void loadSound(Mix_Chunk *&sound, const char *path)
-{
-	sound = Mix_LoadWAV(path);
-	if (sound == nullptr)
-	{
-		std::cout << "Failed to load sound! Error: " << Mix_GetError() << std::endl;
-	}
-}
-
 int random(const int &min, const int &max)
 {
 	return rand() % (max - min + 1) + min;

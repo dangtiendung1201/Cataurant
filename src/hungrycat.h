@@ -5,6 +5,7 @@
 #include "ingredients.h"
 #include "const.h"
 #include "ultils.h"
+#include "res.h"
 
 struct Hungrycat
 {

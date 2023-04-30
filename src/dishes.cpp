@@ -7,7 +7,7 @@ Dishes::Dishes()
 	{
 		for (int j = 0; j < DISHES_MAX_INGREDIENTS; j++)
 		{
-			ingredients[i][j] = NOTHING;
+			typeIngredients[i][j] = NOTHING;
 		}
 	}
 }
@@ -18,7 +18,7 @@ Dishes::~Dishes()
 	{
 		for (int j = 0; j < DISHES_MAX_INGREDIENTS; j++)
 		{
-			ingredients[i][j] = NOTHING;
+			typeIngredients[i][j] = NOTHING;
 		}
 	}
 }
@@ -28,7 +28,7 @@ void Dishes::init()
 {
 	for (int i = 0; i < NUM_DISHES; i++)
 	{
-		ingredients[i][0] = UP_BREAD;
+		typeIngredients[i][0] = UP_BREAD;
 		numIngredients[i] = 1;
 	}
 }
@@ -37,10 +37,10 @@ void Dishes::reset(const int &currentDish)
 {
 	for (int i = 0; i < DISHES_MAX_INGREDIENTS; i++)
 	{
-		ingredients[currentDish][i] = NOTHING;
+		typeIngredients[currentDish][i] = NOTHING;
 	}
 	numIngredients[currentDish] = 1;
-	ingredients[currentDish][0] = UP_BREAD;
+	typeIngredients[currentDish][0] = UP_BREAD;
 }
 
 // Get
@@ -56,32 +56,8 @@ void Dishes::render(SDL_Renderer *renderer)
 	{
 		for (int j = 0; j < numIngredients[i]; j++)
 		{
-			renderIngredients(renderer, DISHES_POSX[i], DISHES_POSY - INGREDIENTS_DISTANCE * j, ingredients[i][j]);
+			ingredients.render(renderer, DISHES_POSX[i], DISHES_POSY - INGREDIENTS_DISTANCE * j, typeIngredients[i][j]);
 		}
-	}
-}
-
-void Dishes::renderIngredients(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type)
-{
-	switch (type)
-	{
-	case UP_BREAD:
-		up_bread.render(renderer, posX, posY);
-		break;
-	case LETTUCE:
-		lettuce.render(renderer, posX, posY);
-		break;
-	case BEEF:
-		beef.render(renderer, posX, posY);
-		break;
-	case TOMATO:
-		tomato.render(renderer, posX, posY);
-		break;
-	case DOWN_BREAD:
-		down_bread.render(renderer, posX, posY);
-		break;
-	default:
-		break;
 	}
 }
 
@@ -95,7 +71,7 @@ void Dishes::renderIngredients(SDL_Renderer *renderer, const int &posX, const in
 ***/
 void Dishes::addIngredient(const int &addDish, const int &addIngredient)
 {
-	ingredients[addDish][numIngredients[addDish]] = addIngredient;
+	typeIngredients[addDish][numIngredients[addDish]] = addIngredient;
 	numIngredients[addDish]++;
 }
 
@@ -107,8 +83,8 @@ void Dishes::addIngredient(const int &addDish, const int &addIngredient)
 ***/
 int Dishes::removeIngredient(const int &removeDish)
 {
-	int removeIngredient = ingredients[removeDish][numIngredients[removeDish] - 1];
-	ingredients[removeDish][numIngredients[removeDish] - 1] = NOTHING;
+	int removeIngredient = typeIngredients[removeDish][numIngredients[removeDish] - 1];
+	typeIngredients[removeDish][numIngredients[removeDish] - 1] = NOTHING;
 	numIngredients[removeDish]--;
 	return removeIngredient;
 }
@@ -133,7 +109,7 @@ int Dishes::checkBurger(const int &currentDish)
 		bool done = true;
 		for (int j = 0; j < num; j++)
 		{
-			if (list[j] != ingredients[currentDish][j])
+			if (list[j] != typeIngredients[currentDish][j])
 			{
 				done = false;
 				break;
