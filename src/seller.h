@@ -13,9 +13,7 @@
 #endif
 // My libraries
 #include "const.h"
-#include "texture.h"
 #include "ingredients.h"
-#include "dishes.h"
 #include "ultils.h"
 
 class Seller
@@ -29,11 +27,12 @@ public:
 	void init();
 	void reset();
 
-	// Handle event
-	void handleEvent(SDL_Renderer *renderer, SDL_Event &event);
-
 	// Get
-	int getDishPosition();
+	int getStatus();
+	int getPosition();
+
+	//Set
+	void setStatus(const int &status);
 
 	// Render
 	void render(SDL_Renderer *renderer);
@@ -45,11 +44,13 @@ public:
 
 	void addTopIngredient();
 
-	void move();
+	void goRight();
+	void goLeft();
 
 private:
 	int posX, posY, cur, position;
 	int status;
 	int typeIngredients[SELLER_MAXINGREDIENTS];
+	Ingredients ingredients;
 };
 #endif

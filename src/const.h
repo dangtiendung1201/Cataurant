@@ -8,6 +8,11 @@
 #include <SDL2/SDL.h>
 #endif
 
+extern int score;
+extern int level;
+extern int live;
+extern int highestScore;
+
 // WINDOWS VARIABLES
 // Screen size
 const char WINDOW_TITLE[] = "Cataurant";
@@ -165,6 +170,9 @@ const int SELLER_STARTY = 350;
 const int SELLER_STEP = 125;
 const int SELLER_START_POSITION = 3;
 
+const int SELLER_LEFT_BOUND = 2;
+const int SELLER_RIGHT_BOUND = 6;
+
 // Seller's ingredients
 const int SELLER_MAXINGREDIENTS_RENDER = 8;
 const int SELLER_MAXINGREDIENTS = 20;
@@ -204,10 +212,14 @@ const int DISHES_LIMIT_INGREDIENTS = 12;
 // HUNGRY CAT VARIABLES
 // Hungry cat position
 const int HUNGRYCAT_START_POSX = 100;
-const int HUNGRYCAT_START_POSY = 600;
+const int HUNGRYCAT_START_POSY = INGREDIENTS_STARTY;
 
 const int HUNGRYCAT_END_POSX = INGREDIENTS_STARTX[0];
-const int HUNGRYCAT_END_POSY = INGREDIENTS_STARTY;
+const int HUNGRYCAT_END_POSY = 600;
+
+const int HUNGRYCAT_POSITION = 0;
+
+const float HUNGRYCAT_EATING_TIME[] = {0, 1, 1, 2, 2, 3};
 
 // COLORS
 const SDL_Color WHITE = {255, 255, 255, 255};

@@ -3,9 +3,8 @@
 
 // My libraries
 #include "const.h"
-#include "ultils.h"
 #include "ingredients.h"
-#include "res.h"
+#include "ultils.h"
 
 class Customer
 {
@@ -45,8 +44,7 @@ public:
 private:
 	int posX, posY, cur, status, type, request[CUSTOMER_MAXREQUESTS], numRequests;
 	float waitingTime;
+	Ingredients ingredients;
 };
-
-extern Customer customer[NUM_CUSTOMERS];
 
 #endif

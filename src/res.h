@@ -19,7 +19,6 @@
 #include "button.h"
 #include "const.h"
 #include "texture.h"
-#include "ingredients.h"
 
 extern TTF_Font *menuFont,									 // Menu font
 	*titleFont, *versionFont, *scoreFont, *highestScoreFont; // Title font

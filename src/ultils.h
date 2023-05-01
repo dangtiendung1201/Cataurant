@@ -7,14 +7,9 @@
 #include <fstream>
 #include <ostream>
 // My libraries
-#include "game.h"
 #include "texture.h"
 #include "const.h"
-
-extern int score;
-extern int level;
-extern int live;
-extern int highestScore;
+#include "res.h"
 
 int random(const int &min, const int &max);
 

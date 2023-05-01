@@ -1,7 +1,5 @@
 #include "ingredients.h"
 
-Ingredients ingredients;
-
 // Constructor and destructor
 Ingredients::Ingredients()
 {

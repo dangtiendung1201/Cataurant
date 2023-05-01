@@ -5,7 +5,6 @@
 #include "ingredients.h"
 #include "const.h"
 #include "ultils.h"
-#include "res.h"
 
 struct Hungrycat
 {
@@ -16,7 +15,7 @@ public:
 
 	// Set
 	void setType(const int &type);
-	void setEating();
+	void setEating(const int &eatingTime);
 
 	// Get
 	bool getEating();
@@ -30,7 +29,7 @@ public:
 
 private:
 	bool eating;
-	int type, frame;
+	int type, frame, cur;
+	Ingredients ingredients;
 };
-extern Hungrycat hungrycat;
 #endif

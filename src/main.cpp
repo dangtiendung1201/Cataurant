@@ -4,6 +4,12 @@
 
 SDL_Window *window;
 SDL_Renderer *renderer;
+Game game;
+
+int score;
+int level;
+int live;
+int highestScore;
 
 int main(int argc, char *argv[])
 {
@@ -12,8 +18,8 @@ int main(int argc, char *argv[])
 	if (init(window, renderer))
 		load(renderer);
 
-	gameState = MENU;
-	manageState(renderer);
+	game.setGameState(MENU);
+	game.manageState(renderer);
 
 	quit(window, renderer);
 	return 0;

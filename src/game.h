@@ -24,16 +24,51 @@
 #include "seller.h"
 #include "customer.h"
 #include "dishes.h"
-#include "ingredients.h"
 #include "hungrycat.h"
 #include "ultils.h"
-#include "res.h"
 
-extern int gameState;
-extern TTF_Font *scoreFont, *highestScoreFont;
-extern Texture heart;
-extern Mix_Chunk *leaveSound, *levelSound, *loseSound, *receiveSound, *wasteSound, *warningSound;
+// void manageState(SDL_Renderer *renderer);
 
-void manageState(SDL_Renderer *renderer);
+// class Seller;
+// class Customer;
+// class Dish;
+// class Hungrycat;
 
+class Game
+{
+public:
+	Game();
+	~Game();
+
+	void play(SDL_Renderer *renderer);
+	void menu(SDL_Renderer *renderer);
+	void help(SDL_Renderer *renderer);
+	void lose(SDL_Renderer *renderer);
+
+	void gameReset();
+	void menuReset();
+
+	void processUpKey();
+	void processDownKey();
+	void handlePlayEvent(SDL_Renderer *renderer, SDL_Event &event);
+
+	void setGameState(const int &state);
+	void manageState(SDL_Renderer *renderer);
+
+private:
+	int gameState;
+
+	bool musicState = ON;
+	bool soundState = ON;
+
+	Seller seller;
+
+	Customer customer[NUM_CUSTOMERS];
+
+	Dishes dish;
+
+	Hungrycat hungrycat;
+
+	bool loop = true;
+};
 #endif

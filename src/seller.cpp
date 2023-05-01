@@ -30,55 +30,21 @@ void Seller::reset()
 	}
 }
 
-// Handle event
-void Seller::handleEvent(SDL_Renderer *renderer, SDL_Event &event)
+// Get
+int Seller::getStatus()
 {
-	if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
-	{
-		switch (event.key.keysym.sym)
-		{
-		case SDLK_UP:
-			status = GO_UP;
-			break;
-		case SDLK_DOWN:
-			status = GO_DOWN;
-			break;
-		case SDLK_LEFT:
-			status = GO_LEFT;
-			break;
-		case SDLK_RIGHT:
-			status = GO_RIGHT;
-			break;
-		}
-
-		move();
-	}
-	else if (event.type == SDL_KEYUP)
-	{
-		switch (event.key.keysym.sym)
-		{
-		case SDLK_UP:
-			status = IDLE;
-			break;
-		case SDLK_DOWN:
-			status = IDLE;
-			break;
-		case SDLK_LEFT:
-			status = IDLE;
-			break;
-		case SDLK_RIGHT:
-			status = IDLE;
-			break;
-		}
-	}
+	return status;
 }
 
-// Get
-int Seller::getDishPosition()
+int Seller::getPosition()
 {
-	if (position >= 2 && position <= 6)
-		return position - 2;
-	return 0;
+	return position;
+}
+
+// Set
+void Seller::setStatus(const int &status)
+{
+	this->status = status;
 }
 
 // Render
@@ -168,64 +134,20 @@ void Seller::addTopIngredient()
 	typeIngredients[SELLER_MAXINGREDIENTS - 1] = random(LETTUCE, DOWN_BREAD);
 }
 
-void Seller::move()
+void Seller::goRight()
 {
-	switch (status)
+	if (posX + SELLER_STEP < SCREEN_WIDTH - customerRight.getWidth() / 4)
 	{
-	case GO_UP:
-		if (2 <= position && position <= 6 && dish.getNumIngredients(getDishPosition()) > 1)
-			addBottomIngredient(dish.removeIngredient(getDishPosition()));
-		break;
-	case GO_DOWN:
-		if (position == 0)
-		{
-			if (hungrycat.getEating() == false)
-			{
-				Mix_PlayChannel(-1, receiveSound, 0);
+		posX += SELLER_STEP;
+		position++;
+	}
+}
 
-				hungrycat.setType(removeBottomIngredient());
-				hungrycat.setEating();
-
-				addTopIngredient();
-			}
-		}
-		else if (DISHES_FIRST_POSITION <= position && position <= DISHES_LAST_POSITION && dish.getNumIngredients(getDishPosition()) < DISHES_MAX_INGREDIENTS)
-		{
-			int dishPosition = getDishPosition();
-
-			if (dish.getNumIngredients(dishPosition) <= DISHES_LIMIT_INGREDIENTS)
-			{
-				dish.addIngredient(getDishPosition(), removeBottomIngredient());
-				addTopIngredient();
-
-				if (dish.checkBurger(getDishPosition()) >= 0)
-				{
-					score++;
-
-					Mix_PlayChannel(-1, receiveSound, 0);
-					
-					levelUp();
-				}
-			}
-			else
-				Mix_PlayChannel(-1, warningSound, 0);
-		}
-		else
-			Mix_PlayChannel(-1, wasteSound, 0);
-		break;
-	case GO_LEFT:
-		if (posX - SELLER_STEP > 0)
-		{
-			posX -= SELLER_STEP;
-			position--;
-		}
-		break;
-	case GO_RIGHT:
-		if (posX + SELLER_STEP < SCREEN_WIDTH - customerRight.getWidth() / 4)
-		{
-			posX += SELLER_STEP;
-			position++;
-		}
-		break;
+void Seller::goLeft()
+{
+	if (posX - SELLER_STEP > 0)
+	{
+		posX -= SELLER_STEP;
+		position--;
 	}
 }

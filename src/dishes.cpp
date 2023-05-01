@@ -91,11 +91,12 @@ int Dishes::removeIngredient(const int &removeDish)
 
 /***
 	Args:
+		customer (Customer *): customer array
 		currentDish (int): dish to check
 	Returns:
 		int: customer index if burger is done, -1 if not
 ***/
-int Dishes::checkBurger(const int &currentDish)
+int Dishes::checkBurger(Customer *customer, const int &currentDish)
 {
 	for (int i = 0; i < NUM_CUSTOMERS; i++)
 	{

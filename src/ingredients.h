@@ -17,6 +17,4 @@ public:
 	void render(SDL_Renderer *renderer, const int &posX, const int &posY, const int &type, const int &reduceSize = 1);
 };
 
-extern Ingredients ingredients;
-
 #endif

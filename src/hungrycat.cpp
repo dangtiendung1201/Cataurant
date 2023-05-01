@@ -17,10 +17,17 @@ void Hungrycat::setType(const int &type)
 	this->type = type;
 }
 
-void Hungrycat::setEating()
+/***
+	Args:
+		eatingTime (int): eating time in seconds
+	Returns:
+		None
+***/
+void Hungrycat::setEating(const int &eatingTime)
 {
 	eating = true;
-	frame = FPS;
+	frame = FPS * eatingTime;
+	cur = 0;
 }
 
 // Get
@@ -77,15 +84,15 @@ int Hungrycat::randomBonus()
 void Hungrycat::eat(SDL_Renderer *renderer, const float &fromX, const float &fromY, const float &toX, const float &toY)
 {
 	// Move from fromX, fromY to toX, toY
-	float dx = fromX + (toX - fromX) * frame / FPS;
-	float dy = fromY + (toY - fromY) * frame / FPS;
+	float dx = fromX + (toX - fromX) / frame * cur;
+	float dy = fromY + (toY - fromY) / frame * cur;
 
 	// Render the ingredient
-	ingredients.render(renderer, dx, dy, type, 2);
+	ingredients.render(renderer, dx, dy, type, 1);
 
-	frame--;
+	cur++;
 
-	if (frame == 0)
+	if (cur == frame)
 	{
 		eating = false;
 

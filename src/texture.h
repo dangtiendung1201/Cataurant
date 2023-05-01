@@ -2,8 +2,7 @@
 #define _TEXTURE_H
 
 // C++ libraries
-#include <stdio.h>
-#include <string>
+#include <iostream>
 // SDL libraries
 #if defined(_WIN64) || defined(_WIN32)
 #include <SDL.h>
@@ -26,12 +25,12 @@ public:
 	~Texture();
 
 	// Loads image at specified path
-	bool loadFromFile(SDL_Renderer *gRenderer, std::string path);
+	bool loadFromFile(SDL_Renderer *renderer, std::string path);
 
 	// Creates image from font string
-	bool loadFromRenderedText(SDL_Renderer *gRender, std::string textureText, SDL_Color textColor, TTF_Font *textFont);
+	bool loadFromRenderedText(SDL_Renderer *renderer, std::string textureText, SDL_Color textColor, TTF_Font *textFont);
 
-	bool loadString(SDL_Renderer *gRender, std::string path, std::string str, TTF_Font *textFont);
+	bool loadString(SDL_Renderer *renderer, std::string path, std::string str, TTF_Font *textFont);
 
 	// Deallocates texture
 	void free();
@@ -39,14 +38,8 @@ public:
 	// Set color modulation
 	void setColor(Uint8 red, Uint8 green, Uint8 blue);
 
-	// Set blending
-	void setBlendMode(SDL_BlendMode blending);
-
-	// Set alpha modulation
-	void setAlpha(Uint8 alpha);
-
 	// Renders texture at given point
-	void render(SDL_Renderer *gRenderer, int x, int y, int width, int height, SDL_Rect *clip, double angle = 0.0, SDL_Point *center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
+	void render(SDL_Renderer *renderer, int x, int y, int width, int height, SDL_Rect *clip, double angle = 0.0, SDL_Point *center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	// Gets image dimensions
 	int getWidth();
@@ -54,10 +47,9 @@ public:
 
 private:
 	// The actual hardware texture
-	SDL_Texture *mTexture;
+	SDL_Texture *texture;
 
 	// Image dimensions
-	int mWidth;
-	int mHeight;
+	int width, height;
 };
 #endif

@@ -5,7 +5,6 @@
 #include "ingredients.h"
 #include "customer.h"
 #include "const.h"
-#include  "res.h"
 
 class Dishes
 {
@@ -27,14 +26,14 @@ public:
 	// Logic
 	void addIngredient(const int &addDish, const int &addIngredient);
 	int removeIngredient(const int &removeDish);
-	
-	int checkBurger(const int &currentDish);
+
+	int checkBurger(Customer *customer, const int &currentDish);
 
 private:
 	int typeIngredients[NUM_DISHES][DISHES_MAX_INGREDIENTS];
 	int numIngredients[NUM_DISHES];
+	Ingredients ingredients;
 };
 
-extern Dishes dish;
 
 #endif

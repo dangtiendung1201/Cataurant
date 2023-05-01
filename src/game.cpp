@@ -1,26 +1,21 @@
 #include "game.h"
 
-int gameState;
+Game::Game()
+{
+	gameState = MENU;
+}
 
-bool musicState = ON;
-bool soundState = ON;
+Game::~Game()
+{
+	gameState = QUIT;
+}
 
-Seller seller;
+void Game::setGameState(const int &state)
+{
+	gameState = state;
+}
 
-Customer customer[NUM_CUSTOMERS];
-
-Dishes dish;
-
-Hungrycat hungrycat;
-
-int score;
-int level;
-int live;
-int highestScore;
-
-bool loop = true;
-
-void gameReset()
+void Game::gameReset()
 {
 	score = 0;
 
@@ -44,7 +39,104 @@ void gameReset()
 	}
 }
 
-void game(SDL_Renderer *renderer)
+void Game::processUpKey()
+{
+	int sellerPosition = seller.getPosition();
+	int dishPosition = sellerPosition - 2;
+
+	if (SELLER_LEFT_BOUND <= sellerPosition && sellerPosition <= SELLER_RIGHT_BOUND && dish.getNumIngredients(dishPosition) > 1)
+		seller.addBottomIngredient(dish.removeIngredient(dishPosition));
+}
+
+void Game::processDownKey()
+{
+	int sellerPosition = seller.getPosition();
+	int dishPosition = sellerPosition - 2;
+
+	if (sellerPosition == HUNGRYCAT_POSITION)
+	{
+		if (hungrycat.getEating() == false)
+		{
+			Mix_PlayChannel(-1, receiveSound, 0);
+
+			hungrycat.setType(seller.removeBottomIngredient());
+			hungrycat.setEating(HUNGRYCAT_EATING_TIME[level]);
+
+			seller.addTopIngredient();
+		}
+	}
+	else if (DISHES_FIRST_POSITION <= sellerPosition && sellerPosition <= DISHES_LAST_POSITION && dish.getNumIngredients(dishPosition) < DISHES_MAX_INGREDIENTS)
+	{
+		if (dish.getNumIngredients(dishPosition) <= DISHES_LIMIT_INGREDIENTS)
+		{
+			dish.addIngredient(dishPosition, seller.removeBottomIngredient());
+			seller.addTopIngredient();
+
+			if (dish.checkBurger(customer, dishPosition) >= 0)
+			{
+				score++;
+
+				Mix_PlayChannel(-1, receiveSound, 0);
+
+				levelUp();
+			}
+		}
+		else
+			Mix_PlayChannel(-1, warningSound, 0);
+	}
+	else
+		Mix_PlayChannel(-1, wasteSound, 0);
+}
+
+void Game::handlePlayEvent(SDL_Renderer *renderer, SDL_Event &event)
+{
+	if (event.type == SDL_KEYDOWN && event.key.repeat == 0)
+	{
+		switch (event.key.keysym.sym)
+		{
+		case SDLK_UP:
+			seller.setStatus(GO_UP);
+
+			processUpKey();
+			break;
+		case SDLK_DOWN:
+			seller.setStatus(GO_DOWN);
+
+			processDownKey();
+			break;
+		case SDLK_LEFT:
+			seller.setStatus(GO_LEFT);
+
+			seller.goLeft();
+			break;
+		case SDLK_RIGHT:
+			seller.setStatus(GO_RIGHT);
+
+			seller.goRight();
+			break;
+		}
+	}
+	else if (event.type == SDL_KEYUP)
+	{
+		switch (event.key.keysym.sym)
+		{
+		case SDLK_UP:
+			seller.setStatus(IDLE);
+			break;
+		case SDLK_DOWN:
+			seller.setStatus(IDLE);
+			break;
+		case SDLK_LEFT:
+			seller.setStatus(IDLE);
+			break;
+		case SDLK_RIGHT:
+			seller.setStatus(IDLE);
+			break;
+		}
+	}
+}
+
+void Game::play(SDL_Renderer *renderer)
 {
 	Uint32 frameStart, frameTime;
 
@@ -65,7 +157,8 @@ void game(SDL_Renderer *renderer)
 				gameState = QUIT;
 				break;
 			}
-			seller.handleEvent(renderer, event);
+
+			handlePlayEvent(renderer, event);
 		}
 
 		// Clear screen
@@ -120,7 +213,7 @@ void game(SDL_Renderer *renderer)
 	}
 }
 
-void menuReset()
+void Game::menuReset()
 {
 	if (musicState)
 		Mix_PlayMusic(music, -1);
@@ -129,7 +222,7 @@ void menuReset()
 		Mix_Resume(-1);
 }
 
-void menu(SDL_Renderer *renderer)
+void Game::menu(SDL_Renderer *renderer)
 {
 	Uint32 frameStart, frameTime;
 
@@ -267,7 +360,7 @@ void menu(SDL_Renderer *renderer)
 	}
 }
 
-void help(SDL_Renderer *renderer)
+void Game::help(SDL_Renderer *renderer)
 {
 	Uint32 frameStart, frameTime;
 
@@ -322,7 +415,7 @@ void help(SDL_Renderer *renderer)
 	}
 }
 
-void lose(SDL_Renderer *renderer)
+void Game::lose(SDL_Renderer *renderer)
 {
 	Uint32 frameStart, frameTime;
 
@@ -383,7 +476,7 @@ void lose(SDL_Renderer *renderer)
 }
 
 // manage all states of the game
-void manageState(SDL_Renderer *renderer)
+void Game::manageState(SDL_Renderer *renderer)
 {
 	while (loop)
 	{
@@ -396,7 +489,7 @@ void manageState(SDL_Renderer *renderer)
 			help(renderer);
 			break;
 		case PLAY:
-			game(renderer);
+			play(renderer);
 			break;
 		case LOSE:
 			lose(renderer);
