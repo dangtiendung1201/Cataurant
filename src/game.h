@@ -18,21 +18,10 @@
 #include <SDL2/SDL_mixer.h>
 #endif
 // My libraries
-#include "button.h"
-#include "const.h"
-#include "texture.h"
 #include "seller.h"
 #include "customer.h"
 #include "dishes.h"
 #include "hungrycat.h"
-#include "ultils.h"
-
-// void manageState(SDL_Renderer *renderer);
-
-// class Seller;
-// class Customer;
-// class Dish;
-// class Hungrycat;
 
 class Game
 {

@@ -16,7 +16,7 @@ extern int highestScore;
 // WINDOWS VARIABLES
 // Screen size
 const char WINDOW_TITLE[] = "Cataurant";
-const char VERSION_INFO[] = "VERSION: 1.1";
+const char VERSION_INFO[] = "VERSION: 1.2";
 
 const int SCREEN_WIDTH = 1366;
 const int SCREEN_HEIGHT = 768;

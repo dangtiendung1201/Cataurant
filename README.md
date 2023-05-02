@@ -27,7 +27,9 @@ This is my own game project using `C`, `C++` and `SDL2 libraries` at University 
 
 ## Idea
 
-From mini-game called Comfy Cakes in Purple Place ([Info](https://en.wikipedia.org/wiki/Purble_Place "Infomation about the game"), [Demo](https://www.youtube.com/watch?v=TRxOvRQpPmg&pp=ygUXcHVyYmxlIHBsYWNlIHdpbmRvd3MgNyA%3D "Demo video")) included with Windows 7 operating systems, I create a new game with the same logic[^fn1]. Instead of a "conveyor belt" in the original game, I use a "deque" to manage "burger ingredients". "Requests" are shown as "customers", ... and many changes.
+From mini-game called Comfy Cakes in Purple Place ([Info](https://en.wikipedia.org/wiki/Purble_Place "Infomation about the game"), [Demo](https://www.youtube.com/watch?v=TRxOvRQpPmg&pp=ygUXcHVyYmxlIHBsYWNlIHdpbmRvd3MgNyA%3D "Demo video")) included with Windows 7 operating systems, I create a new game with the same logic[^fn1]. Instead of a "conveyor belt" in the original game, I use a "deque" to manage "burger ingredients". "Requests" are shown as "customers", ... and many changes. Threfore, my game is just about 10% similar to the original game.
+
+I chose this game because I want to challenge myself with a new game that requires a lot of thinking in design and implement. I also want to create a game that is not too simple and not too complicated, so that I can play it in my free time.
 
 ## Milestone
 
@@ -35,14 +37,19 @@ From mini-game called Comfy Cakes in Purple Place ([Info](https://en.wikipedia.o
 - [x] **12/03/2023:** Initialize all SDL libraries + Implement and refactor some SDL utilities.
 - [x] **14/03/2023:** Finish game menu.
 - [x] **15/03/2023:** Add some features in menu.
-- [x] **16/03/2023:** Show game background
+- [x] **16/03/2023:** Show game background.
 - [x] **17/03/2023:** Make first game character move.
-- [x] **22/03/2023:** Make more game characters
-- [x] **25/03/2023:** Render more characters
+- [x] **22/03/2023:** Make more game characters.
+- [x] **25/03/2023:** Render more characters.
 - [x] **06/04/2023:** Implement burger ingredients.
 - [x] **06/04/2023:** Implement burger ingredients.
 - [x] **08/04/2023:** Release [1.0 version](https://github.com/dangtiendung1201/Cataurant/releases/tag/v1.0).
 - [x] **17/04/2023:** Realease [1.1 version](https://github.com/dangtiendung1201/Cataurant/releases/tag/v1.1).
+- [x] **02/05/2023:** Release [1.2 version](https://github.com/dangtiendung1201/Cataurant/releases/tag/v1.2).
+
+- [ ] **Ongoing:** Add Japanese, Russian and Vietnamse language using Unicode.
+- [ ] **Future:** Play via LAN using SDL2_net library.
+- [ ] **Future:** Using my own assets and change the LICENSE.
 
 ## Prerequisites
 

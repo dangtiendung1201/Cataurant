@@ -3,7 +3,6 @@
 
 // My libraries
 #include "ingredients.h"
-#include "const.h"
 #include "ultils.h"
 
 struct Hungrycat

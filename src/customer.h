@@ -2,7 +2,6 @@
 #define _CUSTOMER_H
 
 // My libraries
-#include "const.h"
 #include "ingredients.h"
 #include "ultils.h"
 

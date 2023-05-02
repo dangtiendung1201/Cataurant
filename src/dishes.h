@@ -4,7 +4,6 @@
 // My libraries
 #include "ingredients.h"
 #include "customer.h"
-#include "const.h"
 
 class Dishes
 {

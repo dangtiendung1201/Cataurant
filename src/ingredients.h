@@ -3,7 +3,6 @@
 
 // My libraries
 #include "const.h"
-#include "texture.h"
 #include "res.h"
 
 class Ingredients

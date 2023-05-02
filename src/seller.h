@@ -12,7 +12,6 @@
 #include <SDL2/SDL_image.h>
 #endif
 // My libraries
-#include "const.h"
 #include "ingredients.h"
 #include "ultils.h"
 
