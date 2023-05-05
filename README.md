@@ -50,6 +50,7 @@ I chose this game because I want to challenge myself with a new game that requir
 - [ ] **Ongoing:** Add Japanese, Russian and Vietnamse language using Unicode.
 - [ ] **Future:** Play via LAN using SDL2_net library.
 - [ ] **Future:** Using my own assets and change the LICENSE.
+- [ ] **Future:** Using Emscripten to play game in browser.
 
 ## Prerequisites
 
@@ -222,7 +223,7 @@ Lives will be displayed at the top-right corner of the screen. You will lose whe
 
 ### Demo
 
-[Link](\null "Youtube video").
+[Link](https://youtu.be/njkZdedeFJk "Youtube video").
 
 ## Credits
 
@@ -247,8 +248,7 @@ In this game, I used:
 
 ## Notes
 
-- Diagram: [Link](/null)
-- Technical notes: [Link](/null)
+- Technical notes: [Link](https://hackmd.io/@uEzrlWylRnqO8b3pM_Yr2w/rkXPog6X2)
 
 [^fn1]: Assembling a cake to match a given cake specification.
 [^fn2]: Please use `sudo apt` in Ubuntu or `brew` in MacOS to install packages.
