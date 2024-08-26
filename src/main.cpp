@@ -1,11 +1,9 @@
 #ifdef __EMSCRIPTEN__
-    #include <emscripten.h>
+#include <emscripten.h>
 #endif
 
 #include "res.h"
 #include "game.h"
-
-#define LOAD_PNG 1
 
 SDL_Window *window;
 SDL_Renderer *renderer;
@@ -33,15 +31,21 @@ int main(int argc, char *argv[])
     emscripten_set_main_loop(main_loop, 0, 1);
 #else
     // Traditional game loop
-    while (game.getGameState() != QUIT) {
+    while (game.getGameState() != QUIT)
+    {
         game.manageState(renderer);
     }
 #endif
 
     quit(window, renderer);
+
+#ifdef __EMSCRIPTEN__
+    emscripten_cancel_main_loop();
+#endif
     return 0;
 }
 
-void main_loop() {
+void main_loop()
+{
     game.manageState(renderer);
 }
