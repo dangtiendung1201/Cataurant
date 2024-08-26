@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     // Traditional game loop
     while (game.getGameState() != QUIT)
     {
-        game.manageState(renderer);
+        main_loop();
     }
 #endif
 
@@ -48,4 +48,24 @@ int main(int argc, char *argv[])
 void main_loop()
 {
     game.manageState(renderer);
+
+    // // // Render red background
+    // SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    // SDL_RenderClear(renderer);
+
+    // // Render green rectangle
+    // SDL_Rect rect = {10, 10, 100, 100};
+    // SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    // SDL_RenderFillRect(renderer, &rect);
+
+    // // Render blue rectangle
+    // SDL_Rect rect2 = {150, 150, 100, 100};
+    // SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    // SDL_RenderFillRect(renderer, &rect2);
+
+    // // Render everything
+    // SDL_RenderPresent(renderer);
+
+    // // Sleep for 16ms
+    // SDL_Delay(16);
 }
