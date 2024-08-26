@@ -1,6 +1,11 @@
+#ifdef __EMSCRIPTEN__
+    #include <emscripten.h>
+#endif
 
 #include "res.h"
 #include "game.h"
+
+#define LOAD_PNG 1
 
 SDL_Window *window;
 SDL_Renderer *renderer;
@@ -11,16 +16,32 @@ int level;
 int live;
 int highestScore;
 
+// Forward declaration for the main loop function
+void main_loop();
+
 int main(int argc, char *argv[])
 {
-	srand(time(NULL));
+    srand(time(NULL));
 
-	if (init(window, renderer))
-		load(renderer);
+    if (init(window, renderer))
+        load(renderer);
 
-	game.setGameState(MENU);
-	game.manageState(renderer);
+    game.setGameState(MENU);
 
-	quit(window, renderer);
-	return 0;
+#ifdef __EMSCRIPTEN__
+    // Use emscripten_set_main_loop to run the main loop in a browser environment
+    emscripten_set_main_loop(main_loop, 0, 1);
+#else
+    // Traditional game loop
+    while (game.getGameState() != QUIT) {
+        game.manageState(renderer);
+    }
+#endif
+
+    quit(window, renderer);
+    return 0;
+}
+
+void main_loop() {
+    game.manageState(renderer);
 }

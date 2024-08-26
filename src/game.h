@@ -42,7 +42,8 @@ public:
 	void handlePlayEvent(SDL_Renderer *renderer, SDL_Event &event);
 
 	void setGameState(const int &state);
-	void manageState(SDL_Renderer *renderer);
+    int getGameState();
+    void manageState(SDL_Renderer *renderer);
 
 private:
 	int gameState;

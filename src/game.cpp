@@ -15,6 +15,11 @@ void Game::setGameState(const int &state)
 	gameState = state;
 }
 
+int Game::getGameState()
+{
+	return gameState;
+}
+
 void Game::gameReset()
 {
 	score = 0;
