@@ -3,3 +3,7 @@
 Release/
 Makefile
 Makefile.mk
+
+main.cpp
+
+res/

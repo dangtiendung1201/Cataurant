@@ -29,6 +29,7 @@ public:
 	Game();
 	~Game();
 
+	void test(SDL_Renderer *renderer);
 	void play(SDL_Renderer *renderer);
 	void menu(SDL_Renderer *renderer);
 	void help(SDL_Renderer *renderer);

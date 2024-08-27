@@ -227,8 +227,145 @@ void Game::menuReset()
 		Mix_Resume(-1);
 }
 
+void Game::test(SDL_Renderer *renderer)
+{
+	// std::cout << "test" << std::endl;
+	Uint32 frameStart = 0, frameTime = 0;
+	SDL_Event event;
+
+	// Clear screen
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(renderer);
+
+	// Content
+	background.render(renderer, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL);
+
+	if (musicState == ON)
+		musicOn.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT, NULL);
+	else
+		musicOff.render(renderer, MUSIC_POSX, MUSIC_POSY, MUSIC_WIDTH, MUSIC_HEIGHT, NULL);
+
+	if (soundState == ON)
+		soundOn.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT, NULL);
+	else
+		soundOff.render(renderer, SOUND_POSX, SOUND_POSY, SOUND_WIDTH, SOUND_HEIGHT, NULL);
+
+	title.render(renderer, SCREEN_WIDTH / 2 - title.getWidth() / 2, SCREEN_HEIGHT / 2 - title.getHeight() / 2 - 200, title.getWidth(), title.getHeight(), NULL);
+
+	version.render(renderer, SCREEN_WIDTH - version.getWidth() - 10, 10, version.getWidth(), version.getHeight(), NULL);
+
+	for (int i = 0; i < NUM_BUTTONS; i++)
+	{
+		buttons[i].render(renderer);
+	}
+
+	// Update screen
+	SDL_RenderPresent(renderer);
+
+	// Event
+	// If press "R", print "Siuuuu"
+	while (SDL_PollEvent(&event))
+	{
+		// Print mouse position
+		std::cout << "Mouse position: " << event.motion.x << ", " << event.motion.y << std::endl;
+
+		if (event.type == SDL_KEYDOWN)
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				gameState = QUIT;
+				break;
+			case SDL_MOUSEMOTION:
+				for (int i = 0; i < NUM_BUTTONS; i++)
+				{
+					if (buttons[i].isMouseInside(event.motion.x, event.motion.y))
+					{
+						buttons[i].changeColor(GREEN);
+					}
+					else
+					{
+						buttons[i].changeColor(PINK);
+					}
+				}
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				for (int i = 0; i < NUM_BUTTONS; i++)
+				{
+					if (buttons[i].isMouseInside(event.motion.x, event.motion.y))
+					{
+						buttons[i].changeColor(ORANGE);
+						if (soundState == ON)
+							Mix_PlayChannel(-1, clickSound, 0);
+					}
+				}
+				if (musicButton.isMouseInside(event.motion.x, event.motion.y))
+				{
+					if (Mix_PausedMusic() == 1)
+					{
+						Mix_ResumeMusic();
+						musicState = ON;
+					}
+					else
+					{
+						Mix_PauseMusic();
+						musicState = OFF;
+					}
+				}
+				if (soundButton.isMouseInside(event.motion.x, event.motion.y))
+				{
+					if (soundState == ON)
+					{
+						Mix_Pause(-1);
+						soundState = OFF;
+					}
+					else
+					{
+						Mix_Resume(-1);
+						soundState = ON;
+					}
+				}
+				break;
+			case SDL_MOUSEBUTTONUP:
+				for (int i = 0; i < NUM_BUTTONS; i++)
+				{
+					if (buttons[i].isMouseInside(event.motion.x, event.motion.y))
+					{
+						buttons[i].changeColor(GREEN);
+						switch (i)
+						{
+						case 0:
+							gameState = PLAY;
+							break;
+						case 1:
+							gameState = HELP;
+							break;
+						case 2:
+							gameState = QUIT;
+							break;
+						}
+					}
+					else
+					{
+						buttons[i].changeColor(PINK);
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	// Frame rate
+	frameTime = SDL_GetTicks() - frameStart;
+	if (frameTime < DELAY_TIME)
+	{
+		SDL_Delay(DELAY_TIME - frameTime);
+	}
+}
+
 void Game::menu(SDL_Renderer *renderer)
 {
+	std::cout << "menu" << std::endl;
 	Uint32 frameStart, frameTime;
 
 	menuReset();
