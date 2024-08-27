@@ -24,7 +24,7 @@ OBJ_NAME = cataurant.exe
 COMPILER_FLAGS = -std=c++17 -g -lm
 LINKER_FLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 compile:
-	emcc -o index.html $(OBJS) $(COMPILER_FLAGS) -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_SDL_TTF=2 -s USE_SDL_MIXER=2 --preload-file assets -s ALLOW_MEMORY_GROWTH=1
+	emcc -o index.html $(OBJS) $(COMPILER_FLAGS) -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_SDL_TTF=2 -s USE_SDL_MIXER=2 -s SDL2_MIXER_FORMATS='["wav"]' --preload-file assets -s ALLOW_MEMORY_GROWTH=1
 
 # OBJS = main.cpp
 # OBJ_NAME = cataurant.exe
