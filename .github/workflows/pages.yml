@@ -3,7 +3,7 @@ name: Build and Deploy WASM Project
 on:
   push:
     branches:
-      - main
+      - emscripten
 
 jobs:
   build:
