@@ -124,6 +124,7 @@
 
 SDL_Window *window;
 SDL_Renderer *renderer;
+SDL_Event event;
 Game game;
 
 int score;
@@ -133,7 +134,8 @@ int highestScore;
 
 void iterate()
 {
-    game.test(renderer);
+    // game.test(renderer);
+    game.playBroswer(renderer, event);
 }
 
 int main(int argc, char **argv)
@@ -142,8 +144,9 @@ int main(int argc, char **argv)
     if (init(window, renderer))
         load(renderer);
 
-    game.setGameState(MENU);
-
+    game.setGameState(PLAY);
+    game.gameReset();
+    
     emscripten_set_main_loop(iterate, 0, 1);
     return 0;
 }
