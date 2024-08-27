@@ -1,0 +1,32 @@
+name: Cleanup and Commit
+
+on:
+  workflow_run:
+    workflows: ["Build and Deploy WASM Project"] # Replace with the name of your main workflow
+    types:
+      - completed
+
+jobs:
+  cleanup:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} # Trigger only if the main branch workflow succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+
+      - name: Set up Git
+        run: |
+          git config --global user.name 'dangtiendung1201'
+          git config --global user.email 'dangtiendung1201@gmail.com'
+
+      - name: Delete unwanted files and folders
+        run: |
+          find . ! -name 'index.html' ! -name 'index.js' ! -name 'index.wasm' ! -name 'index.data' ! -name '.github' ! -path './.github/*' ! -name '.git' ! -path './.git/*' -delete
+
+      - name: Commit changes
+        run: |
+          git add -A
+          git commit -m 'Clean up gh-pages branch'
+          git push
