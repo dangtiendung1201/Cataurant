@@ -13,8 +13,7 @@ RESOURCES_FILE = cataurant.res
 
 # Platform-specific settings
 ifeq ($(OS),Windows_NT)
-	COMPILER_FLAGS += -static-libgcc -static-libstdc++
-	LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+	LINKER_FLAGS = -static -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lpthread
     ifdef PROCESSOR_ARCHITEW6432
         # 32-bit process on 64-bit Windows (targeting 32-bit build)
 		INCLUDE_DIR = -Iinclude/32bit
