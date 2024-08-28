@@ -2,7 +2,7 @@
 #define _CONST_H
 
 // SDL LIBRARIES
-#if defined(_WIN64) || defined(_WIN32)
+#if defined(_WIN64) || defined(_WIN32) || defined(__APPLE__)
 #include <SDL.h>
 #else
 #include <SDL2/SDL.h>

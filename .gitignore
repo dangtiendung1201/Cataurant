@@ -1,5 +1,3 @@
 *.exe
 .vscode/
 Release/
-Makefile
-Makefile.mk

@@ -2,7 +2,7 @@
 #define _BUTTON_H
 
 // SDL libraries
-#if defined(_WIN64) || defined(_WIN32)
+#if defined(_WIN64) || defined(_WIN32) || defined(__APPLE__)
 #include <SDL.h>
 #include <SDL_ttf.h>
 #else
