@@ -1,0 +1,62 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*.*'
+
+jobs:
+  publish:
+    name: Publish for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: cataurant
+            asset_name: assets
+            zip_name: cataurant-linux.zip
+          - os: windows-latest
+            artifact_name: cataurant.exe
+            asset_name: assets
+            zip_name: cataurant-windows.zip
+          - os: macos-latest
+            artifact_name: cataurant
+            asset_name: assets
+            zip_name: cataurant-macos.zip
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          if [[ ${{ matrix.os }} == 'ubuntu-latest' ]]; then
+            sudo apt-get update
+            sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
+          elif [[ ${{ matrix.os }} == 'macos-latest' ]]; then
+            brew install sdl2 sdl2_image sdl2_ttf sdl2_mixer
+          elif [[ ${{ matrix.os }} == 'windows-latest' ]]; then
+            echo "No dependencies to install on Windows"
+          fi
+        shell: bash
+
+      - name: Build
+        run: make
+
+      - name: Zip Binaries
+        run: |
+          if [[ ${{ matrix.os }} == 'ubuntu-latest' ]] || [[ ${{ matrix.os }} == 'macos-latest' ]]; then
+            # For Ubuntu and macOS
+            zip -r ${{ matrix.zip_name }} cataurant assets
+          elif [[ ${{ matrix.os }} == 'windows-latest' ]]; then
+            # For Windows
+            powershell Compress-Archive -Path 'cataurant.exe', 'assets' -DestinationPath ${{ matrix.zip_name }}
+          fi
+        shell: bash
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.MY_TOKEN }}
+          file: ${{ matrix.zip_name }}
+          tag: ${{ github.ref }}
